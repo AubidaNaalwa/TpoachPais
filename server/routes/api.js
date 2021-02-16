@@ -36,6 +36,7 @@ router.post('/event', (req, res) => {
     const event = new Events(req.body)
     event.save()
     res.end()
+    
 })
 
 
