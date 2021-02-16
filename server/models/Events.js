@@ -6,7 +6,9 @@ const events = new Schema({
     img:{type:String , required:true},
     shortDescription:{type:String , required:true},
     longDescription:{type:String , required:true},
-    avilibailty:{type:Boolean, default:true}
+    avilibailty:{type:Boolean, default:true},
+    date:{  type: Date, default: Date.now  },
+    toDate:{type:String, required:true}
 })
 
 const Events = mongoose.model('events', events) 
