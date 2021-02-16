@@ -1,5 +1,7 @@
 const express = require('express')
 const Courses = require('../models/Courses')
+const Images = require('../models/Images')
+
 const Events = require('../models/Events')
 const router = express.Router()
 
@@ -38,6 +40,21 @@ router.post('/event', (req, res) => {
     res.end()
 })
 
+
+router.get('/images/:id', (req, res) => {
+    Images.find({category:req.params.id}, function (err, data) {
+        if (err)
+            res.send({err, status:400})
+        else
+            res.send({ images: data, status:200 })
+    })
+})
+
+router.post('/image', (req, res) => {
+    const course = new Images(req.body)
+    course.save()
+    res.end()
+})
 
 
 module.exports = router
