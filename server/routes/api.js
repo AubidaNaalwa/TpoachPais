@@ -1,49 +1,61 @@
-const express = require('express'),
-axios = require('axios'),
-router = express.Router(),
-PaisSchema = require('../models/paisSchema.js');
 
-router.post('/todo', async function(req, res) {
-	try {
-		const pais = new PaisSchema({ ...req.body });
-		await pais.save();
-		res.send(pais);
-	}
-	catch (error) {
-		res.status(400).send({ error: error.message });
-	}
-});
+const express = require('express')
+const Courses = require('../models/Courses')
+const Images = require('../models/Images')
 
-router.get('/todos', async function(req, res) {
-	try {
-		const pais = await PaisSchema.find({});
-		res.send(pais);
-	}
-	catch (error) {
-		res.status(400).send({ error: error.message });
-	}
-});
+const Events = require('../models/Events')
+const router = express.Router()
 
-router.get('/todo/:id', async function(req, res) {
-		try {
-			const pais = await PaisSchema.findOne({ _id: req.params.id });
-			res.send(pais);
-		}
-		catch (error) {
-			res.status(400).send({ error: error.message });
-		}
-	}
-);
+router.get('/', (req, res) => {
+    res.send({ status: "server working" })
+})
 
-router.delete('/todo/:id', async function(req, res) {
-		try {
-			const pais = await PaisSchema.findByIdAndRemove({ _id: req.params.id });
-			res.send(pais);
-		}
-		catch (error) {
-			res.status(400).send({ error: error.message });
-		}
-	}
-);
 
-module.exports = router;
+router.get('/courses', (req, res) => {
+    Courses.find({}, function (err, data) {
+        if (err)
+            res.send({err, status:400})
+        else
+            res.send({ courses: data, status:200 })
+    })
+})
+
+router.post('/course', (req, res) => {
+    const course = new Courses(req.body)
+    course.save()
+    res.end()
+})
+
+router.get('/Events', (req, res) => {
+    Events.find({}, function (err, data) {
+        if (err)
+            res.send({err, status:400})
+        else
+            res.send({ events: data, status:200 })
+    })
+})
+
+router.post('/event', (req, res) => {
+    const event = new Events(req.body)
+    event.save()
+    res.end()
+})
+
+
+router.get('/images/:id', (req, res) => {
+    Images.find({category:req.params.id}, function (err, data) {
+        if (err)
+            res.send({err, status:400})
+        else
+            res.send({ images: data, status:200 })
+    })
+})
+
+router.post('/image', (req, res) => {
+    const course = new Images(req.body)
+    course.save()
+    res.end()
+})
+
+
+module.exports = router

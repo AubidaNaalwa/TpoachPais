@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Links from './Links';
 import { Link, useHistory } from 'react-router-dom';
+import '../styles//navBar.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {

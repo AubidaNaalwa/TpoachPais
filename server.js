@@ -3,8 +3,8 @@ api = require('./server/routes/api'),
 mongoose = require('mongoose'),
 path = require('path'),
 app = express(),
-PORT = process.env.PORT || 5000,
-URI = process.env.MONGODB_URI || 'mongodb://localhost/tPaisDB',
+PORT = process.env.PORT || 8080,
+URI = "mongodb+srv://AubidaNaalwa:Admin1234@cluster0.cvbqr.mongodb.net/tpoachpais?retryWrites=true&w=majority",
 API_PATH = require('./src/Constants').API_PATH;
 
 app.use(express.urlencoded({ extended: false }));
@@ -26,3 +26,4 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFind
 .catch(function(err){
     console.log(err.message);
 });
+
