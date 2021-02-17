@@ -1,4 +1,6 @@
+
 import '../styles/TGallery.css';
+
 import React, { Component, useEffect, useState } from "react";
 import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css'
@@ -20,8 +22,10 @@ const images = [
     },
 ];
 
+
 export default function TImages(props) {
   let id = props.match.params.id;
+
 
 
     return (
@@ -143,4 +147,6 @@ export default function TImages(props) {
 
         </div>
     )
+
+
 }
