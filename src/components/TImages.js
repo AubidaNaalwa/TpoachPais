@@ -1,9 +1,12 @@
-import '../styles/gallery.css';
+
+import '../styles/TGallery.css';
+
 import React, { Component, useEffect, useState } from "react";
 import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css'
 import ImageGallery from 'react-image-gallery';
 import $ from 'jquery';
+
 const images = [
     {
         original: 'https://picsum.photos/id/1018/1000/600/',
@@ -20,9 +23,9 @@ const images = [
 ];
 
 
-function Images(props) {
+export default function TImages(props) {
+  let id = props.match.params.id;
 
-    let id = props.match.params.id;
 
 
     return (
@@ -145,6 +148,5 @@ function Images(props) {
         </div>
     )
 
-}
 
-export default Images
+}

@@ -1,15 +1,14 @@
-import '../styles/gallery.css';
+
+import '../styles/TGallery.css';
 import React, { Component, useState } from "react";
 import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css'
 import ImageGallery from 'react-image-gallery';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-
-function Gallery(props) {
-
-  return (
-    <div>
+export default function TGallery() {
+	return (
+     <div>
       {/* <div class="container">
 
         <div class="gallery-container w-3 h-2">
@@ -78,7 +77,6 @@ function Gallery(props) {
           </div>
         </div>
 
-
         <div class="gallery-container w-3 h-2">
           <div class="gallery-item">
             <div class="image">
@@ -144,7 +142,6 @@ function Gallery(props) {
             <div class="text">travel 6</div>
           </div>
         </div>
-
 
       </div> */}
 
@@ -236,4 +233,3 @@ function Gallery(props) {
 
 }
 
-export default Gallery

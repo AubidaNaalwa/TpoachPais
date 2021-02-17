@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.MuiTabs-root {
+  display: block !important;
+}
+
+::placeholder, .MuiInputLabel-animated {
+  opacity: 0.7 !important;
+  font-weight: bold !important;
+}
+
+.MuiInputLabel-animated {
+  font-size: 120% !important;
+  color: black !important;
+}
+
+.MuiPaper-elevation4 {
+  box-shadow: 0 0 !important;
+}
+
+.MuiBreadcrumbs-li:hover {
+  text-decoration: underline;
+}
+
+.App-logo:hover {
+  transform: scale(1.1);
+}
+
+.MuiPaper-root, .MuiTypography-displayBlock {
+  font-family: 'Tajawal', sans-serif !important;
+}
+
+.MuiIconButton-label {
+  transition: transform 0.2s;
+}
+
+.MuiIconButton-label:hover {
+  transform: scale(1.1);
+}
+
+.MuiSvgIcon-root {
+  font-size: 1.3em !important;
+}
+
+@media screen and (max-width: 480px) {
+  .MuiBreadcrumbs-separator {
+    display: none !important;
+  }
+}

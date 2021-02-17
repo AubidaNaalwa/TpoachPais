@@ -1,34 +1,28 @@
-const express = require('express')
-const path = require('path')
-const app = express()
-const api = require('./server/routes/api')
-const mongoose = require('mongoose')
-const url = "mongodb+srv://AubidaNaalwa:Admin1234@cluster0.cvbqr.mongodb.net/tpoachpais?retryWrites=true&w=majority"
-//process.env.URI
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true,useFindAndModify: false }) 
-.then(() => console.log( 'Database Connected' ))
-.catch(err => console.log( err ));
+require('dotenv').config();
+const express = require('express'),
+api = require('./server/routes/api'),
+mongoose = require('mongoose'),
+path = require('path'),
+app = express(),
+PORT = process.env.REACT_APP_PORT || 8080,
+URI = process.env.REACT_APP_MONGODB_URI || 'mongodb://localhost/tPaisDB',
+API_PATH = require('./src/Constants').API_PATH;
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static('build'));
+app.use(API_PATH, api);
 
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
-    next()
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true, connectTimeoutMS: 5000, serverSelectionTimeoutMS: 5000 })
+.then(function(){
+    app.listen(PORT, function(){
+        console.log(`Server is up and running on port: ${PORT}`);
+    });
 })
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-
-
-app.use('/', api)
-
-
-app.use(express.static(path.join(__dirname,'build')))
-
-const port = 8080
-
-app.listen((process.env.PORT || port), function () {
-    console.log(`server runs on port : ${port}`)
-})
+.catch(function(err){
+    console.log(err.message);
+});
