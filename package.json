@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "createjs": "^1.0.1",
     "express": "^4.17.1",
+    "jquery": "^3.5.1",
     "mobx": "^6.1.6",
     "mobx-react": "^7.1.0",
     "mongoose": "^5.11.15",
