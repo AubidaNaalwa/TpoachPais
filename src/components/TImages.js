@@ -1,7 +1,7 @@
-import '../styles/TGallery.css';
 import React, { Component, useEffect, useState } from "react";
-import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css'
+import '../styles/TGallery.css';
+import ReactBnbGallery from 'react-bnb-gallery';
 import ImageGallery from 'react-image-gallery';
 import $ from 'jquery';
 

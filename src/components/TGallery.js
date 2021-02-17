@@ -1,9 +1,7 @@
+import React from "react";
 import '../styles/TGallery.css';
-import React, { Component, useState } from "react";
-import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css'
-import ImageGallery from 'react-image-gallery';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function TGallery() {
 	return (
