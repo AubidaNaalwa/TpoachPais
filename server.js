@@ -1,15 +1,15 @@
+require('dotenv').config();
 const express = require('express'),
 api = require('./server/routes/api'),
 mongoose = require('mongoose'),
 path = require('path'),
 app = express(),
-PORT = process.env.PORT || 8080,
-URI = "mongodb+srv://AubidaNaalwa:Admin1234@cluster0.cvbqr.mongodb.net/tpoachpais?retryWrites=true&w=majority",
+PORT = process.env.REACT_APP_PORT || 8080,
+URI = process.env.REACT_APP_MONGODB_URI || 'mongodb://localhost/tPaisDB',
 API_PATH = require('./src/Constants').API_PATH;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('node_modules'));
 app.use(express.static('build'));
 app.use(API_PATH, api);
 
@@ -26,4 +26,3 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFind
 .catch(function(err){
     console.log(err.message);
 });
-

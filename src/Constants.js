@@ -1,4 +1,4 @@
-const API_PATH = '/';
+const API_PATH = '/api';
 const SNACKBAR_PROPS = {
     SeverityType: {
         ERROR: 'error',
@@ -7,12 +7,12 @@ const SNACKBAR_PROPS = {
         SUCCESS: 'success'
     },
     MessageType: {
-        SUCCESS_SAVED: 'Selected data has been saved successfully!',
-        SUCCESS_REMOVED: 'Selected data has been removed successfully!',
-        FAILED_SAVING: 'Failed saving data!',
-        FAILED_DELETING: 'Failed deleting data!',
-        FAILED_GETTING: 'Failed loading data!',
-        CONNECTION_ERROR: 'Failed connecting to the remote server!'
+        SUCCESS_SAVED: 'لقد تم حفظ البيانات بنجاح',
+        SUCCESS_REMOVED: 'لقد تم حذف البيانات بنجاح',
+        FAILED_SAVING: 'فشل في حفظ البيانات',
+        FAILED_DELETING: 'فشل في حذف البيانات',
+        FAILED_GETTING: 'فشل في قراءة البيانات',
+        CONNECTION_ERROR: 'فشل في الاتصال الى السيرفر'
     }
 };
 

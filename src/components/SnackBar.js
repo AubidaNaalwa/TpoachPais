@@ -27,7 +27,7 @@ export default function SnackBar(props) {
         setOpen(false);
     };
 
-    useEffect(() => { props.message? setOpen(true): setOpen(false) }, [props.message]);
+    useEffect(() => { props.message ? setOpen(true): setOpen(false) }, [props.message]);
 
     return (
         <div className={classes.root}>

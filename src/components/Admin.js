@@ -49,14 +49,18 @@ function a11yProps(index) {
 const useStyles = makeStyles(() => ({
     root: {
         flexGrow: 1,
-        width: '100%'
+        width: '100%',
+        textAlign: 'center',
     },
     biggerFont: {
         fontWeight: 'bold',
-        fontSize: '110%'
+        fontSize: '110%',
     },
-    date_size: {
-        width: 170
+    sizes: {
+        width: 370
+    },
+    btn: {
+        textIndent: 3
     }
 }));
 
@@ -86,7 +90,7 @@ export default function Admin() {
     const handleSubmitEvent = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}event`, {name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate});
+            await axios.post(`${API_PATH}/event`, {name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate});
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -97,7 +101,7 @@ export default function Admin() {
     const handleSubmitCourse = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}course`, {name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate});
+            await axios.post(`${API_PATH}/course`, {name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate});
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -108,7 +112,7 @@ export default function Admin() {
     const handleSubmitImage = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}image`, {name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory});
+            await axios.post(`${API_PATH}/image`, {name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory});
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -125,45 +129,45 @@ export default function Admin() {
             </Tabs>
             <TabPanel value={value} index={0}>
                 <form onSubmit={handleSubmitEvent}>
-                    <TextField required onInput={e => setEventName(e.target.value)} name="eventName" placeholder="اسم الحدث" direction="right" />
+                    <TextField required onInput={e => setEventName(e.target.value)} name="eventName" placeholder="اسم الحدث" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setEventImg(e.target.value)} name="eventImg" placeholder="رابط صورة" direction="right" />
+                    <TextField required onInput={e => setEventImg(e.target.value)} name="eventImg" placeholder="رابط الصورة" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setEventShortDesc(e.target.value)} name="eventShortDesc" placeholder="شرح مختصر" direction="right" />
+                    <TextField required onInput={e => setEventShortDesc(e.target.value)} name="eventShortDesc" placeholder="شرح مختصر" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField multiline required onInput={e => setEventLongDesc(e.target.value)} name="eventLongDesc" placeholder="شرح موسع" direction="right" />
+                    <TextField multiline required onInput={e => setEventLongDesc(e.target.value)} name="eventLongDesc" placeholder="شرح موسع" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setEventDate(e.target.value)} name="eventDate" label="تاريخ الحدث" type="date" format="yyyy-MM-dd" className={classes.date_size} InputLabelProps={{ shrink: true }} />
+                    <TextField required onInput={e => setEventDate(e.target.value)} name="eventDate" label="تاريخ الحدث" type="date" format="yyyy-MM-dd" className={classes.sizes} InputLabelProps={{ shrink: true }} />
                     <br/><br/>
-                    <Button type="submit" variant="contained" color="primary" startIcon={<Icon>send</Icon>}>&nbsp;&nbsp;&nbsp;أرسال</Button>
+                    <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
                 </form>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <form onSubmit={handleSubmitCourse}>
-                    <TextField required onInput={e => setCourseName(e.target.value)} name="courseName" placeholder="اسم الدورة" direction="right" />
+                    <TextField required onInput={e => setCourseName(e.target.value)} name="courseName" placeholder="اسم الدورة" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setCourseImg(e.target.value)} name="courseImg" placeholder="رابط صورة" direction="right" />
+                    <TextField required onInput={e => setCourseImg(e.target.value)} name="courseImg" placeholder="رابط الصورة" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setCourseShortDesc(e.target.value)} name="courseShortDesc" placeholder="شرح مختصر" direction="right" />
+                    <TextField required onInput={e => setCourseShortDesc(e.target.value)} name="courseShortDesc" placeholder="شرح مختصر" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField multiline required onInput={e => setCourseLongDesc(e.target.value)} name="courseLongDesc" placeholder="شرح موسع" direction="right" />
+                    <TextField multiline required onInput={e => setCourseLongDesc(e.target.value)} name="courseLongDesc" placeholder="شرح موسع" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setCourseDate(e.target.value)} name="courseDate" label="تاريخ الدورة" type="date" format="yyyy-MM-dd" className={classes.date_size} InputLabelProps={{ shrink: true }} />
+                    <TextField required onInput={e => setCourseDate(e.target.value)} name="courseDate" label="تاريخ الدورة" type="date" format="yyyy-MM-dd" className={classes.sizes} InputLabelProps={{ shrink: true }} />
                     <br/><br/>
-                    <Button type="submit" variant="contained" color="primary" startIcon={<Icon>send</Icon>}>&nbsp;&nbsp;&nbsp;أرسال</Button>
+                    <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
                 </form>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <form onSubmit={handleSubmitImage}>
-                    <TextField required onInput={e => setImageName(e.target.value)} name="imageName" placeholder="اسم الصورة" direction="right" />
+                    <TextField required onInput={e => setImageName(e.target.value)} name="imageName" placeholder="اسم الصورة" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setImgURL(e.target.value)} name="imgURL" placeholder="رابط صورة" direction="right" />
+                    <TextField required onInput={e => setImgURL(e.target.value)} name="imgURL" placeholder="رابط الصورة" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setImageShortDesc(e.target.value)} name="imageShortDesc" placeholder="شرح مختصر" direction="right" />
+                    <TextField required onInput={e => setImageShortDesc(e.target.value)} name="imageShortDesc" placeholder="شرح مختصر" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setImageCategory(e.target.value)} name="imageCategory" placeholder="فئة الصورة" direction="right" />
+                    <TextField required onInput={e => setImageCategory(e.target.value)} name="imageCategory" placeholder="فئة الصورة" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <Button type="submit" variant="contained" color="primary" startIcon={<Icon>send</Icon>}>&nbsp;&nbsp;&nbsp;أرسال</Button>
+                    <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
                 </form>
             </TabPanel>
             <SnackBar message={snack.message} severity={snack.severity} />
