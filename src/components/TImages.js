@@ -20,8 +20,10 @@ const images = [
     },
 ];
 
+
 export default function TImages(props) {
   let id = props.match.params.id;
+
 
 
     return (
@@ -143,4 +145,6 @@ export default function TImages(props) {
 
         </div>
     )
+
+
 }

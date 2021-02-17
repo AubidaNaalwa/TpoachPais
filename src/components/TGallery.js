@@ -7,6 +7,7 @@ export default function TGallery() {
 	return (
      <div>
       {/* <div class="container">
+
         <div class="gallery-container w-3 h-2">
           <div class="gallery-item">
             <div class="image">
@@ -17,6 +18,7 @@ export default function TGallery() {
             <div class="text">nature 1</div>
           </div>
         </div>
+
         <div class="gallery-container w-3 h-3">
           <div class="gallery-item">
             <div class="image">
@@ -27,6 +29,7 @@ export default function TGallery() {
             <div class="text">people 2</div>
           </div>
         </div>
+
         <div class="gallery-container h-2">
           <div class="gallery-item">
             <div class="image">
@@ -37,6 +40,7 @@ export default function TGallery() {
             <div class="text">sport 3</div>
           </div>
         </div>
+
         <div class="gallery-container w-2">
           <div class="gallery-item">
             <div class="image">
@@ -47,6 +51,7 @@ export default function TGallery() {
             <div class="text">fitness 4</div>
           </div>
         </div>
+
         <div class="gallery-container w-4 h-1">
           <div class="gallery-item">
             <div class="image">
@@ -57,6 +62,7 @@ export default function TGallery() {
             <div class="text">food 5</div>
           </div>
         </div>
+
         <div class="gallery-container">
           <div class="gallery-item">
             <div class="image">
@@ -67,6 +73,7 @@ export default function TGallery() {
             <div class="text">travel 6</div>
           </div>
         </div>
+
         <div class="gallery-container w-3 h-2">
           <div class="gallery-item">
             <div class="image">
@@ -77,6 +84,7 @@ export default function TGallery() {
             <div class="text">nature 1</div>
           </div>
         </div>
+
         <div class="gallery-container w-3 h-3">
           <div class="gallery-item">
             <div class="image">
@@ -87,6 +95,7 @@ export default function TGallery() {
             <div class="text">people 2</div>
           </div>
         </div>
+
         <div class="gallery-container h-2">
           <div class="gallery-item">
             <div class="image">
@@ -97,6 +106,7 @@ export default function TGallery() {
             <div class="text">sport 3</div>
           </div>
         </div>
+
         <div class="gallery-container w-2">
           <div class="gallery-item">
             <div class="image">
@@ -107,6 +117,7 @@ export default function TGallery() {
             <div class="text">fitness 4</div>
           </div>
         </div>
+
         <div class="gallery-container w-4 h-1">
           <div class="gallery-item">
             <div class="image">
@@ -117,6 +128,7 @@ export default function TGallery() {
             <div class="text">food 5</div>
           </div>
         </div>
+
         <div class="gallery-container">
           <div class="gallery-item">
             <div class="image">
@@ -127,6 +139,7 @@ export default function TGallery() {
             <div class="text">travel 6</div>
           </div>
         </div>
+
       </div> */}
 
       <h1></h1>
@@ -214,4 +227,6 @@ export default function TGallery() {
 
     </div>
   )
+
 }
+
