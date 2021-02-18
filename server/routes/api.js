@@ -6,6 +6,24 @@ const Events = require('../models/Events');
 const router = express.Router();
 
 
+router.get('/',(req,res)=>{
+    res.send("server working")
+})
+
+
+router.get('/courses/id=:id', async (req, res) => {
+    if (req.params.id) {
+        await Courses.findById(req.params.id).exec(function (err, course) {
+            if (err)
+                res.send({ err, status: 400 });
+            else
+                res.send({ course, status: 200 });
+        })
+    }else{
+        res.send({err:"no id selected"})
+    }
+})
+
 
 router.post('/experiment', (req, res) => {
     const experiment = new Experiments(req.body);

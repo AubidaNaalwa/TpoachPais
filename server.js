@@ -10,9 +10,9 @@ API_PATH = require('./src/Constants').API_PATH;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('build'));
 app.use(API_PATH, api);
 
+app.use(express.static('build'));
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -23,6 +23,7 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFind
         console.log(`Server is up and running on port: ${PORT}`);
     });
 })
+
 .catch(function(err){
     console.log(err.message);
 });
