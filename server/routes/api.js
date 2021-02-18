@@ -4,7 +4,15 @@ const Images = require('../models/Images');
 const Events = require('../models/Events');
 const router = express.Router();
 
-router.get('/courses', (req, res) => {
+router.get('/courses/:id?', (req, res) => {
+    if (req.params.id) {
+        await Courses.findById(req.params.id).exec(function (err, course) {
+            if (err)
+                res.send({ err, status: 400 });
+            else
+                res.send({ course, status: 200 });
+        })
+    }
     Courses.find({}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
@@ -35,11 +43,11 @@ router.post('/event', (req, res) => {
 });
 
 router.get('/images/:id', (req, res) => {
-    Images.find({ category:req.params.id }, function (err, data) {
+    Images.find({ category: req.params.id }, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
-            res.send({ images: data, status:200 });
+            res.send({ images: data, status: 200 });
     });
 });
 
