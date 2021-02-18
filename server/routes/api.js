@@ -6,7 +6,7 @@ const Events = require('../models/Events');
 const router = express.Router();
 
 
-router.get('/courses/:id?', (req, res) => {
+router.get('/courses/:id?',async  (req, res) => {
     if (req.params.id) {
         await Courses.findById(req.params.id).exec(function (err, course) {
             if (err)
