@@ -2,7 +2,7 @@ body {
   margin: 0;
   background-color: whitesmoke;
   overflow-x: hidden;
-  font-family: 'Markazi Text', serif;
+  font-family: "Markazi Text", serif;
 }
 
 .App-header {
@@ -16,7 +16,8 @@ body {
   display: block !important;
 }
 
-::placeholder, .MuiInputLabel-animated {
+::placeholder,
+.MuiInputLabel-animated {
   opacity: 0.7 !important;
   font-weight: bold !important;
 }
@@ -38,8 +39,10 @@ body {
   transform: scale(1.1);
 }
 
-.MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock {
-  font-family: 'Markazi Text', serif !important;
+.MuiButton-containedPrimary,
+.MuiPaper-root,
+.MuiTypography-displayBlock {
+  font-family: "Markazi Text", serif !important;
 }
 
 .MuiIconButton-label {
@@ -58,4 +61,46 @@ body {
   .MuiBreadcrumbs-separator {
     display: none !important;
   }
+}
+
+.events {
+  margin-left: 45px;
+  margin-right: 60px;
+  margin-bottom: 45px;
+}
+
+.eTitle {
+  display: flex;
+  margin: 45px;
+  justify-content: center;
+}
+
+.ePopOver img {
+  width: 350px;
+  height: 190px;
+}
+
+.ePopOver {
+  display: grid;
+  margin: 25px;
+  justify-items: center;
+}
+
+.exit {
+  display: grid;
+  justify-items: left;
+  margin-left: 10px;
+  font-size: 150%;
+}
+
+.eDate {
+  color: gray;
+}
+
+.eDesc {
+  font-size: 127%;
+}
+
+.hdr {
+  margin-top: -20px;
 }
