@@ -19,6 +19,8 @@ router.get('/courses/id=:id', async (req, res) => {
             else
                 res.send({ course, status: 200 });
         })
+    }else{
+        res.send({err:"no id selected"})
     }
 })
 
