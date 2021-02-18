@@ -1,8 +1,26 @@
 const express = require('express');
 const Courses = require('../models/Courses');
 const Images = require('../models/Images');
+const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
 const router = express.Router();
+
+
+
+router.post('/experiment', (req, res) => {
+    const experiment = new Experiments(req.body);
+    experiment.save();
+    res.end();
+});
+
+router.get('/experiments', (req, res) => {
+    Experiments.find({}, function (err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ experiments: data, status: 200 });
+    });
+});
 
 router.get('/courses', (req, res) => {
     Courses.find({}, function (err, data) {
@@ -35,18 +53,27 @@ router.post('/event', (req, res) => {
 });
 
 router.get('/images/:id', (req, res) => {
-    Images.find({ category:req.params.id }, function (err, data) {
+    Images.find({ category: req.params.id }, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
-            res.send({ images: data, status:200 });
+            res.send({ images: data, status: 200 });
     });
 });
 
 router.post('/image', (req, res) => {
-    const course = new Images(req.body);
-    course.save();
+    const image = new Images(req.body);
+    image.save();
     res.end();
+});
+
+router.get('/imagesCategory', async (req, res) => {
+    const results = await Images.aggregate().group(
+        {
+            _id: '$category'
+        }
+    )
+    res.send({ categories: results });
 });
 
 module.exports = router;
