@@ -7,7 +7,8 @@ const img = new Schema({
     shortDescription: { type: String , required: true },
     longDescription: { type:String },
     date: { type: Date, default: Date.now },
-    category: { type: String , required:true }
+    category: { type: String , required:true },
+    forWebsite:{type:String, require:true}
 });
 
 const Images = mongoose.model('img', img);

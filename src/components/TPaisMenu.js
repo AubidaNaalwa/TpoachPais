@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center'
     },
     btn: {
-        fontSize: '110%',
+        fontSize: '130%',
         fontWeight: 'bold',
         width: '22.6%',
         margin: 3,

@@ -12,6 +12,7 @@ import TGallery from "./components/TGallery";
 import TImages from "./components/TImages";
 import Courses from './components/Courses';
 import CourseInfo from './components/courseInfo'
+
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -40,6 +41,7 @@ export default function App() {
 						<Route path="/tpais/courses/courseinfo" exact render={ () => <CourseInfo cInfo={course}/> }/>
 						<Route path="/tpais/gallery" exact render={ () => <TGallery /> }/>
 						<Route path='/tpais/gallery/:id' exact render={ ({match}) => <TImages match={match} /> } />
+
 						<Route render={ () => <h2 style={{ color: "IndianRed " }}>لم يتم العثور على المحتوى المطلوب</h2> } />
 					</Switch>
 				</div>
