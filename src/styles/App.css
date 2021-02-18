@@ -2,6 +2,7 @@ body {
   margin: 0;
   background-color: whitesmoke;
   overflow-x: hidden;
+  font-family: 'Markazi Text', serif;
 }
 
 .App-header {
@@ -37,8 +38,8 @@ body {
   transform: scale(1.1);
 }
 
-.MuiPaper-root, .MuiTypography-displayBlock {
-  font-family: 'Tajawal', sans-serif !important;
+.MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock {
+  font-family: 'Markazi Text', serif !important;
 }
 
 .MuiIconButton-label {
