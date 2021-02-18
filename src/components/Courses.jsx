@@ -36,6 +36,7 @@ export default function Courses(props) {
 
     async function fetchCourses() {
         const res = await axios.get("/courses")
+        console.log(res)
         setCourses(res.data.courses)
     }
 

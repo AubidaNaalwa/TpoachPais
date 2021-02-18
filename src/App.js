@@ -37,7 +37,6 @@ export default function App() {
 						<Route path="/admin" exact render={ () => <Admin /> } />
 						<Route path="/tpais/courses" exact render={ () => <Courses setCourse={setCourse}/> }/>
 						<Route path="/tpais/courses/courseinfo" exact render={ () => <CourseInfo cInfo={course}/> }/>
-
 						<Route render={ () => <h2 style={{ color: "IndianRed " }}>لم يتم العثور على المحتوى المطلوب</h2> } />
 					</Switch>
 				</div>

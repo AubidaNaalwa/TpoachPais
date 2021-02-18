@@ -10,7 +10,6 @@ const courses = new Schema({
     date: { type: Date, default: Date.now },
     toDate: { type: String, required: true },
     courseLink: { type: String , required: true }
-
 });
 
 const Courses = mongoose.model('courses', courses);
