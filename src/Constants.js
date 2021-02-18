@@ -1,4 +1,4 @@
-const API_PATH = '/api';
+const API_PATH = '/';
 const SNACKBAR_PROPS = {
     SeverityType: {
         ERROR: 'error',
