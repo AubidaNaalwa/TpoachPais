@@ -90,7 +90,7 @@ export default function Admin() {
     const handleSubmitEvent = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}/event`, {name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate});
+            await axios.post(`${API_PATH}event`, {name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate});
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -112,7 +112,7 @@ export default function Admin() {
     const handleSubmitImage = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}/image`, {name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory});
+            await axios.post(`${API_PATH}image`, {name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory});
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
