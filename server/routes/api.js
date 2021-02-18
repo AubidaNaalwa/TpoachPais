@@ -6,6 +6,17 @@ const Events = require('../models/Events');
 const router = express.Router();
 
 
+router.get('/courses/:id?', (req, res) => {
+    if (req.params.id) {
+        await Courses.findById(req.params.id).exec(function (err, course) {
+            if (err)
+                res.send({ err, status: 400 });
+            else
+                res.send({ course, status: 200 });
+        })
+    }
+
+
 
 router.post('/experiment', (req, res) => {
     const experiment = new Experiments(req.body);
@@ -23,6 +34,7 @@ router.get('/experiments', (req, res) => {
 });
 
 router.get('/courses', (req, res) => {
+
     Courses.find({}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
