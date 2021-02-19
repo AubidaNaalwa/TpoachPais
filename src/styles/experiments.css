@@ -1,0 +1,14 @@
+#container{
+    font-family: 'Amiri', serif;
+    text-align: center;
+    margin-top: 5%;
+}
+
+.what{
+    width: 300px;
+    height: 100%;
+}
+
+.strings{
+    text-align: right;
+}

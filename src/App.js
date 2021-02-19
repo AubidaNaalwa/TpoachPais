@@ -10,7 +10,9 @@ import Admin from './components/Admin';
 import Events from "./components/Events/Events";
 import React from 'react';
 import Courses from './components/Courses';
-import CourseInfo from './components/courseInfo'
+import CourseInfo from './components/courseInfo';
+import Experiments from './components/Experiments';
+import ExperimentInfo from './components/experimentInfo'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -24,6 +26,7 @@ const theme = createMuiTheme({
 
 export default function App() {
 	const [course, setCourse] = React.useState(null)
+	const [experiment, setExperiment] = React.useState(null)
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -41,6 +44,8 @@ export default function App() {
 
 						<Route path="/tpais/courses" exact render={ () => <Courses setCourse={setCourse}/> }/>
 						<Route path="/tpais/courses/courseinfo" exact render={ () => <CourseInfo cInfo={course}/> }/>
+						<Route path="/tpais/experiments" exact render={ () => <Experiments setExperiment={setExperiment}/> }/>
+						<Route path="/tpais/experiments/experimentinfo" exact render={ () => <ExperimentInfo eInfo={experiment}/> }/>
 
 						<Route render={ () => <h2 style={{ color: "IndianRed " }}>لم يتم العثور على المحتوى المطلوب</h2> } />
 					</Switch>

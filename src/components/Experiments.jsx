@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react'
-import CourseCard from './ExperimentCard'
-import CourseInfo from './ExperimentInfo'
-import '../styles/courses.css'
+import ExperimentCard from './experimentCard'
+import ExperimentInfo from './experimentInfo'
+import '../styles/experiments.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -24,22 +24,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Courses() {
+export default function Experiments(props) {
     const [spacing, setSpacing] = React.useState(2);
-    const [experimnts, setExperimnts] = React.useState([])
+    const [experiments, setExperiments] = React.useState([])
     const classes = useStyles();
+    const func = props.setExperiment
 
     const handleChange = (event) => {
         setSpacing(Number(event.target.value));
     };
 
-    async function fetchCourses() {
-        const res = await axios.get("/experimnts")
-        setExperimnts(res.data.courses)
+    async function fetchExperiments() {
+        const res = await axios.get("/experiments")
+        console.log(res)
+        setExperiments(res.data.experiments)
     }
 
     useEffect(() => {
-        fetchCourses()
+        fetchExperiments()
     }, [])
 
     return (
@@ -47,9 +49,9 @@ export default function Courses() {
             <Grid container className={classes.root} spacing={2}>
                 <Grid item xs={12}>
                     <Grid container justify="center" spacing={10}>
-                        {courses.map((value) => (
+                        {experiments.map((value) => (
                             <Grid key={value._id} item>
-                                <CourseCard className='card' course={value}/>
+                                <ExperimentCard className='card' setExperiment={func} experiment={value}/>
                             </Grid>
                         ))}
                     </Grid>
