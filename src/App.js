@@ -12,7 +12,7 @@ import React from 'react';
 import Courses from './components/Courses';
 import CourseInfo from './components/courseInfo';
 import Experiments from './components/Experiments';
-import ExperimentInfo from './components/experimentInfo'
+import ExperimentInfo from './components/ExperimentInfo'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 

@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from 'react'
-import ExperimentCard from './experimentCard'
-import ExperimentInfo from './experimentInfo'
+import ExperimentCard from './ExperimentCard'
+import ExperimentInfo from './ExperimentInfo'
 import '../styles/experiments.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
