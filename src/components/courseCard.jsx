@@ -8,17 +8,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import '../styles/courses.css'
-import CourseInfo from './courseInfo'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
+    maxWidth: 300,
   },
   media: {
-    height: 150,
+    height: 200,
   },
 });
 
@@ -40,10 +39,10 @@ export default function MediaCard(props) {
           image="https://i.imgur.com/Sz6ZAx6.jpg"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography className="strings" gutterBottom variant="h5" component="h2">
             {cInfo.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography className="strings" variant="body2" color="textSecondary" component="p">
             {cInfo.shortDescription}
           </Typography>
         </CardContent>

@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from 'react'
-import CourseCard from './courseCard'
-import CourseInfo from './courseInfo'
+import CourseCard from './CourseCard'
+import CourseInfo from './CourseInfo'
 import '../styles/courses.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
