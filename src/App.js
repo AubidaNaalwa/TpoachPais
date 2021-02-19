@@ -15,6 +15,11 @@ import Courses from './components/Courses';
 import CourseInfo from './components/courseInfo';
 import Experiments from './components/Experiments';
 import ExperimentInfo from './components/ExperimentInfo';
+import SpaceGallery from "./components/SpaceGallery";
+import Images from "./components/Images";
+import TpoaPaisGallery from "./components/TpoaPaisGallery";
+import Astronauts from "./components/Astronauts";
+import AstronomicalEvenings from "./components/AstronomicalEvenings";
 
 const theme = createMuiTheme({
 	palette: {
@@ -26,11 +31,11 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles(() => ({
-    root: {
+	root: {
 		boxShadow: '0 8px 6px -6px #ccc',
 		borderRadius: 5,
 		padding: 15
-    },
+	},
 	pageNotFound: {
 		width: '100vh',
 		textAlign: 'center',
@@ -40,8 +45,8 @@ const useStyles = makeStyles(() => ({
 
 export default function App() {
 	const classes = useStyles(),
-	[course, setCourse] = React.useState(null),
-	[experiment, setExperiment] = React.useState(null);
+		[course, setCourse] = React.useState(null),
+		[experiment, setExperiment] = React.useState(null);
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -50,17 +55,27 @@ export default function App() {
 				<div className="App-header">
 					<div className={classes.root}>
 						<Switch>
-							<Route path="/" exact render={ () => <TPais /> } />
-							<Route path="/space" exact render={ () => <Space /> } />
-							<Route path="/about" exact render={ () => <About /> } />
-							<Route path="/contactus" exact render={ () => <ContactUs /> } />
-							<Route path="/admin" exact render={ () => <Admin /> } />
-							<Route path="/tpais/events" exact render={ () => <Events /> } />
-							<Route path="/tpais/courses" exact render={ () => <Courses setCourse={setCourse}/> }/>
-							<Route path="/tpais/courses/courseinfo" exact render={ () => <CourseInfo cInfo={course}/> }/>
-							<Route path="/tpais/experiments" exact render={ () => <Experiments setExperiment={setExperiment}/> }/>
-							<Route path="/tpais/experiments/experimentinfo" exact render={ () => <ExperimentInfo eInfo={experiment}/> }/>
-							<Route render={ () => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div> } />
+							<Route path="/" exact render={() => <TPais />} />
+							<Route path="/space" exact render={() => <Space />} />
+							<Route path="/about" exact render={() => <About />} />
+							<Route path="/contactus" exact render={() => <ContactUs />} />
+							<Route path="/admin" exact render={() => <Admin />} />
+							<Route path="/tpais/events" exact render={() => <Events />} />
+							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
+							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
+							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
+							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
+							<Route path="/tpais/gallery" exact render={() => <TpoaPaisGallery />} />
+							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} />} />
+							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
+							<Route exact path="/space/gallery/astronomical/evenings" render={() => <AstronomicalEvenings />} />
+							<Route exact path="/space/gallery/astronauts/evenings" render={() => <Astronauts />} />
+							<Route path='/space/gallery/astronomical/evenings/:id' exact render={({ match }) => <Images match={match} />} />
+							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} />} />
+							<Route path='/space/gallery/astronauts/evenings/:id' exact render={({ match }) => <Images match={match} />} />
+							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
+
+
 						</Switch>
 					</div>
 				</div>

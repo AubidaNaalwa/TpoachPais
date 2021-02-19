@@ -1,0 +1,364 @@
+
+
+/* body {
+  background-image: url("https://pngimage.net/wp-content/uploads/2018/06/star-field-png-5.png");
+
+} */
+
+h1{
+  color: orange;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.grid-container {
+  columns: 3 200px;
+  column-gap: 1.5rem;
+  width: 90%;
+  margin: 0 auto;
+  
+}
+.grid-container div {
+  width: 150px;
+  margin: 0 1.5rem 1.5rem 0;
+  display: inline-block;
+  width: 100%;
+  border: solid 2px rgb(233, 224, 224);
+  padding: 5px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  transition: all 0.25s ease-in-out;
+}
+.grid-container div:hover img {
+  filter: grayscale(0);
+}
+.grid-container div:hover {
+  border-color: coral;
+}
+.grid-container div img {
+  width: 100%;
+  filter: grayscale(100%);
+  border-radius: 5px;
+  max-height: 240px;
+  min-height: 240px;
+  transition: all 0.25s ease-in-out;
+}
+.grid-container div p {
+  margin: 5px 0;
+  padding: 0;
+  text-align: center;
+  font-style: italic;
+  color: red;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#gallery {
+  display: grid;
+  /* height: calc(100vh - 10px); */
+  grid-template: repeat(6, 1fr)/repeat(6, 1fr);
+  grid-gap: 0.5em;
+}
+@media (max-width: 800px) {
+  #gallery {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  #gallery > div {
+    width: 48%;
+    margin: 1%;
+  }
+}
+@media (max-width: 800px) and (max-width: 350px) {
+  #gallery > div {
+    width: 98%;
+  }
+}
+
+#gallery > div > a {
+  opacity: 0;
+  position: absolute;
+  color: #000;
+  background-color: #000;
+  font: bold 4em "Helvetica";
+  text-shadow: 0 -1px 5px #fff, -1px 0px 5px #fff, 0 1px 5px #fff, 1px 0px 5px #fff;
+  padding: 2rem;
+  mix-blend-mode: difference;
+  width: 100%;
+  height: 100%;
+  transition: all ease 1s;
+}
+#gallery > div > img {
+  width: 100%;
+  min-height: 100%;
+  transition: all ease 1s;
+}
+#gallery > div:hover img {
+  filter: blur(4px);
+}
+#gallery > div:hover a {
+  opacity: 1;
+}
+#gallery > div {
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#gallery div,
+#gallery a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+[id^=lightbox-] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  opacity: 0;
+  transition: opacity 450ms ease-in-out;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+[id^=lightbox-]:target {
+  opacity: 1;
+  pointer-events: inherit;
+}
+[id^=lightbox-]:target img {
+  filter: blur(0);
+}
+[id^=lightbox-] .content {
+  max-width: 90%;
+  position: relative;
+  color: #fff;
+}
+[id^=lightbox-] .content:hover > a.close {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+[id^=lightbox-] .content:hover > .title {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+[id^=lightbox-] .content:hover > .title::after {
+  opacity: 1;
+}
+[id^=lightbox-] .content > * {
+  transition: all 450ms ease-in-out;
+}
+[id^=lightbox-] .title {
+  display: block;
+  margin: 0;
+  padding: 1em;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transform: translateY(50%);
+  font-size: 1.5em;
+  opacity: 0;
+}
+[id^=lightbox-] .title::after {
+  content: " ";
+  background-color: rgba(0, 0, 0, 0.4);
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transition: all 350ms ease-in-out 250ms;
+  opacity: 0;
+  transform-origin: bottom;
+  mix-blend-mode: soft-light;
+}
+[id^=lightbox-] img {
+  max-height: 90vh;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  filter: blur(50px);
+}
+[id^=lightbox-] a.close {
+  width: 2em;
+  height: 2em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0, 0);
+  opacity: 0;
+  transform-origin: right top;
+  text-decoration: none;
+  color: #fff;
+}
+[id^=lightbox-] a.close::after {
+  content: "X";
+}
+
+.gallery-container {
+  padding: 0.9375rem 0;
+  margin-top: 2%;
+}
+
+.gallery-container h1 {
+  margin: 2rem 0;
+  padding: 0;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 6.5vw;
+  font-weight: lighter;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+@media (min-width: 20em) {
+  .gallery-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media (min-width: 34em) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 60em) {
+  .gallery-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+.gallery-grid img {
+  width: 100%;
+  border: 5px solid #fff;
+}
+
+.gallery-grid div {
+  position: relative;
+  cursor: pointer;
+}
+.gallery-grid div:before, .gallery-grid div:after {
+  transition: 0.3s opacity ease;
+  opacity: 0;
+}
+.gallery-grid div:after {
+  content: "↔";
+  font-size: 80px;
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+  color: #fff;
+  left: 50%;
+  top: 50%;
+  display: block;
+}
+.gallery-grid div:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  background: rgba(34, 34, 34, 0.5);
+  display: block;
+}
+.gallery-grid div:hover:before, .gallery-grid div:hover:after {
+  opacity: 1;
+  transition: 0.3s opacity ease;
+}
+
+.modal {
+  position: fixed;
+  z-index: 999;
+  width: 50%;
+  max-width: 800px;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+@media (min-width: 20em) {
+  .modal {
+    width: 95%;
+  }
+}
+@media (min-width: 34em) {
+  .modal {
+    width: 80%;
+  }
+}
+@media (min-width: 60em) {
+  .modal {
+    width: 60%;
+  }
+}
+.modal img {
+  width: 100%;
+  border: 5px solid #fff;
+}
+
+.modal-overlay {
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+}
+
+.modal-body a {
+  position: absolute;
+  display: inline;
+  color: #222;
+  text-decoration: none;
+  line-height: 36px;
+  font-size: 30px;
+  font-weight: lighter;
+  background: #fff;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+
+.modal-body .modal-close {
+  right: 0;
+  top: 0;
+  border-radius: 0 0 0 5px;
+}
+
+.modal-body .modal-next,
+.modal-body .modal-prev {
+  right: 0;
+  top: calc(50% - 25px);
+  border-radius: 5px 0 0 5px;
+  height: 50px;
+  line-height: 40px;
+  font-size: 60px;
+}
+
+.modal-body .modal-prev {
+  left: 0;
+  right: auto;
+  border-radius: 0 5px 5px 0;
+}
+
+.modal-body {
+  position: relative;
+}
