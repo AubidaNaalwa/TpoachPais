@@ -69,8 +69,17 @@ router.post('/event', (req, res) => {
     res.end();
 });
 
-router.get('/images/:id', (req, res) => {
-    Images.find({ category: req.params.id }, function (err, data) {
+router.get('/images/tpoach/category=:id', (req, res) => {
+    Images.find({ category: req.params.id , forWebsite:"t"}, function (err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ images: data, status: 200 });
+    });
+});
+
+router.get('/images/space/category=:id', (req, res) => {
+    Images.find({ category: req.params.id , forWebsite:"s"}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -101,5 +110,7 @@ router.get('/imagesCategory/space', async (req, res) => {
     )
     res.send({ categories: results });
 });
+
+
 
 module.exports = router;
