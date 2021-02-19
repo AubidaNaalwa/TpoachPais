@@ -36,7 +36,7 @@ export default function MediaCard(props) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={eInfo.img}
+          image="https://sites.google.com/site/hanasamiraa/_/rsrc/1508501213109/home/tjarb-kymyayyte-mtnwte-wshyqte/%D8%AA%D8%AC%D8%A7%D8%B1%D8%A8%20%D9%83%D9%8A%D9%85%D9%8A%D8%A7%D8%A6%D9%8A%D8%A9.jpg?height=266&width=400"
         />
         <CardContent>
           <Typography className="strings" gutterBottom variant="h5" component="h2">
