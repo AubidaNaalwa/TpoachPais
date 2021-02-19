@@ -13,6 +13,10 @@ import EventsIcon from '@material-ui/icons/EventAvailable';
 import ActivitiesIcon from '@material-ui/icons/LocalActivity';
 import { API_PATH, SNACKBAR_PROPS } from '../Constants';
 import axios from 'axios';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -51,13 +55,20 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
         width: '100%',
         textAlign: 'center',
+        fontWeight: 'bold'
     },
     biggerFont: {
         fontWeight: 'bold',
         fontSize: '110%',
     },
     sizes: {
-        width: 370
+        width: 370,
+        textAlign: 'right'
+    },
+    lblSelect: {
+        fontWeight: 'bold',
+        fontSize: '100%',
+        textAlign: 'right'
     },
     btn: {
         textIndent: 3
@@ -77,10 +88,12 @@ export default function Admin() {
     [courseShortDesc, setCourseShortDesc] = useState(''),
     [courseLongDesc, setCourseLongDesc] = useState(''),
     [courseDate, setCourseDate] = useState(''),
+    [courseLink, setCourseLink] = useState(''),
     [imageName, setImageName] = useState(''),
     [imgURL, setImgURL] = useState(''),
     [imageShortDesc, setImageShortDesc] = useState(''),
     [imageCategory, setImageCategory] = useState(''),
+    [imageForWebsite, setImageForWebsite] = useState(''),
     [snack, setSnack] = useState({ message: "", severity: "" });
 
     const handleChange = (event, newValue) => {
@@ -90,7 +103,7 @@ export default function Admin() {
     const handleSubmitEvent = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}/event`, {name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate});
+            await axios.post(`${API_PATH}event`, { name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -101,7 +114,7 @@ export default function Admin() {
     const handleSubmitCourse = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}/course`, {name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate});
+            await axios.post(`${API_PATH}course`, { name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate, courseLink });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -112,7 +125,7 @@ export default function Admin() {
     const handleSubmitImage = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}/image`, {name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory});
+            await axios.post(`${API_PATH}image`, { name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory, imageForWebsite });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -154,6 +167,8 @@ export default function Admin() {
                     <br/><br/>
                     <TextField required onInput={e => setCourseDate(e.target.value)} name="courseDate" label="تاريخ الدورة" type="date" format="yyyy-MM-dd" className={classes.sizes} InputLabelProps={{ shrink: true }} />
                     <br/><br/>
+                    <TextField required onInput={e => setCourseLink(e.target.value)} name="courseLink" placeholder="رابط التسجيل" className={classes.sizes} />
+                    <br/><br/>
                     <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
                 </form>
             </TabPanel>
@@ -166,6 +181,14 @@ export default function Admin() {
                     <TextField required onInput={e => setImageShortDesc(e.target.value)} name="imageShortDesc" placeholder="شرح مختصر" direction="right" className={classes.sizes} />
                     <br/><br/>
                     <TextField required onInput={e => setImageCategory(e.target.value)} name="imageCategory" placeholder="فئة الصورة" direction="right" className={classes.sizes} />
+                    <br/><br/>
+                    <FormControl className={classes.sizes}>
+                        <Select labelId="مكان الصورة" name="imageForWebsite" value={imageForWebsite} onChange={e => setImageForWebsite(e.target.value)}>
+                            <MenuItem value={'tpais'}>تبواح بايس</MenuItem>
+                            <MenuItem value={'space'}>مركز الفضاء</MenuItem>
+                        </Select>
+                        <FormHelperText className={classes.lblSelect}>مكان الصورة</FormHelperText>
+                    </FormControl>
                     <br/><br/>
                     <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
                 </form>

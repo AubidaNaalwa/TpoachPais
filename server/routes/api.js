@@ -39,7 +39,7 @@ router.get('/images/:id', (req, res) => {
         if (err)
             res.send({ err, status: 400 });
         else
-            res.send({ images: data, status:200 });
+            res.send({ images: data, status: 200 });
     });
 });
 

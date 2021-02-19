@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	link_active: {
 		color: 'rgba(24, 130, 201, 1)',
 		display: 'flex',
-		fontWeight: "bold",
+		fontWeight: 'bold',
 		marginLeft: 10,
 		marginRight: 10,
 		textDecoration: 'none'

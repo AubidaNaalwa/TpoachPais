@@ -7,7 +7,7 @@ body {
 
 .App-header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -30,6 +30,10 @@ body {
   box-shadow: 0 0 !important;
 }
 
+a {
+  text-decoration: none;
+}
+
 .MuiBreadcrumbs-li:hover {
   text-decoration: underline;
 }
@@ -40,10 +44,15 @@ body {
 
 .MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock {
   font-family: 'Markazi Text', serif !important;
+  word-spacing: 2px;
 }
 
 .MuiIconButton-label {
   transition: transform 0.2s;
+}
+
+.MuiInputBase-input {
+  font-weight: bold !important;
 }
 
 .MuiIconButton-label:hover {
@@ -58,4 +67,16 @@ body {
   .MuiBreadcrumbs-separator {
     display: none !important;
   }
+}
+
+.content {
+  width: 100%;
+  max-width: 100vh;
+  line-height: 2;
+  font-size: 130%;
+  word-spacing: 4px;
+}
+
+.Mui-selected {
+  height: 79% !important;
 }

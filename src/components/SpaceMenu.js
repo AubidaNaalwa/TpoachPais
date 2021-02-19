@@ -19,21 +19,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function TPaisMenu() {
+export default function SpaceMenu() {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            <Link to="/tpais/events">
+            <Link to="/space/events">
                 <Button variant="contained" color="primary" className={classes.btn}>أحداث وأخبار</Button>
             </Link>
-            <Link to="/tpais/courses">
+            <Link to="/space/courses">
                 <Button variant="contained" color="primary" className={classes.btn}>نشاطات المركز</Button>
             </Link>
-            <Link to="/tpais/experiments">
+            <Link to="/space/experiments">
                 <Button variant="contained" color="primary" className={classes.btn}>تجارب علمية</Button>
             </Link>
-            <Link to="/tpais/gallery">
+            <Link to="/space/gallery">
                 <Button variant="contained" color="primary" className={classes.btn}>معرض الصور</Button>
             </Link>
         </div>
