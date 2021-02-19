@@ -3,6 +3,8 @@ const Courses = require('../models/Courses');
 const Images = require('../models/Images');
 const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
+const Contact = require('../models/ContactUs');
+
 const router = express.Router();
 
 router.get('/',(req,res)=>{
@@ -107,6 +109,12 @@ router.get('/imagesCategory/space', async (req, res) => {
         }
     )
     res.send({ categories: results });
+});
+
+router.post('/contactus', (req, res) => {
+    const contact = new Contact(req.body);
+    contact.save();
+    res.end();
 });
 
 module.exports = router;
