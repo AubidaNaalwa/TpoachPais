@@ -19,6 +19,8 @@ import SpaceGallery from "./components/SpaceGallery";
 import Images from "./components/Images";
 import TpoaPaisGallery from "./components/TpoaPaisGallery";
 import Astronauts from "./components/Astronauts";
+import SolarSys from "./components/earth/SolarSys";
+
 import AstronomicalEvenings from "./components/AstronomicalEvenings";
 
 const theme = createMuiTheme({
@@ -73,6 +75,8 @@ export default function App() {
 							<Route path='/space/gallery/astronomical/evenings/:id' exact render={({ match }) => <Images match={match} />} />
 							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} />} />
 							<Route path='/space/gallery/astronauts/evenings/:id' exact render={({ match }) => <Images match={match} />} />
+							<Route exact path="/space/Simulator/SolarSys" render={() => <SolarSys />} />
+							
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
 
 
