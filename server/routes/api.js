@@ -5,11 +5,9 @@ const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
 const router = express.Router();
 
-
 router.get('/',(req,res)=>{
     res.send("server working")
 })
-
 
 router.get('/courses/id=:id', async (req, res) => {
     if (req.params.id) {
@@ -110,7 +108,5 @@ router.get('/imagesCategory/space', async (req, res) => {
     )
     res.send({ categories: results });
 });
-
-
 
 module.exports = router;
