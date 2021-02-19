@@ -24,7 +24,6 @@ router.get('/courses/id=:id', async (req, res) => {
     }
 })
 
-
 router.post('/experiment', (req, res) => {
     const experiment = new Experiments(req.body);
     experiment.save();
@@ -85,8 +84,17 @@ router.post('/image', (req, res) => {
     res.end();
 });
 
-router.get('/imagesCategory', async (req, res) => {
-    const results = await Images.aggregate().group(
+router.get('/imagesCategory/tpoach', async (req, res) => {
+    const results = await Images.aggregate().match({forWebsite:"t"}).group(
+        {
+            _id: '$category'
+        }
+    )
+    res.send({ categories: results });
+});
+
+router.get('/imagesCategory/space', async (req, res) => {
+    const results = await Images.aggregate().match({forWebsite:"s"}).group(
         {
             _id: '$category'
         }
