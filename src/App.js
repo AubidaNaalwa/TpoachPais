@@ -10,6 +10,11 @@ import Admin from './components/Admin';
 import Footer from './components/Footer';
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import Events from "./components/Events/Events";
+import Courses from './components/Courses';
+import CourseInfo from './components/courseInfo';
+import Experiments from './components/Experiments';
+import ExperimentInfo from './components/ExperimentInfo';
 
 const theme = createMuiTheme({
 	palette: {
@@ -34,7 +39,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function App() {
-	const classes = useStyles();
+	const classes = useStyles(),
+	[course, setCourse] = React.useState(null),
+	[experiment, setExperiment] = React.useState(null);
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -48,6 +55,11 @@ export default function App() {
 							<Route path="/about" exact render={ () => <About /> } />
 							<Route path="/contactus" exact render={ () => <ContactUs /> } />
 							<Route path="/admin" exact render={ () => <Admin /> } />
+							<Route path="/tpais/events" exact render={ () => <Events /> } />
+							<Route path="/tpais/courses" exact render={ () => <Courses setCourse={setCourse}/> }/>
+							<Route path="/tpais/courses/courseinfo" exact render={ () => <CourseInfo cInfo={course}/> }/>
+							<Route path="/tpais/experiments" exact render={ () => <Experiments setExperiment={setExperiment}/> }/>
+							<Route path="/tpais/experiments/experimentinfo" exact render={ () => <ExperimentInfo eInfo={experiment}/> }/>
 							<Route render={ () => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div> } />
 						</Switch>
 					</div>

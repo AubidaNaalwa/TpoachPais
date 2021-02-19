@@ -2,7 +2,7 @@ body {
   margin: 0;
   background-color: whitesmoke;
   overflow-x: hidden;
-  font-family: 'Markazi Text', serif;
+  font-family: "Markazi Text", serif;
 }
 
 .App-header {
@@ -16,7 +16,8 @@ body {
   display: block !important;
 }
 
-::placeholder, .MuiInputLabel-animated {
+::placeholder,
+.MuiInputLabel-animated {
   opacity: 0.7 !important;
   font-weight: bold !important;
 }
@@ -79,4 +80,35 @@ a {
 
 .Mui-selected {
   height: 79% !important;
+}
+
+.ePopOver img {
+  width: 350px;
+  height: 190px;
+}
+
+.ePopOver {
+  display: grid;
+  margin: 25px;
+  justify-items: center;
+}
+
+.exit {
+  display: grid;
+  justify-items: left;
+  margin-left: 10px;
+  font-size: 150%;
+  cursor: pointer;
+}
+
+.eDate {
+  color: gray;
+}
+
+.eDesc {
+  font-size: 127%;
+}
+
+.hdr {
+  margin-top: -20px;
 }
