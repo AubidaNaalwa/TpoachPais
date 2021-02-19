@@ -10,7 +10,7 @@ import Admin from './components/Admin';
 import Events from "./components/Events/Events";
 import React from 'react';
 import Courses from './components/Courses';
-import CourseInfo from './components/courseInfo'
+import CourseInfo from './components/CourseInfo'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 

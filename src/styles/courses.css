@@ -1,26 +1,14 @@
-.cats{
-    height: 60px;
-    width: 150px;
-    display: inline-flex;
-    justify-content: center !important;
-    align-items: center !important;
-    margin: 7px;
-    border-radius: 5px;
-    font-size: 20px;
-    letter-spacing: 1px;
-    line-height: 1.4em;
-    font-family: 'Amiri', serif;
-    text-transform: uppercase;
-    background-color: #fafafa;
-    color: #404040;
-    box-shadow: 0 1px 3px -1px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.03);
-    -webkit-transition: 0.2s;
-    -moz-transition: 0.2s;
-    transition: 0.2s;
-}
-
 #container{
     font-family: 'Amiri', serif;
     text-align: center;
     margin-top: 5%;
+}
+
+.what{
+    width: 300px;
+    height: 100%;
+}
+
+.strings{
+    text-align: right;
 }
