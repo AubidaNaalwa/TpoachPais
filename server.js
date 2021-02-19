@@ -1,12 +1,12 @@
 require('dotenv').config();
 const express = require('express'),
-api = require('./server/routes/api'),
-mongoose = require('mongoose'),
-path = require('path'),
-app = express(),
-PORT = process.env.REACT_APP_PORT || 8080,
-URI = process.env.REACT_APP_MONGODB_URI || 'mongodb://localhost/tPaisDB',
-API_PATH = require('./src/Constants').API_PATH;
+    api = require('./server/routes/api'),
+    mongoose = require('mongoose'),
+    path = require('path'),
+    app = express(),
+    PORT = process.env.REACT_APP_PORT || 8080,
+    URI = process.env.REACT_APP_MONGODB_URI || 'mongodb://localhost/tPaisDB',
+    API_PATH = require('./src/Constants').API_PATH;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -18,12 +18,13 @@ app.get('/*', function (req, res) {
 });
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true, connectTimeoutMS: 5000, serverSelectionTimeoutMS: 5000 })
-.then(function(){
-    app.listen(PORT, function(){
-        console.log(`Server is up and running on port: ${PORT}`);
+    .then(function () {
+        console.log("DataBase Connected ... ")
+    })
+    .catch(function (err) {
+        console.log(err.message);
     });
-})
 
-.catch(function(err){
-    console.log(err.message);
+app.listen(PORT, function () {
+    console.log(`Server is up and running on port: ${PORT}`);
 });
