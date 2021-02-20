@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 		height: '100%'
 	},
 	media: {
-		height: 200
+		height: 150,
 	},
 	strings: {
 		textAlign: 'right'
@@ -36,7 +36,7 @@ export default function MediaCard(props) {
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia className={classes.media} image="https://i.imgur.com/Sz6ZAx6.jpg" />
+				<CardMedia className={classes.media} image={cInfo.img} />
 				<CardContent>
 					<Typography className={classes.strings} gutterBottom variant="h5" component="h2">
 						{cInfo.name}

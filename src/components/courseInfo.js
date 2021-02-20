@@ -11,7 +11,7 @@ export default function CourseInfo(props) {
     return (
         <div style={{textAlign: 'right', marginRight: '20%'}}>
             <h1>{item.name}</h1>
-            <img src='https://i.imgur.com/Sz6ZAx6.jpg' alt='img'></img>
+            <img src={item.img} alt='img' style={{width:'80%', height:'75%'}}></img>
             <p>{item.longDescription}</p>
             <p>{item.availabaility}</p>
             <p>{item.date}</p>
