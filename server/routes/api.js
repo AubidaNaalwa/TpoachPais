@@ -84,7 +84,7 @@ router.post('/event', (req, res) => {
     res.end();
 });
 
-router.get('/images/category=:id', (req, res) => {
+router.get('/images/:id', (req, res) => {
     Images.find({ category: req.params.id }, function (err, data) {
         if (err)
             res.send({ err, status: 400 });

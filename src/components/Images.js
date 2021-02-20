@@ -22,7 +22,9 @@ class Images extends React.Component {
     async getImagesFromDb(){
       const id = this.props.match.params.id;
       const imagesArray = await axios.get(`/images/${id}`)
-      this.setState({imgUrls: imagesArray.data.images})
+      console.log(imagesArray.data.images)
+      const imagesUrl = imagesArray.data.images.map(i=> i.img)
+      this.setState({imgUrls: imagesUrl})
     }
 
     componentDidMount() {
@@ -64,6 +66,9 @@ class Images extends React.Component {
     
     render() {
       return /*#__PURE__*/(
+        <div>
+          {this.state.imgUrls ? 
+
         React.createElement("div", { className: "gallery-container" }, /*#__PURE__*/
         React.createElement("div", { className: "gallery-grid" },
         this.state.imgUrls.map(this.renderImageContent)), /*#__PURE__*/
@@ -74,7 +79,11 @@ class Images extends React.Component {
             findNext: this.findNext,
             hasPrev: this.state.currentIndex > 0,
             hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length,
-            src: this.state.imgUrls[this.state.currentIndex] })));
+            src: this.state.imgUrls[this.state.currentIndex] }))
+            : null}
+        </div>
+            
+            );
         
         
 
@@ -100,7 +109,6 @@ class GalleryModal extends React.Component {
     render() {
       const { closeModal, hasNext, hasPrev, findNext, findPrev, src } = this.props;
       if (!src) {
-        console.log('whut');
         return null;
       }
       return /*#__PURE__*/(

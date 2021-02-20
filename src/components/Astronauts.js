@@ -18,8 +18,6 @@ function Astronauts(props) {
           <p>  دونالد توماس  </p>
         </div>
     
- 
-     
 
         <div>
           <Link to={`/space/gallery/astronomical/evenings/nicoleshtot`}>
