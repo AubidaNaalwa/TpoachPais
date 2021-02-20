@@ -7,10 +7,10 @@ const Contact = require('../models/ContactUs');
 const router = express.Router();
 
 const checkValidate = (body) => {
-    const keys = Object.keys(body)
-    for (let i of keys) {
-        res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-    }
+    // const keys = Object.keys(body)
+    // for (let i of keys) {
+    //     res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    // }
     return body
 }
 
@@ -37,7 +37,7 @@ router.post('/experiment', (req, res) => {
         res.send({ err: "data is missing" })
         return
     } else {
-        body = checkValidate(body)
+        body = checkValidate(req.body)
     }
     const experiment = new Experiments(body);
     experiment.save();
@@ -68,7 +68,7 @@ router.post('/course', (req, res) => {
         res.send({ err: "data is missing" })
         return
     } else {
-        body = checkValidate(body)
+        body = checkValidate(req.body)
     }
 
     const course = new Courses(body);
@@ -92,7 +92,7 @@ router.post('/event', (req, res) => {
         res.send({ err: "data is missing" })
         return
     } else {
-        body = checkValidate(body)
+        body = checkValidate(req.body)
     }
     const event = new Events(body);
     event.save();
@@ -115,7 +115,7 @@ router.post('/image', (req, res) => {
         res.send({ err: "data is missing" })
         return
     } else {
-        body = checkValidate(body)
+        body = checkValidate(req.body)
     }
     const image = new Images(body);
     image.save();
@@ -149,7 +149,7 @@ router.post('/contactus', (req, res) => {
         res.send({ err: "data is missing" })
         return
     } else {
-        body = checkValidate(body)
+        body = checkValidate(req.body)
     }
     const contact = new Contact(body);
     contact.save();
