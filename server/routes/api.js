@@ -6,9 +6,15 @@ const Events = require('../models/Events');
 const Contact = require('../models/ContactUs');
 const router = express.Router();
 
+const checkValidate = (body) => {
+    const keys = Object.keys(body)
+    for (let i of keys) {
+        res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+    return body
+}
 
-
-router.get('/',(req,res)=> {
+router.get('/', (req, res) => {
     res.send("server working");
 })
 
@@ -20,23 +26,25 @@ router.get('/courses/id=:id', async (req, res) => {
             else
                 res.send({ course, status: 200 });
         })
-    }else{
-        res.send({err:"no id selected"});
+    } else {
+        res.send({ err: "no id selected" });
     }
 })
 
 router.post('/experiment', (req, res) => {
-    if(!req.body){
-        res.send({err:"data is missing"})
+    let body = req.body
+    if (!body) {
+        res.send({ err: "data is missing" })
         return
+    } else {
+        body = checkValidate(body)
     }
-    const experiment = new Experiments(req.body);
+    const experiment = new Experiments(body);
     experiment.save();
     res.end();
 });
 
 router.get('/experiments', (req, res) => {
-
     Experiments.find({}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
@@ -55,17 +63,21 @@ router.get('/courses', (req, res) => {
 });
 
 router.post('/course', (req, res) => {
-    if(!req.body){
-        res.send({err:"data is missing"})
+    let body = req.body
+    if (!body) {
+        res.send({ err: "data is missing" })
         return
+    } else {
+        body = checkValidate(body)
     }
-    const course = new Courses(req.body);
+
+    const course = new Courses(body);
     course.save();
     res.end();
 });
 
 router.get('/events', (req, res) => {
- 
+
     Events.find({}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
@@ -75,11 +87,14 @@ router.get('/events', (req, res) => {
 });
 
 router.post('/event', (req, res) => {
-    if(!req.body){
-        res.send({err:"data is missing"})
+    let body = req.body
+    if (!body) {
+        res.send({ err: "data is missing" })
         return
+    } else {
+        body = checkValidate(body)
     }
-    const event = new Events(req.body);
+    const event = new Events(body);
     event.save();
     res.end();
 });
@@ -95,41 +110,48 @@ router.get('/images/category=:id', (req, res) => {
 
 
 router.post('/image', (req, res) => {
-    if(!req.body){
-        res.send({err:"data is missing"})
+    let body = req.body
+    if (!body) {
+        res.send({ err: "data is missing" })
         return
+    } else {
+        body = checkValidate(body)
     }
-    const image = new Images(req.body);
+    const image = new Images(body);
     image.save();
     res.end();
 });
 
 router.get('/imagesCategory/tpoach', async (req, res) => {
-    const results = await Images.aggregate().match({forWebsite:"t"}).group(
+    const results = await Images.aggregate().match({ forWebsite: "t" }).group(
         {
             _id: '$category',
-            imgUrl:  { $first: "$img" }
+            imgUrl: { $first: "$img" }
         }
     )
     res.send({ categories: results });
 });
 
+
 router.get('/imagesCategory/space', async (req, res) => {
-    const results = await Images.aggregate().match({forWebsite:"s"}).group(
+    const results = await Images.aggregate().match({ forWebsite: "s" }).group(
         {
             _id: '$category',
-            imgUrl:  { $first: "$img" }
+            imgUrl: { $first: "$img" }
         }
     )
     res.send({ categories: results });
 });
 
 router.post('/contactus', (req, res) => {
-    if(!req.body){
-        res.send({err:"data is missing"})
+    let body = req.body
+    if (!body) {
+        res.send({ err: "data is missing" })
         return
+    } else {
+        body = checkValidate(body)
     }
-    const contact = new Contact(req.body);
+    const contact = new Contact(body);
     contact.save();
     res.end();
 });
