@@ -6,6 +6,8 @@ const Events = require('../models/Events');
 const Contact = require('../models/ContactUs');
 const router = express.Router();
 
+
+
 router.get('/',(req,res)=> {
     res.send("server working");
 })
@@ -24,12 +26,17 @@ router.get('/courses/id=:id', async (req, res) => {
 })
 
 router.post('/experiment', (req, res) => {
+    if(!req.body){
+        res.send({err:"data is missing"})
+        return
+    }
     const experiment = new Experiments(req.body);
     experiment.save();
     res.end();
 });
 
 router.get('/experiments', (req, res) => {
+
     Experiments.find({}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
@@ -48,12 +55,17 @@ router.get('/courses', (req, res) => {
 });
 
 router.post('/course', (req, res) => {
+    if(!req.body){
+        res.send({err:"data is missing"})
+        return
+    }
     const course = new Courses(req.body);
     course.save();
     res.end();
 });
 
 router.get('/events', (req, res) => {
+ 
     Events.find({}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
@@ -63,6 +75,10 @@ router.get('/events', (req, res) => {
 });
 
 router.post('/event', (req, res) => {
+    if(!req.body){
+        res.send({err:"data is missing"})
+        return
+    }
     const event = new Events(req.body);
     event.save();
     res.end();
@@ -79,6 +95,10 @@ router.get('/images/category=:id', (req, res) => {
 
 
 router.post('/image', (req, res) => {
+    if(!req.body){
+        res.send({err:"data is missing"})
+        return
+    }
     const image = new Images(req.body);
     image.save();
     res.end();
@@ -87,7 +107,8 @@ router.post('/image', (req, res) => {
 router.get('/imagesCategory/tpoach', async (req, res) => {
     const results = await Images.aggregate().match({forWebsite:"t"}).group(
         {
-            _id: '$category'
+            _id: '$category',
+            imgUrl:  { $first: "$img" }
         }
     )
     res.send({ categories: results });
@@ -96,16 +117,23 @@ router.get('/imagesCategory/tpoach', async (req, res) => {
 router.get('/imagesCategory/space', async (req, res) => {
     const results = await Images.aggregate().match({forWebsite:"s"}).group(
         {
-            _id: '$category'
+            _id: '$category',
+            imgUrl:  { $first: "$img" }
         }
     )
     res.send({ categories: results });
 });
 
 router.post('/contactus', (req, res) => {
+    if(!req.body){
+        res.send({err:"data is missing"})
+        return
+    }
     const contact = new Contact(req.body);
     contact.save();
     res.end();
 });
+
+
 
 module.exports = router;
