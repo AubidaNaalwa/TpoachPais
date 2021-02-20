@@ -5,14 +5,13 @@ import axios from 'axios';
 import Gallery from './Gallery'
 
 function SpaceGallery(props) {
-  const location = useLocation();
-  console.log(location.pathname)
 
   const [gallery, setGallery] = useState([]);
 
   const getCategoriesFromDb = async () => {
     const categoriesArray = await axios.get('/imagesCategory/space')
     setGallery(categoriesArray.data.categories)
+    console.log(categoriesArray.data.categories)
   }
   
   useEffect(() => {
