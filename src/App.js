@@ -68,7 +68,7 @@ export default function App() {
 							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
 							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
 							<Route path="/tpais/gallery" exact render={() => <TpoaPaisGallery />} />
-							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
+							<Route path='/tpais/gallery/:id1' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
 							<Route exact path="/space/gallery/astronomical/evenings/:id1" render={({ match }) => <AstronomicalEvenings match={match} pathLink={"s"}  />} />
 							<Route exact path="/space/gallery/astronauts/evenings/:id1" render={({ match }) => <Astronauts match={match} pathLink={"s"}  />} />
