@@ -4,12 +4,14 @@ const Images = require('../models/Images');
 const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
 const Contact = require('../models/ContactUs');
+const axios = require('axios')
+
 const router = express.Router();
 
 const checkValidate = (body) => {
     // const keys = Object.keys(body)
     // for (let i of keys) {
-    //     res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    //     res.body[i].replace(/</g, '&lt;').replace(/"/g, '&quot;');
     // }
     return body
 }
@@ -31,6 +33,17 @@ router.get('/courses/id=:id', async (req, res) => {
     }
 })
 
+router.get('/experimentsCategory', async (req, res) => {
+    const results = await Experiments.aggregate().group(
+        {
+            _id: '$category',
+            imgUrl: { $first: "$defaultImg" }
+        }
+    )
+    res.send({ categories: results });
+});
+
+
 router.post('/experiment', (req, res) => {
     let body = req.body
     if (!body) {
@@ -44,14 +57,21 @@ router.post('/experiment', (req, res) => {
     res.end();
 });
 
-router.get('/experiments', (req, res) => {
-    Experiments.find({}, function (err, data) {
+router.get('/experiments/category=:categoryName', (req, res) => {
+
+    if(!req.params.category){
+        res.send({err:"missing fields"})
+        return
+    }
+    Experiments.find({category:req.params.category}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
             res.send({ experiments: data, status: 200 });
     });
 });
+
+
 
 router.get('/courses', (req, res) => {
     Courses.find({}, function (err, data) {
@@ -118,6 +138,10 @@ router.get('/tpoach/images/:id', (req, res) => {
 });
 
 
+
+
+
+
 router.post('/image', (req, res) => {
     let body = req.body
     if (!body) {
@@ -135,7 +159,8 @@ router.get('/imagesCategory/tpoach', async (req, res) => {
     const results = await Images.aggregate().match({ forWebsite: "t" }).group(
         {
             _id: '$category',
-            imgUrl: { $first: "$img" }
+            imgUrl: { $first: "$img" },
+            count: { $sum: 1 }
         }
     )
     res.send({ categories: results });
@@ -146,7 +171,8 @@ router.get('/imagesCategory/space', async (req, res) => {
     const results = await Images.aggregate().match({ forWebsite: "s" }).group(
         {
             _id: '$category',
-            imgUrl: { $first: "$img" }
+            imgUrl: { $first: "$img" },
+            count: { $sum: 1 }
         }
     )
     res.send({ categories: results });
