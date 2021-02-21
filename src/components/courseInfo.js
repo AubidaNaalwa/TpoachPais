@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect  } from 'react-router-dom';
+import Moment from 'react-moment';
 
 export default function CourseInfo(props) {
     const item = props.cInfo;
@@ -13,10 +14,11 @@ export default function CourseInfo(props) {
             <h1>{item.name}</h1>
             <img src={item.img} alt='img' style={{width:'80%', height:'75%'}}></img>
             <p>{item.longDescription}</p>
-            <p>{item.availabaility}</p>
-            <p>{item.date}</p>
+            <p>{<Moment date={item.date} format="DD/MM/YYYY"/>}</p>
             <p>{item.toDate}</p>
-            <p>{item.courseLink}</p>
+            <p>{item.teacher}</p>
+            <p>{item.class}</p>
+            <p>{item.available ? `للاشتراك والتسجيل :${item.courseLink}` : "الدورة غير متوفرة حاليا"}</p>
         </div>
     )
 }

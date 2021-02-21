@@ -22,10 +22,10 @@ function TpoaPaisGallery() {
   return (
     <div>
 
-      <h1>مركز تبواح بايس</h1>
+      <h1 className="galleryTitle">مركز تبواح بايس</h1>
 
       <div class="grid-container">
-          {gallery.map(g => <Gallery gallery={g} key={g._id}/> )}
+          {gallery.map(g => <Gallery gallery={g} key={g._id} path={'t'}/> )}
       </div>
 
     </div>

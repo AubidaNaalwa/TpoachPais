@@ -19,10 +19,7 @@ import ExperimentTybe from './components/ExperimentTybe';
 import SpaceGallery from "./components/SpaceGallery";
 import Images from "./components/Images";
 import TpoaPaisGallery from "./components/TpoaPaisGallery";
-import Astronauts from "./components/Astronauts";
 import SolarSys from "./components/earth/SolarSys";
-
-import AstronomicalEvenings from "./components/AstronomicalEvenings";
 
 const theme = createMuiTheme({
 	palette: {
@@ -71,11 +68,7 @@ export default function App() {
 							<Route path="/tpais/gallery" exact render={() => <TpoaPaisGallery />} />
 							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
-							<Route exact path="/space/gallery/astronomical/evenings/:id1" render={({ match }) => <AstronomicalEvenings match={match} pathLink={"s"}  />} />
-							<Route exact path="/space/gallery/astronauts/evenings/:id1" render={({ match }) => <Astronauts match={match} pathLink={"s"}  />} />
-							<Route path='/space/gallery/astronomical/evenings/:id1/:id2' exact render={({ match }) => <Images match={match} pathLink={"s"}/>} />
-							<Route path='/space/gallery/:id1' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
-							<Route path='/space/gallery/astronauts/evenings/:id1/:id2' exact render={({ match }) => <Images match={match} pathLink={"s"}/>} />
+							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
 							<Route exact path="/space/Simulator/SolarSys" render={() => <SolarSys />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
 

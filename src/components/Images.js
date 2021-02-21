@@ -15,7 +15,7 @@ class Images extends React.Component {
     }
 
     async getImagesFromDb(){
-      const id = this.props.match.params.id1;
+      const id = this.props.match.params.id;
       let pathLink 
       this.props.pathLink === "s" ? pathLink = `/space/images/${id}` :  pathLink = `/tpoach/images/${id}`
       const imagesArray = await axios.get(pathLink)
@@ -68,7 +68,7 @@ class Images extends React.Component {
         React.createElement("div", { className: "gallery-container" }, /*#__PURE__*/
         React.createElement("div", { className: "gallery-grid" },
         this.state.imgUrls.map(this.renderImageContent)), /*#__PURE__*/
-
+        
         React.createElement(GalleryModal, {
             closeModal: this.closeModal,
             findPrev: this.findPrev,
@@ -77,6 +77,8 @@ class Images extends React.Component {
             hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length,
             src: this.state.imgUrls[this.state.currentIndex] }))
             : null}
+
+            {()=>console.log(this.renderImageContent)}
         </div>
             
             );
@@ -116,10 +118,7 @@ class GalleryModal extends React.Component {
         hasPrev && /*#__PURE__*/React.createElement("a", { href: "#", className: "modal-prev", onClick: findPrev, onKeyDown: this.handleKeyDown }, "\u2039"),
         hasNext && /*#__PURE__*/React.createElement("a", { href: "#", className: "modal-next", onClick: findNext, onKeyDown: this.handleKeyDown }, "\u203A"), /*#__PURE__*/
         React.createElement("img", { src: src })))));
-  
-  
-  
-  
+        
     }}
   
   

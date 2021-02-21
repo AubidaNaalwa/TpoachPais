@@ -25,8 +25,8 @@ const useStyles = makeStyles({
 
 export default function MediaCard(props) {
 	const classes = useStyles(),
-	eInfo = props.experiment,
-	setExperiment = props.setExperiment;
+		eInfo = props.experiment,
+		setExperiment = props.setExperiment;
 
 	function handleClick(e) {
 		setExperiment(e);

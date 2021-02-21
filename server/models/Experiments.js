@@ -6,7 +6,8 @@ const experiments = new Schema({
     img: { type:String , required: true },
     defaultImg:{ type:String , required: true },
     shortDescription: {type: String , required: true},
-    longDescription: { type: String , required: true }
+    longDescription: { type: String , required: true },
+    category:{type: String, required:true}
 });
 
 const Experiments = mongoose.model('experiments', experiments);

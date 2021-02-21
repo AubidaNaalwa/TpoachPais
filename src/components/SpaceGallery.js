@@ -1,17 +1,15 @@
 import '../styles/gallery.css';
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Link, useLocation } from 'react-router-dom'
 import axios from 'axios';
 import Gallery from './Gallery'
 
-function SpaceGallery(props) {
+function SpaceGallery() {
 
   const [gallery, setGallery] = useState([]);
 
   const getCategoriesFromDb = async () => {
     const categoriesArray = await axios.get('/imagesCategory/space')
     setGallery(categoriesArray.data.categories)
-    console.log(categoriesArray.data.categories)
   }
   
   useEffect(() => {
@@ -22,10 +20,10 @@ function SpaceGallery(props) {
   return (
     <div>
 
-      <h1>مركز الفضاء</h1>
+      <h1 className="galleryTitle">مركز الفضاء</h1>
 
       <div class="grid-container">
-          {gallery.map(g => <Gallery gallery={g} key={g._id}/> )}
+          {gallery.map(g => <Gallery gallery={g} key={g._id} path={'s'}/> )}
       </div>
 
     </div>
