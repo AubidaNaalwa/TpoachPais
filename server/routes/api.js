@@ -9,7 +9,7 @@ const router = express.Router();
 const checkValidate = (body) => {
     // const keys = Object.keys(body)
     // for (let i of keys) {
-    //     res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    //     res.body[i].replace(/</g, '&lt;').replace(/"/g, '&quot;');
     // }
     return body
 }
@@ -99,14 +99,24 @@ router.post('/event', (req, res) => {
     res.end();
 });
 
-router.get('/images/category=:id', (req, res) => {
-    Images.find({ category: req.params.id }, function (err, data) {
+router.get('/space/images/:id', (req, res) => {
+    Images.find({forWebsite:"s", category: req.params.id }, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
             res.send({ images: data, status: 200 });
     });
 });
+
+router.get('/tpoach/images/:id', (req, res) => {
+    Images.find({forWebsite:"t", category: req.params.id }, function (err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ images: data, status: 200 });
+    });
+});
+
 
 
 router.post('/image', (req, res) => {
