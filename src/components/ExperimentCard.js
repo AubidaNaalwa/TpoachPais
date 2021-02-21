@@ -25,8 +25,8 @@ const useStyles = makeStyles({
 
 export default function MediaCard(props) {
 	const classes = useStyles(),
-	eInfo = props.experiment,
-	setExperiment = props.setExperiment;
+		eInfo = props.experiment,
+		setExperiment = props.setExperiment;
 
 	function handleClick(e) {
 		setExperiment(e);
@@ -35,7 +35,7 @@ export default function MediaCard(props) {
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia className={classes.media} image="https://sites.google.com/site/hanasamiraa/_/rsrc/1508501213109/home/tjarb-kymyayyte-mtnwte-wshyqte/%D8%AA%D8%AC%D8%A7%D8%B1%D8%A8%20%D9%83%D9%8A%D9%85%D9%8A%D8%A7%D8%A6%D9%8A%D8%A9.jpg?height=266&width=400" />
+				<CardMedia className={classes.media} image={eInfo.defaultImg} />
 				<CardContent>
 					<Typography className={classes.strings} gutterBottom variant="h5" component="h2">
 						{eInfo.name}
