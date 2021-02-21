@@ -119,7 +119,7 @@ router.post('/event', (req, res) => {
     res.end();
 });
 
-router.get('/space1/images/:id', (req, res) => {
+router.get('/space/images/:id', (req, res) => {
     Images.find({forWebsite:"s", category: req.params.id }, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
@@ -128,14 +128,6 @@ router.get('/space1/images/:id', (req, res) => {
     });
 });
 
-router.get('/space2/images/:id', (req, res) => {
-    Images.find({forWebsite:"s", name: req.params.id }, function (err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ images: data, status: 200 });
-    });
-});
 
 router.get('/tpoach/images/:id', (req, res) => {
     Images.find({forWebsite:"t", category: req.params.id }, function (err, data) {
@@ -145,9 +137,6 @@ router.get('/tpoach/images/:id', (req, res) => {
             res.send({ images: data, status: 200 });
     });
 });
-
-
-
 
 
 
