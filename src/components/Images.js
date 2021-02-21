@@ -15,13 +15,9 @@ class Images extends React.Component {
     }
 
     async getImagesFromDb(){
-      const id = this.props.match.params.id2;
+      const id = this.props.match.params.id;
       let pathLink 
-      this.props.pathLink === "s" 
-      ? pathLink = `/space1/images/${id}` 
-      : this.props.pathLink === "s2" 
-      ? pathLink = `/space2/images/${id}`
-      :  pathLink = `/tpoach/images/${id}`
+      this.props.pathLink === "s" ? pathLink = `/space/images/${id}` :  pathLink = `/tpoach/images/${id}`
       const imagesArray = await axios.get(pathLink)
       const imagesUrl = imagesArray.data.images.map(i=> i.img)
       this.setState({imgUrls: imagesUrl})
