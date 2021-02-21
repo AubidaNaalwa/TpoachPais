@@ -65,13 +65,11 @@ export default function App() {
 							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
 							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
 							<Route path="/tpais/gallery" exact render={() => <TpoaPaisGallery />} />
-							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
+							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"} />} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
 							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
 							<Route exact path="/space/Simulator/SolarSys" render={() => <SolarSys />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
-
-
 						</Switch>
 					</div>
 				</div>

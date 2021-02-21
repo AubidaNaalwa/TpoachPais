@@ -4,7 +4,7 @@ const Images = require('../models/Images');
 const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
 const Contact = require('../models/ContactUs');
-const axios = require('axios')
+
 
 const router = express.Router();
 

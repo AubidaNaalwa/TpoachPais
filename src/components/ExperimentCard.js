@@ -47,7 +47,7 @@ export default function MediaCard(props) {
 			</CardActionArea>
 			<CardActions>
 				<Button onClick={() => handleClick(eInfo)} size="small" color="primary">
-					<Link to='/tpais/experiments/experimentinfo'>اقرأ المزيد...</Link>
+					<Link to={`/tpais/experiments/experimentinfo/${eInfo._id}`}>اقرأ المزيد...</Link>
 				</Button>
 			</CardActions>
 		</Card>
