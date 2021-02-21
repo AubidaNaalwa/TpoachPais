@@ -35,7 +35,7 @@ export default function MediaCard(props) {
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia className={classes.media} image={eInfo.defaultImg} />
+				<CardMedia className={classes.media} image={eInfo.defaultImg}/>
 				<CardContent>
 					<Typography className={classes.strings} gutterBottom variant="h5" component="h2">
 						{eInfo.name}

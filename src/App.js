@@ -15,6 +15,7 @@ import Courses from './components/Courses';
 import CourseInfo from './components/courseInfo';
 import Experiments from './components/Experiments';
 import ExperimentInfo from './components/ExperimentInfo';
+import ExperimentTybe from './components/ExperimentTybe';
 import SpaceGallery from "./components/SpaceGallery";
 import Images from "./components/Images";
 import TpoaPaisGallery from "./components/TpoaPaisGallery";
