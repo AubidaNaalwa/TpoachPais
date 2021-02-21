@@ -11,13 +11,14 @@ export default function CourseInfo(props) {
 
     return (
         <div style={{textAlign: 'right', marginRight: '20%'}}>
-            <h1 style={{textAlign: 'right'}}>{item.name}</h1>
+            <h1>{item.name}</h1>
             <img src={item.img} alt='img' style={{width:'80%', height:'75%'}}></img>
             <p>{item.longDescription}</p>
-            <p>{item.availabaility}</p>
             <p>{<Moment date={item.date} format="DD/MM/YYYY"/>}</p>
             <p>{item.toDate}</p>
-            <p>{item.courseLink}</p>
+            <p>{item.teacher}</p>
+            <p>{item.class}</p>
+            <p>{item.available ? `للاشتراك والتسجيل :${item.courseLink}` : "الدورة غير متوفرة حاليا"}</p>
         </div>
     )
 }
