@@ -43,6 +43,14 @@ router.get('/experimentsCategory', async (req, res) => {
     res.send({ categories: results });
 });
 
+router.get('/experiments', (req,res)=>{
+    Experiments.find({}, function (err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ experiments: data, status: 200 });
+    });
+})
 
 router.post('/experiment', (req, res) => {
     let body = req.body
@@ -58,7 +66,6 @@ router.post('/experiment', (req, res) => {
 });
 
 router.get('/experiments/category=:categoryName', (req, res) => {
-
     if(!req.params.category){
         res.send({err:"missing fields"})
         return
@@ -70,7 +77,6 @@ router.get('/experiments/category=:categoryName', (req, res) => {
             res.send({ experiments: data, status: 200 });
     });
 });
-
 
 
 router.get('/courses', (req, res) => {
@@ -137,7 +143,6 @@ router.get('/tpoach/images/:id', (req, res) => {
             res.send({ images: data, status: 200 });
     });
 });
-
 
 
 router.post('/image', (req, res) => {
