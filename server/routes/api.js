@@ -6,31 +6,62 @@ const Events = require('../models/Events');
 const Contact = require('../models/ContactUs');
 const router = express.Router();
 
-router.get('/',(req,res)=> {
+const checkValidate = (body) => {
+    const keys = Object.keys(body);
+    //TODO
+    //for (let i of keys)
+        //res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+    return body;
+}
+
+router.get('/', (req, res) => {
     res.send("server working");
 })
 
 router.get('/courses/id=:id', async (req, res) => {
     if (req.params.id) {
-        await Courses.findById(req.params.id).exec(function (err, course) {
+        await Courses.findById(req.params.id).exec(function(err, course) {
             if (err)
                 res.send({ err, status: 400 });
             else
                 res.send({ course, status: 200 });
-        })
-    }else{
-        res.send({err:"no id selected"});
+        });
     }
+    else
+        res.send({ err: "invalid data" });
 })
 
 router.post('/experiment', (req, res) => {
-    const experiment = new Experiments(req.body);
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const experiment = new Experiments(body);
     experiment.save();
     res.end();
 });
 
 router.get('/experiments', (req, res) => {
-    Experiments.find({}, function (err, data) {
+    Experiments.find({}, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ experiments: data, status: 200 });
+    });
+});
+
+router.get('/experiments/category=:categoryName', (req, res) => {
+
+    if(!req.params.category) {
+        res.send({ err: "missing fields" });
+        return;
+    }
+
+    Experiments.find({ category: req.params.category }, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -48,13 +79,20 @@ router.get('/courses', (req, res) => {
 });
 
 router.post('/course', (req, res) => {
-    const course = new Courses(req.body);
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const course = new Courses(body);
     course.save();
     res.end();
 });
 
 router.get('/events', (req, res) => {
-    Events.find({}, function (err, data) {
+    Events.find({}, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -63,13 +101,20 @@ router.get('/events', (req, res) => {
 });
 
 router.post('/event', (req, res) => {
-    const event = new Events(req.body);
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const event = new Events(body);
     event.save();
     res.end();
 });
 
-router.get('/images/category=:id', (req, res) => {
-    Images.find({ category: req.params.id }, function (err, data) {
+router.get('/space/images/:id', (req, res) => {
+    Images.find({ forWebsite: 's', category: req.params.id }, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -77,33 +122,58 @@ router.get('/images/category=:id', (req, res) => {
     });
 });
 
+router.get('/tpoach/images/:id', (req, res) => {
+    Images.find({ forWebsite: 't', category: req.params.id }, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ images: data, status: 200 });
+    });
+});
 
 router.post('/image', (req, res) => {
-    const image = new Images(req.body);
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const image = new Images(body);
     image.save();
     res.end();
 });
 
 router.get('/imagesCategory/tpoach', async (req, res) => {
-    const results = await Images.aggregate().match({forWebsite:"t"}).group(
-        {
-            _id: '$category'
-        }
-    )
+    const results = await Images.aggregate().match({ forWebsite: "t" }).group(
+    {
+        _id: '$category',
+        imgUrl: { $first: "$img" },
+        count: { $sum: 1 }
+    });
     res.send({ categories: results });
 });
 
+
 router.get('/imagesCategory/space', async (req, res) => {
-    const results = await Images.aggregate().match({forWebsite:"s"}).group(
-        {
-            _id: '$category'
-        }
-    )
+    const results = await Images.aggregate().match({ forWebsite: "s" }).group(
+    {
+        _id: '$category',
+        imgUrl: { $first: "$img" },
+        count: { $sum: 1 }
+    });
     res.send({ categories: results });
 });
 
 router.post('/contactus', (req, res) => {
-    const contact = new Contact(req.body);
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const contact = new Contact(body);
     contact.save();
     res.end();
 });

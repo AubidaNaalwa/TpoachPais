@@ -1,4 +1,5 @@
 import './styles/App.css';
+import './styles/Gallery.css';
 import "react-image-gallery/styles/css/image-gallery.css";
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -8,20 +9,19 @@ import ContactUs from './components/ContactUs';
 import About from './components/About';
 import Admin from './components/Admin';
 import Footer from './components/Footer';
-import React from 'react';
+import React, { useState } from 'react';
 import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import Events from "./components/Events/Events";
-import Courses from './components/Courses';
-import CourseInfo from './components/courseInfo';
-import Experiments from './components/Experiments';
-import ExperimentInfo from './components/ExperimentInfo';
-import SpaceGallery from "./components/SpaceGallery";
-import Images from "./components/Images";
-import TpoaPaisGallery from "./components/TpoaPaisGallery";
-import Astronauts from "./components/Astronauts";
-import SolarSys from "./components/earth/SolarSys";
-
-import AstronomicalEvenings from "./components/AstronomicalEvenings";
+import EventInfo from './components/Events/EventInfo';
+import Courses from './components/Courses/Courses';
+import CourseInfo from './components/Courses/CourseInfo';
+import Experiments from './components/Experiments/Experiments';
+import ExperimentInfo from './components/Experiments/ExperimentInfo';
+import SpaceGallery from "./components/Galleries/SpaceGallery";
+import Images from "./components/Galleries/Images";
+import TPaisGallery from "./components/Galleries/TPaisGallery";
+import SimulationSolarSystem from "./components/Simulations/SolarSystem";
+import SubNavWrapper from "./components/SubNavWrapper";
 
 const theme = createMuiTheme({
 	palette: {
@@ -47,14 +47,15 @@ const useStyles = makeStyles(() => ({
 
 export default function App() {
 	const classes = useStyles(),
-		[course, setCourse] = React.useState(null),
-		[experiment, setExperiment] = React.useState(null);
+	[course, setCourse] = useState(null),
+	[experiment, setExperiment] = useState(null),
+	[event, setEvent] = useState(null);
 
 	return (
 		<MuiThemeProvider theme={theme}>
 			<Router>
 				<NavBar />
-				<div className="App-header">
+				<SubNavWrapper>
 					<div className={classes.root}>
 						<Switch>
 							<Route path="/" exact render={() => <TPais />} />
@@ -62,27 +63,21 @@ export default function App() {
 							<Route path="/about" exact render={() => <About />} />
 							<Route path="/contactus" exact render={() => <ContactUs />} />
 							<Route path="/admin" exact render={() => <Admin />} />
-							<Route path="/tpais/events" exact render={() => <Events />} />
+							<Route path="/tpais/events" exact render={() => <Events setEvent={setEvent} />} />
+							<Route path="/tpais/events/eventinfo" exact render={() => <EventInfo eInfo={event} />} />
 							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
 							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
 							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
-							<Route path="/tpais/gallery" exact render={() => <TpoaPaisGallery />} />
-							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} />} />
+							<Route path="/tpais/gallery" exact render={() => <TPaisGallery />} />
+							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
-							<Route exact path="/space/gallery/astronomical/evenings" render={() => <AstronomicalEvenings />} />
-							<Route exact path="/space/gallery/astronauts/evenings" render={() => <Astronauts />} />
-							<Route path='/space/gallery/astronomical/evenings/:id' exact render={({ match }) => <Images match={match} />} />
-							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} />} />
-							<Route path='/space/gallery/astronauts/evenings/:id' exact render={({ match }) => <Images match={match} />} />
-							<Route exact path="/space/Simulator/SolarSys" render={() => <SolarSys />} />
-							
+							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
+							<Route exact path="/space/simulations/solarsystem" render={() => <SimulationSolarSystem />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
-
-
 						</Switch>
 					</div>
-				</div>
+				</SubNavWrapper>
 				<Footer />
 			</Router>
 		</MuiThemeProvider>

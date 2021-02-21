@@ -5,8 +5,8 @@ const img = new Schema({
     name: { type: String , required: true },
     img: { type: String , required: true },
     date: { type: Date, default: Date.now },
-    category: { type: String , required:true },
-    forWebsite:{ type:String, require:true}
+    category: { type: String , required: true },
+    forWebsite: { type: String, require: true }
 });
 
 const Images = mongoose.model('img', img);

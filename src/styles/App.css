@@ -5,13 +5,6 @@ body {
   font-family: "Markazi Text", serif;
 }
 
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .MuiTabs-root {
   display: block !important;
 }
@@ -70,45 +63,19 @@ a {
   }
 }
 
-.content {
-  width: 100%;
-  max-width: 100vh;
-  line-height: 2;
-  font-size: 130%;
-  word-spacing: 4px;
-}
-
 .Mui-selected {
   height: 79% !important;
 }
 
-.ePopOver img {
-  width: 350px;
-  height: 190px;
+.hr {
+  margin-bottom: 4px;
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-.ePopOver {
-  display: grid;
-  margin: 25px;
-  justify-items: center;
-}
-
-.exit {
-  display: grid;
-  justify-items: left;
-  margin-left: 10px;
-  font-size: 150%;
-  cursor: pointer;
-}
-
-.eDate {
-  color: gray;
-}
-
-.eDesc {
-  font-size: 127%;
-}
-
-.hdr {
-  margin-top: -20px;
+.content {
+  line-height: 2;
+  font-size: 130%;
+  word-spacing: 4px;
 }

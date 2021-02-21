@@ -16,8 +16,8 @@ const images = [
     }
 ];
 
-export default function TQuickGallery() {
+export default function TPaisQuickGallery() {
     return (
         <ImageGallery isRTL={true} autoPlay={true} showBullets={true} items={images} />
-    )
+    );
 }

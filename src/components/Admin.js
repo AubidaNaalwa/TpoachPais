@@ -77,7 +77,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Admin() {
     const classes = useStyles(),
-    [value, setValue] = React.useState(0),
+    [value, setValue] = useState(0),
     [eventName, setEventName] = useState(''),
     [eventImg, setEventImg] = useState(''),
     [eventShortDesc, setEventShortDesc] = useState(''),

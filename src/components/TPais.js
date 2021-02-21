@@ -1,8 +1,13 @@
 import React from 'react';
-import TQuickGallery from './TQuickGallery';
+import TPaisQuickGallery from './Galleries/TPaisQuickGallery';
+import ContactForm from './ContactForm';
 
 export default function TPais() {
     return (
-        <TQuickGallery />
-    )
+        <>
+            <TPaisQuickGallery />
+            <hr className="hr" style={{marginBottom: 15}} />
+            <ContactForm />
+        </>
+    );
 }

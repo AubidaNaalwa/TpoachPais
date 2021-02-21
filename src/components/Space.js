@@ -1,8 +1,13 @@
 import React from 'react';
-import SQuickGallery from './SQuickGallery';
+import SpaceQuickGallery from './Galleries/SpaceQuickGallery';
+import ContactForm from './ContactForm';
 
 export default function Space() {
     return (
-        <SQuickGallery />
-    )
+        <>
+            <SpaceQuickGallery />
+            <hr className="hr" style={{marginBottom: 15}} />
+            <ContactForm />
+        </>
+    );
 }

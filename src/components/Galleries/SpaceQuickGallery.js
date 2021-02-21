@@ -16,8 +16,8 @@ const images = [
     }
 ];
 
-export default function SQuickGallery() {
+export default function SpaceQuickGallery() {
     return (
         <ImageGallery isRTL={true} autoPlay={true} showBullets={true} items={images} />
-    )
+    );
 }

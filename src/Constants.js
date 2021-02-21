@@ -7,6 +7,7 @@ const SNACKBAR_PROPS = {
         SUCCESS: 'success'
     },
     MessageType: {
+        SUCCESS_SENT: 'لقد تم ارسال البيانات بنجاح',
         SUCCESS_SAVED: 'لقد تم حفظ البيانات بنجاح',
         SUCCESS_REMOVED: 'لقد تم حذف البيانات بنجاح',
         FAILED_SAVING: 'فشل في حفظ البيانات',

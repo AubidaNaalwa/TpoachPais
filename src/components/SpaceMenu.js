@@ -3,15 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
-        width: '100%',
-        textAlign: 'center'
+        display: 'flex'
     },
     btn: {
         fontSize: '130%',
         fontWeight: 'bold',
-        width: '22.6%',
+        width: '22.6vw',
         margin: 3,
         minHeight: '73.6px',
         letterSpacing: 1,
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SpaceMenu() {
+export default function SpaceMenu(props) {
     const classes = useStyles();
 
     return (
@@ -31,11 +30,11 @@ export default function SpaceMenu() {
                 <Button variant="contained" color="primary" className={classes.btn}>نشاطات المركز</Button>
             </Link>
             <Link to="/space/experiments">
-                <Button variant="contained" color="primary" className={classes.btn}>تجارب علمية</Button>
+                <Button variant="contained" color="primary" className={classes.btn}>تجارب ومُحاكاة</Button>
             </Link>
             <Link to="/space/gallery">
                 <Button variant="contained" color="primary" className={classes.btn}>معرض الصور</Button>
             </Link>
         </div>
-    )
+    );
 }

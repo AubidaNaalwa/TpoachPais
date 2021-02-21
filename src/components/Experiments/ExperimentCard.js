@@ -8,47 +8,43 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 
 const useStyles = makeStyles({
 	root: {
 		maxWidth: 259,
 		width: 259,
-		height: '100%'
+		height: 350
 	},
 	media: {
-		height: 200
-	},
-	strings: {
-		textAlign: 'right'
+		height: 190
 	}
 });
 
 export default function MediaCard(props) {
-	const classes = useStyles();
-
-	const cInfo = props.course
-	const setCourse = props.setCourse
-
-	function handleClick(e) {
-		setCourse(e)
-	}
+	const classes = useStyles(),
+	eInfo = props.experiment,
+	setExperiment = props.setExperiment;
 
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia className={classes.media} image="https://i.imgur.com/Sz6ZAx6.jpg" />
+				<CardMedia className={classes.media} image={eInfo.defaultImg} />
 				<CardContent>
-					<Typography className={classes.strings} gutterBottom variant="h5" component="h2">
-						{cInfo.name}
+					<Typography gutterBottom variant="h6" component="h2">
+						{eInfo.name}
 					</Typography>
-					<Typography className={classes.strings} variant="body2" color="textSecondary" component="p">
-						{cInfo.shortDescription}
+                    <Typography gutterBottom variant="body2" component="p">
+                        <Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
+					</Typography>
+					<Typography variant="body2" color="textSecondary" component="p">
+						{eInfo.shortDescription}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
 			<CardActions>
-				<Button onClick={() => handleClick(cInfo)} size="small" color="primary">
-					<Link to='/tpais/courses/courseinfo'>اقرأ المزيد...</Link>
+				<Button onClick={() => setExperiment(eInfo)} size="small" color="primary">
+					<Link to='/tpais/experiments/experimentinfo'>اقرأ المزيد...</Link>
 				</Button>
 			</CardActions>
 		</Card>
