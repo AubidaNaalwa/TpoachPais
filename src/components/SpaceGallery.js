@@ -20,7 +20,7 @@ function SpaceGallery() {
   return (
     <div>
 
-      <h1>مركز الفضاء</h1>
+      <h1 className="galleryTitle">مركز الفضاء</h1>
 
       <div class="grid-container">
           {gallery.map(g => <Gallery gallery={g} key={g._id}/> )}

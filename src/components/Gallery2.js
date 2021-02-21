@@ -8,15 +8,15 @@ function Gallery2(props) {
     const helper = () => {
         let id;
         props.gallery.category == "رواد فضاء" 
-        ? id =`astronauts/evenings/${props.gallery.category}` 
-        : props.gallery.category == "أمسيات فلكية" ? id =`astronomical/evenings/${props.gallery.category}` 
+        ? id =`${props.gallery.category}` 
+        : props.gallery.category == "أمسيات فلكية" ? id =`${props.gallery.category}` 
         : id= props.gallery.category 
         return id; 
 
     }
     return (
         <div>     
-            <Link to={`/space/gallery/${helper()}/${props.gallery.name}`}>
+            <Link to={`/space/gallery/astronauts/evenings/${props.gallery.name}/${helper()}`}>
                 <img  src={`${props.gallery.img}`} alt='img' />
             </Link>
             <p>{props.gallery.name}</p>
