@@ -4,6 +4,8 @@ const Images = require('../models/Images');
 const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
 const Contact = require('../models/ContactUs');
+const axios = require('axios')
+
 const router = express.Router();
 
 const checkValidate = (body) => {
@@ -138,6 +140,8 @@ router.get('/tpoach/images/:id', (req, res) => {
 
 
 
+
+
 router.post('/image', (req, res) => {
     let body = req.body
     if (!body) {
@@ -155,7 +159,8 @@ router.get('/imagesCategory/tpoach', async (req, res) => {
     const results = await Images.aggregate().match({ forWebsite: "t" }).group(
         {
             _id: '$category',
-            imgUrl: { $first: "$img" }
+            imgUrl: { $first: "$img" },
+            count: { $sum: 1 }
         }
     )
     res.send({ categories: results });
@@ -166,7 +171,8 @@ router.get('/imagesCategory/space', async (req, res) => {
     const results = await Images.aggregate().match({ forWebsite: "s" }).group(
         {
             _id: '$category',
-            imgUrl: { $first: "$img" }
+            imgUrl: { $first: "$img" },
+            count: { $sum: 1 }
         }
     )
     res.send({ categories: results });
