@@ -31,6 +31,17 @@ router.get('/courses/id=:id', async (req, res) => {
     }
 })
 
+router.get('/experimentsCategory', async (req, res) => {
+    const results = await Experiments.aggregate().group(
+        {
+            _id: '$category',
+            imgUrl: { $first: "$defaultImg" }
+        }
+    )
+    res.send({ categories: results });
+});
+
+
 router.post('/experiment', (req, res) => {
     let body = req.body
     if (!body) {
@@ -44,14 +55,21 @@ router.post('/experiment', (req, res) => {
     res.end();
 });
 
-router.get('/experiments', (req, res) => {
-    Experiments.find({}, function (err, data) {
+router.get('/experiments/category=:categoryName', (req, res) => {
+
+    if(!req.params.category){
+        res.send({err:"missing fields"})
+        return
+    }
+    Experiments.find({category:req.params.category}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
             res.send({ experiments: data, status: 200 });
     });
 });
+
+
 
 router.get('/courses', (req, res) => {
     Courses.find({}, function (err, data) {
@@ -116,6 +134,7 @@ router.get('/tpoach/images/:id', (req, res) => {
             res.send({ images: data, status: 200 });
     });
 });
+
 
 
 
