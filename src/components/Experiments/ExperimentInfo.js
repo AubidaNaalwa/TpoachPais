@@ -12,7 +12,7 @@ export default function ExperimentInfo(props) {
         <div style={{textAlign: 'center'}}>
             <h3>{item.name}</h3>
             <p><Moment format="YYYY/MM/DD">{item.date}</Moment></p>
-            <iframe title="experiment" width="560" height="315" src={item.img} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe title="experiment" width="560" height="315" src={item.img} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             <p>{item.longDescription}</p>
         </div>
     );

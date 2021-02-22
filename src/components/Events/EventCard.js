@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -25,11 +25,11 @@ export default function EventCard(props) {
     const classes = useStyles(),
     eInfo = props.event,
 	setEvent = props.setEvent;
-
+    const [err, setError] = useState(0)
     return (
         <Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia className={classes.media} image={eInfo.img} title="صورة الحدث" />
+				<CardMedia className={classes.media} image={!err ?eInfo.img:"https://artisanslotois.fr/pictures/category/cat-24.png"} title="صورة الحدث" onError ={()=>setError(1)} />
 				<CardContent>
                     <Typography variant="h6" component="h2">
 						{eInfo.name}

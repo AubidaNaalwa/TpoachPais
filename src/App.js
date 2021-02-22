@@ -73,7 +73,7 @@ export default function App() {
 							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
 							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
-							<Route exact path="/space/simulations/solarsystem" render={() => <SimulationSolarSystem />} />
+							<Route exact path="/space/experiments" render={() => <SimulationSolarSystem />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
 						</Switch>
 					</div>
