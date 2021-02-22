@@ -16,14 +16,14 @@ export default function Events(props) {
     }, []);
 
     return (
-        <Grid container direction="row" justify="space-between" spacing={3} style={{marginTop: 15}}>
-        {
-            events.sort((a, b) => new Date(a.date) - new Date(b.date)).map(e => (
-                <Grid item key={e._id}>
-                    <EventCard setEvent={props.setEvent} event={e} />
-                </Grid>
-            ))
-        }
+        <Grid container direction="row" justify="space-between" spacing={3} style={{ marginTop: 15 }}>
+            {
+                events.sort((a, b) => new Date(a.date) - new Date(b.date)).map(e => (
+                    <Grid item key={e._id}>
+                        <EventCard setEvent={props.setEvent} event={e} />
+                    </Grid>
+                ))
+            }
         </Grid>
     );
 }
