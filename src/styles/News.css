@@ -1,0 +1,74 @@
+.news_container {
+    width: 25em;
+    height: 15em;
+    overflow: hidden;
+    background: #FFF;
+    position: fixed;
+    top: 50%;
+    right: 22px;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+}
+
+.marquee {
+    top: 6em;
+    position: relative;
+    box-sizing: border-box;
+    animation: marquee 15s linear infinite;
+}
+
+.marquee:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0%   { top:   8em }
+    100% { top: -11em }
+}
+
+.marq_font .marquee {
+	margin: 0;
+    padding: 0 1em;
+    line-height: 1.5em;
+    font: 1em 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+}
+
+.marq_font:before, .marq_font::before, .marq_font:after,  .marq_font::after {
+    left: 0;
+    z-index: 1;
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    width: 100%; height: 2em;
+    background-image: linear-gradient(180deg, #FFF, rgba(255,255,255,0));
+}
+
+.marq_font:after, .marq_font::after {
+    bottom: 0;
+    transform: rotate(180deg);
+}
+
+.marq_font:before, .marq_font::before {
+    top: 0;
+}
+
+.vanity {
+    color: #333;
+    text-align: center;
+    font: .75em 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+}
+
+.vanity a, .marq_font a {
+    color: #1570A6;
+    transition: color .5s;
+    text-decoration: none;
+}
+
+.vanity a:hover, .marq_font a:hover {
+    color: #F65314;
+}
+
+.toggle {
+	display: block;
+    margin: 2em auto;
+}

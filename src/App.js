@@ -1,5 +1,6 @@
 import './styles/App.css';
 import './styles/Gallery.css';
+import './styles/News.css';
 import "react-image-gallery/styles/css/image-gallery.css";
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -58,21 +59,21 @@ export default function App() {
 				<SubNavWrapper>
 					<div className={classes.root}>
 						<Switch>
-							<Route path="/" exact render={() => <TPais />} />
-							<Route path="/space" exact render={() => <Space />} />
-							<Route path="/about" exact render={() => <About />} />
-							<Route path="/contactus" exact render={() => <ContactUs />} />
-							<Route path="/admin" exact render={() => <Admin />} />
-							<Route path="/tpais/events" exact render={() => <Events setEvent={setEvent} />} />
-							<Route path="/tpais/events/eventinfo" exact render={() => <EventInfo eInfo={event} />} />
-							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
-							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
-							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
-							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
-							<Route path="/tpais/gallery" exact render={() => <TPaisGallery />} />
-							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
+							<Route exact path="/" render={() => <TPais />} />
+							<Route exact path="/space" render={() => <Space />} />
+							<Route exact path="/about" render={() => <About />} />
+							<Route exact path="/contactus" render={() => <ContactUs />} />
+							<Route exact path="/admin" render={() => <Admin />} />
+							<Route exact path="/tpais/events" render={() => <Events setEvent={setEvent} />} />
+							<Route exact path="/tpais/events/eventinfo" render={() => <EventInfo eInfo={event} />} />
+							<Route exact path="/tpais/courses" render={() => <Courses setCourse={setCourse} />} />
+							<Route exact path="/tpais/courses/courseinfo" render={() => <CourseInfo cInfo={course} />} />
+							<Route exact path="/tpais/experiments" render={() => <Experiments setExperiment={setExperiment} />} />
+							<Route exact path="/tpais/experiments/experimentinfo" render={() => <ExperimentInfo eInfo={experiment} />} />
+							<Route exact path="/tpais/gallery" render={() => <TPaisGallery />} />
+							<Route exact path='/tpais/gallery/:id' render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
-							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
+							<Route exact path='/space/gallery/:id' render={({ match }) => <Images match={match} pathLink={"s"} />} />
 							<Route exact path="/space/simulations/solarsystem" render={() => <SimulationSolarSystem />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
 						</Switch>
