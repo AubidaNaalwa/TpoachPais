@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -25,11 +25,13 @@ export default function MediaCard(props) {
 	const classes = useStyles(),
 	cInfo = props.course,
 	setCourse = props.setCourse;
-
+    const [err, setErr] = useState(0)
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia className={classes.media} image={cInfo.img} />
+				<CardMedia className={classes.media} >
+					<img alt='img' className={classes.media} src= {!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
+				</CardMedia>
 				<CardContent>
 					<Typography gutterBottom variant="h6" component="h2">
 						{cInfo.name}

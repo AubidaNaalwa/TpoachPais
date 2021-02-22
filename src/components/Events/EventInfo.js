@@ -1,19 +1,46 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import Popover from '@material-ui/core/Popover';
+import { makeStyles } from '@material-ui/core/styles';
 import Moment from 'react-moment';
 
-export default function EventInfo(props) {
-    const item = props.eInfo;
+const useStyles = makeStyles(theme => ({
+    popoverRoot: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+}));
 
-    if (!item)
-        return (<Redirect to="/tpais/events" />);
+export default function EventInfo(props) {
+
+    const { name, date, img, longDescription } = props.event
+
+    const classes = useStyles();
+
+    const handleClose = () => {
+        props.setOpen(false)
+    };
 
     return (
-        <div style={{textAlign: 'center'}}>
-            <h3>{item.name}</h3>
-            <p><Moment format="YYYY/MM/DD">{item.date}</Moment></p>
-            <img src={item.img} alt='img' style={{ width:'80%', height:'75%' }}></img>
-            <p>{item.longDescription}</p>
+        <div style={{ textAlign: 'center' }}>
+            <Popover
+                open={true}
+                onClose={handleClose}
+                anchorReference={"none"}
+                classes={{
+                    root: classes.popoverRoot,
+                }}
+            >
+                <div className="exit" onClick={handleClose}> x </div>
+                <div className="ePopOver" >
+                    <h1 className='hdr'>{name}</h1>
+                    <h3 className='eDate'>{<Moment format="YYYY/MM/DD">
+                        {date}
+                    </Moment>}</h3>
+                    <img src={img} alt="Event Image" />
+                    <div className='eDesc'>{longDescription}</div>
+                </div>
+            </Popover>
         </div>
     );
 }

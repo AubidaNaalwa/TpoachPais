@@ -29,7 +29,7 @@ export default function NavBar() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Link to="/" className={classes.inputRoot}>
+                    <Link to="/" className={classes.inputRoot} >
                         <IconButton edge="start" color="inherit">
                             <img src={process.env.PUBLIC_URL + '/logo.png'} className={classes.logo} alt="Logo" />
                         </IconButton>
