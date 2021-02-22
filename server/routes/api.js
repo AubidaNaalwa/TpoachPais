@@ -1,9 +1,10 @@
 const express = require('express');
 const Courses = require('../models/Courses');
 const SpaceCourses = require('../models/SpaceCourses');
-
+const SpaceNews = require('../models/SpaceNews');
 const Images = require('../models/Images');
 const SpaceExperiments = require('../models/SpaceExperiments');
+const News = require('../models/News');
 
 const Experiments = require('../models/Experiments');
 const Events = require('../models/Events');
@@ -23,8 +24,6 @@ const checkValidate = (body) => {
 router.get('/', (req, res) => {
     res.send("server working");
 })
-
-
 
 router.post('/experiment', (req, res) => {
     let body = req.body;
@@ -231,5 +230,50 @@ router.post('/contactus', (req, res) => {
     contact.save();
     res.end();
 });
+
+router.get('/space/news', (req,res)=>{
+    SpaceNews.find({}, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ experiments: data, status: 200 });
+    });
+})
+
+router.post('/space/news', (req, res)=>{
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+    body = checkValidate(req.body);
+    const news = new SpaceNews(body);
+    news.save();
+    res.end();
+})
+
+
+router.get('/tpoach/news', (req,res)=>{
+    News.find({}, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ experiments: data, status: 200 });
+    });
+})
+
+router.post('/tpoach/news', (req, res)=>{
+    let body = req.body;
+    if (!body) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+    body = checkValidate(req.body);
+    const news = new News(body);
+    news.save();
+    res.end();
+})
+
+
 
 module.exports = router;
