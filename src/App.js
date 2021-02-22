@@ -48,8 +48,7 @@ const useStyles = makeStyles(() => ({
 export default function App() {
 	const classes = useStyles(),
 	[course, setCourse] = useState(null),
-	[experiment, setExperiment] = useState(null),
-	[event, setEvent] = useState(null);
+	[experiment, setExperiment] = useState(null);
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -63,8 +62,7 @@ export default function App() {
 							<Route path="/about" exact render={() => <About />} />
 							<Route path="/contactus" exact render={() => <ContactUs />} />
 							<Route path="/admin" exact render={() => <Admin />} />
-							<Route path="/tpais/events" exact render={() => <Events setEvent={setEvent} />} />
-							<Route path="/tpais/events/eventinfo" exact render={() => <EventInfo eInfo={event} />} />
+							<Route path="/tpais/events" exact render={() => <Events />} />
 							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
 							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
@@ -74,6 +72,7 @@ export default function App() {
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
 							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
 							<Route exact path="/space/experiments" render={() => <SimulationSolarSystem />} />
+							<Route path="/space/events" exact render={() => <Events />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
 						</Switch>
 					</div>
