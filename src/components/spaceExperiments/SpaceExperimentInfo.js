@@ -3,15 +3,12 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
-
 export default function ExperimentInfo(props) {
-
     const history = useHistory();
     const item = props.eInfo;
     const [err, setErr] = useState(0)
-
     if (!item)
-        return (<Redirect to="/tpais/experiments" />);
+        return (<Redirect to="/space/experiments" />);
 
     return (
         <div style={{textAlign: 'right'}}>
