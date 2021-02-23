@@ -24,15 +24,16 @@ const useStyles = makeStyles({
 
 export default function MediaCard(props) {
 	const classes = useStyles(),
-	eInfo = props.experiment,
-	setExperiment = props.setExperiment,
-	[err, setErr] = useState(0);
+	eInfo = props.spaceexperiment,
+	setExperiment = props.setExperiment;
+	const [err, setErr] = useState(0)
+	
 
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
 			<CardMedia>
-					<img alt="img" className={classes.media} src= {!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
+					<img className={classes.media} src= {!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
 				</CardMedia>
 				<CardContent>
 					<Typography gutterBottom variant="h6" component="h2">
@@ -48,7 +49,7 @@ export default function MediaCard(props) {
 			</CardActionArea>
 			<CardActions>
 				<Button onClick={() => setExperiment(eInfo)} size="small" color="primary">
-					<Link to='/tpais/experiments/experimentinfo'>اقرأ المزيد...</Link>
+					<Link to='/space/experiments/experimentinfo'>اقرأ المزيد...</Link>
 				</Button>
 			</CardActions>
 		</Card>
