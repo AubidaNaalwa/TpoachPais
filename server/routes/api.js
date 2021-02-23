@@ -11,8 +11,29 @@ const Events = require('../models/Events');
 const SpaceEvents  = require('../models/SpaceEvents');
 const Contact = require('../models/ContactUs');
 const router = express.Router();
+AdminUserName = require('../../src/Constants').AdminUserName;
+AdminPassword = require('../../src/Constants').AdminPassword;
+Login =0;
 
+router.post('/logIn', (req, res)=>{
+    if(!req.body){
+        res.send({error : 1})
+        Login =0;
+        return
+    }
+    if(AdminUserName === req.body.username && AdminPassword === req.body.password){
+        res.send({error:0})
+        Login = 1;
+    }else{
+        res.send({error:1})
+        Login =0;
+    }
+})
 
+router.post('/LogOut', (req, res)=>{
+    Login =0;
+    res.send({error:0})
+})
 
 const checkValidate = (body) => {
     const keys = Object.keys(body);
@@ -27,9 +48,10 @@ router.get('/', (req, res) => {
     res.send("server working");
 })
 
+
 router.post('/experiment', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body || !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -78,7 +100,7 @@ router.delete('/experiments/tpoach/delete', (req, res)=>{
 //Start Space Experiments
 router.post('/space/experiment', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body|| !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -139,7 +161,7 @@ router.get('/courses', (req, res) => {
 
 router.post('/course', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body|| !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -189,7 +211,7 @@ router.get('/space/courses', (req, res) => {
 
 router.post('/space/course', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body || !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -238,7 +260,7 @@ router.get('/events', (req, res) => {
 
 router.post('/event', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body || !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -286,7 +308,7 @@ router.get('/space/events', (req, res) => {
 
 router.post('/space/event', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body|| !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -343,7 +365,7 @@ router.get('/tpoach/images/:id', (req, res) => {
 
 router.post('/image', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body|| !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -377,7 +399,7 @@ router.get('/imagesCategory/space', async (req, res) => {
 
 router.post('/contactus', (req, res) => {
     let body = req.body;
-    if (!body) {
+    if (!body|| !Login) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -388,47 +410,31 @@ router.post('/contactus', (req, res) => {
     res.end();
 });
 
-router.get('/space/news', (req,res)=>{
-    SpaceNews.find({ }, [],{sort:{date:-1}},function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ experiments: data, status: 200 });
-    });
-})
-
-router.post('/space/news', (req, res)=>{
-    let body = req.body;
-    if (!body) {
-        res.send({ err: "data is missing" });
-        return;
+router.get('/space/news', async(req,res)=>{
+    try{
+        const courses = await SpaceCourses.find({}, [],{sort:{date:-1},limit:5})
+        const events = await SpaceEvents.find({}, [],{sort:{date:-1},limit:5})
+        const experiments = await SpaceExperiments.find({}, [],{sort:{date:-1},limit:5})
+        res.send({courses, events, experiments})
+    }catch(error){
+        res.send({error})
     }
-    body = checkValidate(req.body);
-    const news = new SpaceNews(body);
-    news.save();
-    res.end();
+
 })
 
 
-router.get('/tpoach/news', (req,res)=>{
-    News.find({}, [],{sort:{date:-1}},function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ experiments: data, status: 200 });
-    });
-})
 
-router.post('/tpoach/news', (req, res)=>{
-    let body = req.body;
-    if (!body) {
-        res.send({ err: "data is missing" });
-        return;
+router.get('/tpoach/news', async (req,res)=>{
+    try{
+        const courses = await Courses.find({}, [],{sort:{date:-1},limit:5})
+        const events = await Events.find({}, [],{sort:{date:-1},limit:5})
+        const experiments = await Experiments.find({}, [],{sort:{date:-1},limit:5})
+        res.send({courses, events, experiments})
+    }catch(error){
+        res.send({error})
     }
-    body = checkValidate(req.body);
-    const news = new News(body);
-    news.save();
-    res.end();
 })
+
+
 
 module.exports = router;
