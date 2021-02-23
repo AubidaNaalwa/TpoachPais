@@ -15,6 +15,8 @@ import Events from "./components/Events/Events";
 import EventInfo from './components/Events/EventInfo';
 import Courses from './components/Courses/Courses';
 import CourseInfo from './components/Courses/CourseInfo';
+import SpaceCourses from './components/spaceCourses/SpaceCourses';
+import SpaceCourseInfo from './components/spaceCourses/SpaceCourseInfo';
 import Experiments from './components/Experiments/Experiments';
 import ExperimentInfo from './components/Experiments/ExperimentInfo';
 import SpaceGallery from "./components/Galleries/SpaceGallery";
@@ -65,6 +67,8 @@ export default function App() {
 							<Route path="/tpais/events" exact render={() => <Events />} />
 							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
+							<Route path="/space/courses" exact render={() => <SpaceCourses setCourse={setCourse} />} />
+							<Route path="/space/courses/courseinfo" exact render={() => <SpaceCourseInfo cInfo={course} />} />
 							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
 							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
 							<Route path="/tpais/gallery" exact render={() => <TPaisGallery />} />
