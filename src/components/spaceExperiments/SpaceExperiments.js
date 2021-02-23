@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ExperimentCard from './SpaceExperimentCardلهف';
+import ExperimentCard from './SpaceExperimentCard';
 import Grid from '@material-ui/core/Grid';
 const axios = require('axios');
 

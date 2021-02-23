@@ -12,6 +12,8 @@ const SpaceEvents  = require('../models/SpaceEvents');
 const Contact = require('../models/ContactUs');
 const router = express.Router();
 
+
+
 const checkValidate = (body) => {
     const keys = Object.keys(body);
     //TODO
