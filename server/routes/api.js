@@ -12,6 +12,8 @@ const SpaceEvents  = require('../models/SpaceEvents');
 const Contact = require('../models/ContactUs');
 const router = express.Router();
 
+
+
 const checkValidate = (body) => {
     const keys = Object.keys(body);
     //TODO
@@ -39,13 +41,39 @@ router.post('/experiment', (req, res) => {
 });
 
 router.get('/experiments', (req, res) => {
-    Experiments.find({}, function(err, data) {
+    Experiments.find({},[],{sort:{date:-1}}, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
             res.send({ experiments: data, status: 200 });
     });
 });
+
+router.put('/experiments/tpoach/update/id=:id', (req, res)=>{
+    if(!req.params.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    Experiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
+router.delete('/experiments/tpoach/delete', (req, res)=>{
+    if(!req.body.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    Experiments.findByIdAndDelete(req.body.id, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
 
 //Start Space Experiments
 router.post('/space/experiment', (req, res) => {
@@ -62,7 +90,7 @@ router.post('/space/experiment', (req, res) => {
 });
 
 router.get('/space/experiments', (req, res) => {
-    SpaceExperiments.find({}, function(err, data) {
+    SpaceExperiments.find({}, [],{sort:{date:-1}},function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -71,10 +99,37 @@ router.get('/space/experiments', (req, res) => {
 });
 
 
+router.put('/experiments/space/update/id=:id', (req, res)=>{
+    if(!req.params.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    SpaceExperiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
+router.delete('/experiments/space/delete', (req, res)=>{
+    if(!req.body.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    SpaceExperiments.findByIdAndDelete(req.body.id, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
+
 //End Space Experiments
 
 router.get('/courses', (req, res) => {
-    Courses.find({}, function (err, data) {
+    Courses.find({}, [],{sort:{date:-1}},function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -95,10 +150,36 @@ router.post('/course', (req, res) => {
     res.end();
 });
 
+router.put('/course/tpoach/update/id=:id', (req, res)=>{
+    if(!req.params.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    Courses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
+router.delete('/course/tpoach/delete', (req, res)=>{
+    if(!req.body.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    Courses.findByIdAndDelete(req.body.id, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
 
 //Space Courses
 router.get('/space/courses', (req, res) => {
-    SpaceCourses.find({}, function (err, data) {
+    SpaceCourses.find({},[],{sort:{date:-1}}, function (err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -118,10 +199,36 @@ router.post('/space/course', (req, res) => {
     course.save();
     res.end();
 });
+
+router.put('/course/space/update/id=:id', (req, res)=>{
+    if(!req.params.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    SpaceCourses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
+router.delete('/course/space/delete', (req, res)=>{
+    if(!req.body.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    SpaceCourses.findByIdAndDelete(req.body.id, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
 //Space Courses
 
 router.get('/events', (req, res) => {
-    Events.find({}, function(err, data) {
+    Events.find({},[],{sort:{date:-1}} ,function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -135,18 +242,41 @@ router.post('/event', (req, res) => {
         res.send({ err: "data is missing" });
         return;
     }
-
     body = checkValidate(req.body);
     const event = new Events(body);
     event.save();
     res.end();
 });
 
+router.put('/event/tpoach/update/id=:id', (req, res)=>{
+    if(!req.params.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    Events.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
 
+router.delete('/event/tpoach/delete', (req, res)=>{
+    if(!req.body.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    Events.findByIdAndDelete(req.body.id, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
 
 //new Space Events
 router.get('/space/events', (req, res) => {
-    SpaceEvents.find({}, function(err, data) {
+    SpaceEvents.find({}, [],{sort:{date:-1}},function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -165,6 +295,33 @@ router.post('/space/event', (req, res) => {
     event.save();
     res.end();
 });
+
+router.put('/event/space/update/id=:id', (req, res)=>{
+    if(!req.params.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    SpaceEvents.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
+router.delete('/event/space/delete', (req, res)=>{
+    if(!req.body.id){
+        res.send({err:"not all faild exist"})
+        return
+    }
+    SpaceEvents.findByIdAndDelete(req.body.id, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }})
+})
+
 //End Space Events
 router.get('/space/images/:id', (req, res) => {
     Images.find({ forWebsite: 's', category: req.params.id }, function(err, data) {
@@ -232,9 +389,7 @@ router.post('/contactus', (req, res) => {
 });
 
 router.get('/space/news', (req,res)=>{
-    SpaceNews.find({ sort:{
-        date: 1 
-    }}, function(err, data) {
+    SpaceNews.find({ }, [],{sort:{date:-1}},function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -256,9 +411,7 @@ router.post('/space/news', (req, res)=>{
 
 
 router.get('/tpoach/news', (req,res)=>{
-    News.find({ sort:{
-        date: 1 
-    }}, function(err, data) {
+    News.find({}, [],{sort:{date:-1}},function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
