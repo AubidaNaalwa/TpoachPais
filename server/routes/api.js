@@ -232,7 +232,9 @@ router.post('/contactus', (req, res) => {
 });
 
 router.get('/space/news', (req,res)=>{
-    SpaceNews.find({}, function(err, data) {
+    SpaceNews.find({ sort:{
+        date: 1 
+    }}, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -254,7 +256,9 @@ router.post('/space/news', (req, res)=>{
 
 
 router.get('/tpoach/news', (req,res)=>{
-    News.find({}, function(err, data) {
+    News.find({ sort:{
+        date: 1 
+    }}, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -273,7 +277,5 @@ router.post('/tpoach/news', (req, res)=>{
     news.save();
     res.end();
 })
-
-
 
 module.exports = router;
