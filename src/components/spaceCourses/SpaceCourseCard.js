@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 export default function MediaCard(props) {
 	const classes = useStyles(),
-	cInfo = props.course,
+	cInfo = props.spaceCourse,
 	setCourse = props.setCourse;
     const [err, setErr] = useState(0)
 	return (
@@ -47,7 +47,7 @@ export default function MediaCard(props) {
 			</CardActionArea>
 			<CardActions>
 				<Button onClick={() => setCourse(cInfo)} size="small" color="primary">
-					<Link to='/tpais/courses/courseinfo'>اقرأ المزيد...</Link>
+					<Link to='/space/courses/courseinfo'>اقرأ المزيد...</Link>
 				</Button>
 			</CardActions>
 		</Card>

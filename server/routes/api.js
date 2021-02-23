@@ -225,8 +225,8 @@ router.post('/contactus', (req, res) => {
     res.end();
 });
 
-router.get('/space/news', (req,res)=>{
-    SpaceNews.find({}, function(err, data) {
+router.get('/space/news', (req,res)=> {
+    SpaceNews.find({ sort:{ date: 1 }}, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -234,7 +234,7 @@ router.get('/space/news', (req,res)=>{
     });
 });
 
-router.post('/space/news', (req, res)=>{
+router.post('/space/news', (req, res)=> {
     let body = req.body;
     if (!body) {
         res.send({ err: "data is missing" });
@@ -247,8 +247,8 @@ router.post('/space/news', (req, res)=>{
     res.end();
 });
 
-router.get('/tpoach/news', (req,res)=>{
-    News.find({}, function(err, data) {
+router.get('/tpoach/news', (req,res)=> {
+    News.find({ sort:{ date: 1 }}, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -256,12 +256,13 @@ router.get('/tpoach/news', (req,res)=>{
     });
 });
 
-router.post('/tpoach/news', (req, res)=>{
+router.post('/tpoach/news', (req, res)=> {
     let body = req.body;
     if (!body) {
         res.send({ err: "data is missing" });
         return;
     }
+
     body = checkValidate(req.body);
     const news = new News(body);
     news.save();

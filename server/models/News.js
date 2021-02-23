@@ -5,7 +5,7 @@ const news = new Schema({
     name: { type: String , required: true },
     shortDescription: { type: String , required: true },
     longDescription: { type: String , required: true },
-    date:{ type: Date, default: Date.now },
+    date: { type: Date, default: Date.now },
     toDate: { type: String, required: true }
 });
 
