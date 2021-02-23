@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 export default function MediaCard(props) {
 	const classes = useStyles(),
-	eInfo = props.experiment,
+	eInfo = props.spaceexperiment,
 	setExperiment = props.setExperiment;
 	const [err, setErr] = useState(0)
 	
@@ -49,7 +49,7 @@ export default function MediaCard(props) {
 			</CardActionArea>
 			<CardActions>
 				<Button onClick={() => setExperiment(eInfo)} size="small" color="primary">
-					<Link to='/tpais/experiments/experimentinfo'>اقرأ المزيد...</Link>
+					<Link to='/space/experiments/experimentinfo'>اقرأ المزيد...</Link>
 				</Button>
 			</CardActions>
 		</Card>
