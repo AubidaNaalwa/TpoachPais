@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 export default function MediaCard(props) {
 	const classes = useStyles(),
-	cInfo = props.spaceCourse,
+	cInfo = props.course,
 	setCourse = props.setCourse;
     const [err, setErr] = useState(0)
 	return (
