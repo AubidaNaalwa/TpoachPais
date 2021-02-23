@@ -37,7 +37,7 @@ export default function EventInfo(props) {
                     <h3 className='eDate'>{<Moment format="YYYY/MM/DD">
                         {date}
                     </Moment>}</h3>
-                    <img src={img} alt="Event Image" />
+                    <img src={img} alt="img" />
                     <div className='eDesc'>{longDescription}</div>
                 </div>
             </Popover>

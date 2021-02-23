@@ -52,7 +52,7 @@ export default function EventCard(props) {
                     اقرأ المزيد...
                 </Button>
             </CardActions>
-            { open && <EventInfo event={props.event} setOpen={setOpen} />}
+            { open && <EventInfo event={props.event} setOpen={setOpen} /> }
         </Card>
     );
 }

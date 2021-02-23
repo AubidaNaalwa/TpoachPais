@@ -39,7 +39,6 @@ const useStyles = makeStyles(() => ({
 		padding: 15
 	},
 	pageNotFound: {
-		width: '100vh',
 		textAlign: 'center',
 		color: 'IndianRed'
 	}
