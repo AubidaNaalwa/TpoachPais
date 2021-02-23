@@ -19,7 +19,7 @@ export default function TPaisGallery() {
 		{
 			gallery.map((g) => (
 				<Grid className="grid-container" item key={g._id}>
-					<Gallery gallery={g} path={'t'} key={g._id} />
+					<Gallery gallery={g} path={'t'} key={g.imgUrl} />
 				</Grid>
 			))
 		}
