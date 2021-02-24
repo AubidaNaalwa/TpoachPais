@@ -12,15 +12,8 @@ import Footer from './components/Footer';
 import React, { useState } from 'react';
 import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import Events from "./components/Events/Events";
-import EventInfo from './components/Events/EventInfo';
 import Courses from './components/Courses/Courses';
 import CourseInfo from './components/Courses/CourseInfo';
-import SpaceCourses from './components/spaceCourses/SpaceCourses';
-import SpaceCourseInfo from './components/spaceCourses/SpaceCourseInfo';
-import Experiments from './components/Experiments/Experiments';
-import SpaceExperimentInfo from './components/spaceExperiments/SpaceExperimentInfo';
-import SpaceExperiments from './components/spaceExperiments/SpaceExperiments';
-import ExperimentInfo from './components/Experiments/ExperimentInfo';
 import SpaceGallery from "./components/Galleries/SpaceGallery";
 import Images from "./components/Galleries/Images";
 import TPaisGallery from "./components/Galleries/TPaisGallery";
@@ -69,12 +62,8 @@ export default function App() {
 							<Route path="/tpais/events" exact render={() => <Events />} />
 							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
-							<Route path="/space/courses" exact render={() => <SpaceCourses setCourse={setCourse} />} />
-							<Route path="/space/courses/courseinfo" exact render={() => <SpaceCourseInfo cInfo={course} />} />
-							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
-							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
-							<Route path="/space/experiments" exact render={() => <SpaceExperiments setExperiment={setExperiment} />} />
-							<Route path="/space/experiments/experimentinfo" exact render={() => <SpaceExperimentInfo eInfo={experiment} />} />
+							<Route path="/space/courses" exact render={() => <Courses setCourse={setCourse} />} />
+							<Route path="/space/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
 							<Route path="/tpais/gallery" exact render={() => <TPaisGallery />} />
 							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
