@@ -15,10 +15,10 @@
 
 .news_container {
     width: 18em;
-    height: 18em;
+    height: 25em;
     position: fixed;
-    top: 41.5%;
-    right: 22px;
+    top: 28em;
+    left: 22px;
     transform: translateY(-50%);
     box-sizing: border-box;
     border-bottom-left-radius: 5px;
@@ -48,8 +48,8 @@
 }
 
 @keyframes marquee {
-    0%   { top:   15em }
-    100% { top: -15em }
+    0%   { top:   25em }
+    100% { top: -25em }
 }
 
 .marq_font .marquee {
