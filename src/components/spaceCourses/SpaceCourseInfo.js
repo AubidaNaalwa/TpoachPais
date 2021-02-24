@@ -18,7 +18,7 @@ export default function CourseInfo(props) {
             <p>{item.longDescription}</p>
             <p>{item.available ? `للاشتراك والتسجيل :${item.courseLink}` : "الدورة غير متوفرة حاليا"}</p>
             <Button onClick={() => history.push('/space/courses')} size="small" color="primary">
-            <i class="far fa-arrow-alt-circle-right"></i>
+            <i className="far fa-arrow-alt-circle-right"></i>
 			</Button>
         </div>
     );

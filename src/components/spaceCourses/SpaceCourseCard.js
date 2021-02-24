@@ -34,7 +34,7 @@ export default function MediaCard(props) {
 				</CardMedia>
 				<CardContent>
 					<Typography gutterBottom variant="h6" component="h2">
-						{cInfo.name} <Link to='/space/courses/courseinfo'><i class="fas fa-info-circle" onClick={() => setCourse(cInfo)}></i></Link>
+						{cInfo.name} <Link to='/space/courses/courseinfo'><i className="fas fa-info-circle" onClick={() => setCourse(cInfo)}></i></Link>
 					</Typography>
 					<Typography gutterBottom variant="body2" component="p">
 						<Moment format="YYYY/MM/DD">{cInfo.date}</Moment>

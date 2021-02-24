@@ -18,6 +18,6 @@ const images = [
 
 export default function TPaisQuickGallery() {
     return (
-        <ImageGallery isRTL={true} autoPlay={true} showBullets={true} items={images} />
+        <ImageGallery isRTL={true} autoPlay={true} showBullets={true} items={images} showThumbnails={false} />
     );
 }

@@ -16,7 +16,7 @@ export default function ExperimentInfo(props) {
             <iframe title="experiment" width="560" height="315" src={item.img} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             <p>{item.longDescription}</p>
             <Button onClick={() => history.push('/space/experiments')} size="small" color="primary">
-            <i class="far fa-arrow-alt-circle-right"></i>
+            <i className="far fa-arrow-alt-circle-right"></i>
 			</Button>
         </div>
     );

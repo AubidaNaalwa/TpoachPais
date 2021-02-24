@@ -6,7 +6,7 @@ export default function TPais() {
     return (
         <>
             <TPaisQuickGallery />
-            <hr className="hr" style={{marginBottom: 15}} />
+            <hr className="hr" style={{marginBottom: 15, marginTop: 20}} />
             <ContactForm />
         </>
     );
