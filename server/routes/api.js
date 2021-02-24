@@ -2,6 +2,7 @@ const express = require('express'),
 Courses = require('../models/Courses'),
 SpaceCourses = require('../models/SpaceCourses'),
 Images = require('../models/Images'),
+Videos = require('../models/Videos'),
 SpaceExperiments = require('../models/SpaceExperiments'),
 Experiments = require('../models/Experiments'),
 Events = require('../models/Events'),
@@ -34,10 +35,8 @@ router.post('/logout', (req, res)=> {
 
 const checkValidate = (body) => {
     const keys = Object.keys(body);
-    //TODO
-    //for (let i of keys)
-        //res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-
+    for (let i of keys)
+        res.body[i].replace(/</g, '&lt;');
     return body;
 }
 
@@ -81,13 +80,13 @@ router.put('/experiments/tpoach/update/id=:id', (req, res)=>{
     });
 });
 
-router.delete('/experiments/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/experiments/tpoach/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    Experiments.findByIdAndDelete(req.body.id, function(err, result) {
+    Experiments.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -133,13 +132,13 @@ router.put('/experiments/space/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/experiments/space/delete', (req, res)=>{
-    if(!req.body.id) {
+router.delete('/experiments/space/delete/id=:id', (req, res)=>{
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    SpaceExperiments.findByIdAndDelete(req.body.id, function(err, result) {
+    SpaceExperiments.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -184,13 +183,13 @@ router.put('/course/tpoach/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/course/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/course/tpoach/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    Courses.findByIdAndDelete(req.body.id, function(err, result) {
+    Courses.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -236,12 +235,12 @@ router.put('/course/space/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/course/space/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/course/space/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err: "not all faild exist"});
         return;
     }
-    SpaceCourses.findByIdAndDelete(req.body.id, function(err, result) {
+    SpaceCourses.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -286,13 +285,13 @@ router.put('/event/tpoach/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/event/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/event/tpoach/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    Events.findByIdAndDelete(req.body.id, function(err, result) {
+    Events.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -337,13 +336,13 @@ router.put('/event/space/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/event/space/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/event/space/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    SpaceEvents.findByIdAndDelete(req.body.id, function(err, result) {
+    SpaceEvents.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -439,5 +438,40 @@ router.get('/tpoach/news', async (req,res)=> {
         res.send({error});
     }
 });
+
+
+//viseos
+
+router.get('/space/videos/:id', (req, res) => {
+    Videos.find({ forWebsite: 's' }, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ videos: data, status: 200 });
+    });
+});
+
+router.get('/tpoach/videos/', (req, res) => {
+    Videos.find({ forWebsite: 't' }, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ videos: data, status: 200 });
+    });
+});
+
+router.post('/video', (req, res) => {
+    let body = req.body;
+    if (!body|| !iLoggedIn) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const image = new Videos(body);
+    image.save();
+    res.end();
+});
+
 
 module.exports = router;
