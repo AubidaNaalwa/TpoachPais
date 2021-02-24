@@ -20,6 +20,8 @@ import Images from "./components/Galleries/Images";
 import TPaisGallery from "./components/Galleries/TPaisGallery";
 import SimulationSolarSystem from "./components/Simulations/SolarSystem";
 import SubNavWrapper from "./components/SubNavWrapper";
+import Experiments from './components/Experiments/Experiments';
+import ExperimentInfo from './components/Experiments/ExperimentInfo';
 
 const theme = createMuiTheme({
 	palette: {
@@ -65,6 +67,10 @@ export default function App() {
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
 							<Route path="/space/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/space/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
+							<Route path="/tpais/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
+							<Route path="/tpais/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
+							<Route path="/space/experiments" exact render={() => <Experiments setExperiment={setExperiment} />} />
+							<Route path="/space/experiments/experimentinfo" exact render={() => <ExperimentInfo eInfo={experiment} />} />
 							<Route path="/tpais/gallery" exact render={() => <TPaisGallery />} />
 							<Route path='/tpais/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"t"}/>} />
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
