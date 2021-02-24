@@ -7,30 +7,21 @@ const useStyles = makeStyles(theme => ({
     popoverRoot: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-    },
+        alignItems: 'center'
+    }
 }));
 
 export default function EventInfo(props) {
-
-    const { name, date, img, longDescription } = props.event
-
-    const classes = useStyles();
+    const { name, date, img, longDescription } = props.event,
+    classes = useStyles();
 
     const handleClose = () => {
-        props.setOpen(false)
+        props.setOpen(false);
     };
 
     return (
         <div style={{ textAlign: 'center' }}>
-            <Popover
-                open={true}
-                onClose={handleClose}
-                anchorReference={"none"}
-                classes={{
-                    root: classes.popoverRoot,
-                }}
-            >
+            <Popover open={true} onClose={handleClose} anchorReference={"none"} classes={{ root: classes.popoverRoot }}>
                 <div className="exit" onClick={handleClose}> x </div>
                 <div className="ePopOver" >
                     <h1 className='hdr'>{name}</h1>

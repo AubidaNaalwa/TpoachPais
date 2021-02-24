@@ -22,13 +22,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function EventCard(props) {
-
-    const classes = useStyles()
-    const eInfo = props.event
-    const [open, setOpen] = useState(false)
+    const classes = useStyles(),
+    eInfo = props.event,
+    [open, setOpen] = useState(false);
 
     const handleClick = () => {
-        setOpen(true)
+        setOpen(true);
     };
 
     return (
@@ -48,9 +47,7 @@ export default function EventCard(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button onClick={handleClick} size="small" color="primary">
-                    اقرأ المزيد...
-                </Button>
+                <Button onClick={handleClick} size="small" color="primary">اقرأ المزيد...</Button>
             </CardActions>
             { open && <EventInfo event={props.event} setOpen={setOpen} /> }
         </Card>

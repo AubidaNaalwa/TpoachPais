@@ -5,17 +5,16 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 export default function Events(props) {
-
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
         async function fetchEvents() {
-            let events
-            if (window.location.pathname === '/tpais/events') {
+            let events;
+            if (window.location.pathname === '/tpais/events')
                 events = await axios.get(`/events`);
-            } else {
+            else
                 events = await axios.get(`/space/events`);
-            }
+
             setEvents(events.data.events);
         }
         fetchEvents();

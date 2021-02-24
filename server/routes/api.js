@@ -9,35 +9,31 @@ SpaceEvents  = require('../models/SpaceEvents'),
 Contact = require('../models/ContactUs'),
 router = express.Router(),
 { AdminUser, AdminPass } = require('../../src/Constants');
-let iLoggedIn = 0;
+let isLoggedIn = false;
 
 router.post('/logIn', (req, res)=> {
-    if(!req.body) {
+    if (!req.body) {
         res.send({ error : 1 });
-        iLoggedIn = false;
+        isLoggedIn = false;
         return;
     }
-    if(AdminUser === req.body.username && AdminPass === req.body.password) {
+    if (AdminUser === req.body.username && AdminPass === req.body.password) {
         res.send({ error: 0 });
-        iLoggedIn = true;
+        isLoggedIn = true;
     }
     else {
         res.send({ error: 1 });
-        iLoggedIn = false;
+        isLoggedIn = false;
     }
 });
 
 router.post('/logout', (req, res)=> {
-    iLoggedIn = false;
+    isLoggedIn = false;
     res.send({ error: 0 });
 });
 
 const checkValidate = (body) => {
-    const keys = Object.keys(body);
-    //TODO
-    //for (let i of keys)
-        //res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-
+    body.replace(/</g, '&lt;');
     return body;
 }
 
@@ -47,7 +43,7 @@ router.get('/', (req, res) => {
 
 router.post('/experiment', (req, res) => {
     let body = req.body;
-    if (!body || !iLoggedIn) {
+    if (!body || !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -68,7 +64,7 @@ router.get('/experiments', (req, res) => {
 });
 
 router.put('/experiments/tpoach/update/id=:id', (req, res)=>{
-    if(!req.params.id) {
+    if (!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -82,7 +78,7 @@ router.put('/experiments/tpoach/update/id=:id', (req, res)=>{
 });
 
 router.delete('/experiments/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+    if (!req.body.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -98,7 +94,7 @@ router.delete('/experiments/tpoach/delete', (req, res)=> {
 //Start Space Experiments
 router.post('/space/experiment', (req, res) => {
     let body = req.body;
-    if (!body|| !iLoggedIn) {
+    if (!body|| !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -118,9 +114,8 @@ router.get('/space/experiments', (req, res) => {
     });
 });
 
-
 router.put('/experiments/space/update/id=:id', (req, res)=> {
-    if(!req.params.id) {
+    if (!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -134,7 +129,7 @@ router.put('/experiments/space/update/id=:id', (req, res)=> {
 });
 
 router.delete('/experiments/space/delete', (req, res)=>{
-    if(!req.body.id) {
+    if (!req.body.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -159,7 +154,7 @@ router.get('/courses', (req, res) => {
 
 router.post('/course', (req, res) => {
     let body = req.body;
-    if (!body|| !iLoggedIn) {
+    if (!body|| !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -171,7 +166,7 @@ router.post('/course', (req, res) => {
 });
 
 router.put('/course/tpoach/update/id=:id', (req, res)=> {
-    if(!req.params.id) {
+    if (!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -185,7 +180,7 @@ router.put('/course/tpoach/update/id=:id', (req, res)=> {
 });
 
 router.delete('/course/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+    if (!req.body.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -197,7 +192,6 @@ router.delete('/course/tpoach/delete', (req, res)=> {
             res.send(result);
     })
 });
-
 
 //Space Courses
 router.get('/space/courses', (req, res) => {
@@ -211,7 +205,7 @@ router.get('/space/courses', (req, res) => {
 
 router.post('/space/course', (req, res) => {
     let body = req.body;
-    if (!body || !iLoggedIn) {
+    if (!body || !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -223,7 +217,7 @@ router.post('/space/course', (req, res) => {
 });
 
 router.put('/course/space/update/id=:id', (req, res)=> {
-    if(!req.params.id) {
+    if (!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -237,7 +231,7 @@ router.put('/course/space/update/id=:id', (req, res)=> {
 });
 
 router.delete('/course/space/delete', (req, res)=> {
-    if(!req.body.id) {
+    if (!req.body.id) {
         res.send({err: "not all faild exist"});
         return;
     }
@@ -261,7 +255,7 @@ router.get('/events', (req, res) => {
 
 router.post('/event', (req, res) => {
     let body = req.body;
-    if (!body || !iLoggedIn) {
+    if (!body || !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -273,7 +267,7 @@ router.post('/event', (req, res) => {
 });
 
 router.put('/event/tpoach/update/id=:id', (req, res)=> {
-    if(!req.params.id) {
+    if (!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -287,7 +281,7 @@ router.put('/event/tpoach/update/id=:id', (req, res)=> {
 });
 
 router.delete('/event/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+    if (!req.body.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -312,7 +306,7 @@ router.get('/space/events', (req, res) => {
 
 router.post('/space/event', (req, res) => {
     let body = req.body;
-    if (!body|| !iLoggedIn) {
+    if (!body|| !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -324,7 +318,7 @@ router.post('/space/event', (req, res) => {
 });
 
 router.put('/event/space/update/id=:id', (req, res)=> {
-    if(!req.params.id) {
+    if (!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -338,7 +332,7 @@ router.put('/event/space/update/id=:id', (req, res)=> {
 });
 
 router.delete('/event/space/delete', (req, res)=> {
-    if(!req.body.id) {
+    if (!req.body.id) {
         res.send({err:"not all faild exist"});
         return;
     }
@@ -372,7 +366,7 @@ router.get('/tpoach/images/:id', (req, res) => {
 
 router.post('/image', (req, res) => {
     let body = req.body;
-    if (!body|| !iLoggedIn) {
+    if (!body|| !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }
@@ -405,7 +399,7 @@ router.get('/imagesCategory/space', async (req, res) => {
 
 router.post('/contactus', (req, res) => {
     let body = req.body;
-    if (!body|| !iLoggedIn) {
+    if (!body|| !isLoggedIn) {
         res.send({ err: "data is missing" });
         return;
     }

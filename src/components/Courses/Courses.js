@@ -8,12 +8,12 @@ export default function Courses(props) {
 
     useEffect(() => {
         async function fetchCourses() {
-            let courses
-            if (window.location.pathname === '/tpais/courses') {
+            let courses;
+            if (window.location.pathname === '/tpais/courses')
                 courses = await axios.get(`/courses`);
-            } else {
+            else
                 courses = await axios.get(`/space/courses`);
-            }
+
             setCourses(courses.data.courses);
         }
         fetchCourses();

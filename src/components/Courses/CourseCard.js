@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 	},
 	media: {
 		height: 180,
-		width: '100%',
+		width: '100%'
 	}
 });
 
@@ -31,7 +31,7 @@ export default function MediaCard(props) {
 			<Card className={classes.root} onClick={() => setCourse(cInfo)}>
 				<CardActionArea>
 					<CardMedia>
-						<img className={classes.media} src={!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
+						<img alt="img" className={classes.media} src={!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
 					</CardMedia>
 					<CardContent>
 						<Typography gutterBottom variant="h6" component="h2">

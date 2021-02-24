@@ -6,24 +6,18 @@ const axios = require('axios');
 export default function Experiments(props) {
     const [experiments, setExperiments] = useState([]);
 
-    
-        
         useEffect(() => {
         async function fetchExperiments() {
-        let experiments
-
-            if (window.location.pathname === '/tpais/experiments') {
+            let experiments;
+            if (window.location.pathname === '/tpais/experiments')
                 experiments = await axios.get(`/experiments`);
-            } else {
+            else
                 experiments = await axios.get(`/space/experiments`);
-            }
+
             setExperiments(experiments.data.experiments);
         }
         fetchExperiments();
     }, []);
-
-    
-
 
     return (
         <Grid container direction="row" justify="space-between" spacing={3} style={{marginTop: 15}}>
