@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 export default function ExperimentInfo(props) {
     const history = useHistory();
     const item = props.eInfo;
-    const [err, setErr] = useState(0)
+    const [err, setErr] = useState(0);
     if (!item)
         return (<Redirect to="/space/experiments" />);
 

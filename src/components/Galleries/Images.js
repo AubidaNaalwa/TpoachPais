@@ -82,10 +82,10 @@ class GalleryModal extends React.Component {
     handleKeyDown(e) {
 		if (e.keyCode === 27)
 			this.props.closeModal();
-		if (e.keyCode === 37 && this.props.hasPrev)
-			this.props.findPrev();
-		if (e.keyCode === 39 && this.props.hasNext)
+		if (e.keyCode === 37 && this.props.hasNext)
 			this.props.findNext();
+		if (e.keyCode === 39 && this.props.hasPrev)
+			this.props.findPrev();
     }
 
     render() {

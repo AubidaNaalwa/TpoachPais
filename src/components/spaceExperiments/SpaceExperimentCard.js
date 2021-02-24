@@ -25,15 +25,14 @@ const useStyles = makeStyles({
 export default function MediaCard(props) {
 	const classes = useStyles(),
 	eInfo = props.spaceexperiment,
-	setExperiment = props.setExperiment;
-	const [err, setErr] = useState(0)
-	
+	setExperiment = props.setExperiment,
+	[err, setErr] = useState(0);
 
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
 			<CardMedia>
-					<img className={classes.media} src= {!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
+					<img alt="img" className={classes.media} src= {!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
 				</CardMedia>
 				<CardContent>
 					<Typography gutterBottom variant="h6" component="h2">
