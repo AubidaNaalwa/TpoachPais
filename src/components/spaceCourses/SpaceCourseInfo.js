@@ -4,9 +4,10 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
 export default function CourseInfo(props) {
-    const history = useHistory();
-    const item = props.cInfo;
-    const [err, setErr] = useState(0)
+    const history = useHistory(),
+    item = props.cInfo,
+    [err, setErr] = useState(0);
+
     if (!item)
         return (<Redirect to="/space/courses" />);
 

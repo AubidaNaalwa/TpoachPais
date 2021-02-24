@@ -18,7 +18,7 @@ export default function SpaceGallery() {
 		{
 			gallery.map((g) => (
 				<Grid className="grid-container" item key={g._id}>
-					<Gallery gallery={g} path={'s'} key={g._id} />
+					<Gallery gallery={g} path={'s'} key={g.imgUrl}/>
 				</Grid>
 			))
 		}
