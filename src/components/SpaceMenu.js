@@ -14,7 +14,11 @@ const useStyles = makeStyles(() => ({
         margin: 3,
         minHeight: '73.6px',
         letterSpacing: 1,
-        maxWidth: 250
+        maxWidth: 250,
+        boxShadow: '0 3px 9px #283039',
+        "&:focus":{
+            backgroundColor: 'rgb(31, 39, 44)'
+        }
     }
 }));
 
@@ -24,10 +28,10 @@ export default function SpaceMenu(props) {
     return (
         <div className={classes.root}>
             <Link to="/space/events">
-                <Button variant="contained" color="primary" className={classes.btn}>أحداث وأخبار</Button>
+                <Button variant="contained" color="primary" className={classes.btn}>أحداث المركز</Button>
             </Link>
             <Link to="/space/courses">
-                <Button variant="contained" color="primary" className={classes.btn}>نشاطات المركز</Button>
+                <Button variant="contained" color="primary" className={classes.btn}>نشاطات ودورات</Button>
             </Link>
             <Link to="/space/experiments">
                 <Button variant="contained" color="primary" className={classes.btn}>تجارب ومُحاكاة</Button>

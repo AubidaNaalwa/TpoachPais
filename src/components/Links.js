@@ -39,7 +39,7 @@ export default function Links() {
 	return (
 		<Breadcrumbs separator='|' aria-label="breadcrumb" className={classes.links}>
 			<Link to="/" className={location.pathname === '/' || location.pathname.includes('/tpais') ? classes.link_active : classes.link_inactive}>
-				<HomeIcon /><span className={classes.marginIcons}>تبواح بايس الطيبة</span>
+				<HomeIcon /><span className={classes.marginIcons}>مركز العلوم والفنون</span>
 			</Link>
 			<Link to="/space" className={location.pathname.includes('/space') ? classes.link_active : classes.link_inactive}>
 				<SpaceIcon /><span className={classes.marginIcons}>مركز فضاء الطيبة</span>

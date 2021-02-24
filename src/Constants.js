@@ -17,4 +17,7 @@ const SNACKBAR_PROPS = {
     }
 };
 
-module.exports = { API_PATH, SNACKBAR_PROPS };
+const AdminUser ="Admin"
+const AdminPass ="Admin111"
+
+module.exports = { API_PATH, SNACKBAR_PROPS , AdminUser, AdminPass};

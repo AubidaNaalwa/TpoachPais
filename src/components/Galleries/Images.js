@@ -25,7 +25,7 @@ export default class Images extends React.Component {
     }
 
     renderImageContent(src, index) {
-		return (React.createElement("div", { onClick: e => this.openModal(e, index) }, React.createElement("img", { src: src, key: src })));
+		return (React.createElement("div", { onClick: e => this.openModal(e, index) }, React.createElement("img", { src: src, key: index })));
     }
 
     openModal(e, index) {
@@ -55,15 +55,15 @@ export default class Images extends React.Component {
 
     render() {
     	return (
-        <div>
-			{
-				this.state.imgUrls ?
-				React.createElement("div", { className: "gallery-container" },
-				React.createElement("div", { className: "gallery-grid" },
-				this.state.imgUrls.map(this.renderImageContent)),
-				React.createElement(GalleryModal, { closeModal: this.closeModal, findPrev: this.findPrev, findNext: this.findNext, hasPrev: this.state.currentIndex > 0, hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length, src: this.state.imgUrls[this.state.currentIndex] })): null
-			}
-        </div>
+			<div>
+				{
+					this.state.imgUrls ?
+					React.createElement("div", { className: "gallery-container" },
+					React.createElement("div", { className: "gallery-grid" },
+					this.state.imgUrls.map(this.renderImageContent)),
+					React.createElement(GalleryModal, { closeModal: this.closeModal, findPrev: this.findPrev, findNext: this.findNext, hasPrev: this.state.currentIndex > 0, hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length, src: this.state.imgUrls[this.state.currentIndex] })): null
+				}
+			</div>
         );
 	}
 }
@@ -82,10 +82,10 @@ class GalleryModal extends React.Component {
     handleKeyDown(e) {
 		if (e.keyCode === 27)
 			this.props.closeModal();
-		if (e.keyCode === 37 && this.props.hasPrev)
-			this.props.findPrev();
-		if (e.keyCode === 39 && this.props.hasNext)
+		if (e.keyCode === 37 && this.props.hasNext)
 			this.props.findNext();
+		if (e.keyCode === 39 && this.props.hasPrev)
+			this.props.findPrev();
     }
 
     render() {
@@ -99,9 +99,9 @@ class GalleryModal extends React.Component {
 			React.createElement("div", { className: "modal" },
 			React.createElement("div", { className: "modal-body" },
 			React.createElement("a", { href: "#", className: "modal-close", onClick: closeModal, onKeyDown: this.handleKeyDown }, "\xD7"),
-			hasNext && React.createElement("a", { href: "#", className: "modal-next", onClick: findPrev, onKeyDown: this.handleKeyDown }, "\u2039"),
-			hasPrev && React.createElement("a", { href: "#", className: "modal-prev", onClick: findNext, onKeyDown: this.handleKeyDown }, "\u203A"),
-			React.createElement("img", { src: src }))))
+			hasPrev && React.createElement("a", { href: "#", className: "modal-next", onClick: findPrev, onKeyDown: this.handleKeyDown }, "\u2039"),
+			hasNext && React.createElement("a", { href: "#", className: "modal-prev", onClick: findNext, onKeyDown: this.handleKeyDown }, "\u203A"),
+			React.createElement("img", {className:"display", src: src }))))
 		);
     }
 }

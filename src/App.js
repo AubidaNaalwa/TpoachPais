@@ -1,5 +1,6 @@
 import './styles/App.css';
 import './styles/Gallery.css';
+import './styles/News.css';
 import "react-image-gallery/styles/css/image-gallery.css";
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -36,7 +37,6 @@ const useStyles = makeStyles(() => ({
 		padding: 15
 	},
 	pageNotFound: {
-		width: '100vh',
 		textAlign: 'center',
 		color: 'IndianRed'
 	}
@@ -60,6 +60,7 @@ export default function App() {
 							<Route path="/contactus" exact render={() => <ContactUs />} />
 							<Route path="/admin" exact render={() => <Admin />} />
 							<Route path="/tpais/events" exact render={() => <Events />} />
+							<Route path="/space/events" exact render={() => <Events />} />
 							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
 							<Route path="/space/courses" exact render={() => <Courses setCourse={setCourse} />} />
@@ -69,7 +70,6 @@ export default function App() {
 							<Route exact path="/space/gallery" render={() => <SpaceGallery />} />
 							<Route path='/space/gallery/:id' exact render={({ match }) => <Images match={match} pathLink={"s"} />} />
 							<Route exact path="/space/experiments" render={() => <SimulationSolarSystem />} />
-							<Route path="/space/events" exact render={() => <Events />} />
 							<Route render={() => <div className={classes.pageNotFound}><h2>لم يتم العثور على المحتوى المطلوب</h2></div>} />
 						</Switch>
 					</div>

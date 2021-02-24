@@ -3,21 +3,21 @@ import ImageGallery from 'react-image-gallery';
 
 const images = [
     {
-        original: 'https://picsum.photos/id/1018/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1018/250/150/'
+        original: './images/tpais1.jpg',
+        thumbnail: './images/tpais_thumb1.jpg'
     },
     {
-        original: 'https://picsum.photos/id/1015/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1015/250/150/'
+        original: './images/tpais2.jpg',
+        thumbnail: './images/tpais_thumb2.jpg'
     },
     {
-        original: 'https://picsum.photos/id/1019/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1019/250/150/'
+        original: './images/tpais3.jpg',
+        thumbnail: './images/tpais_thumb3.jpg'
     }
 ];
 
 export default function TPaisQuickGallery() {
     return (
-        <ImageGallery isRTL={true} autoPlay={true} showBullets={true} items={images} />
+        <ImageGallery isRTL={true} autoPlay={true} showBullets={true} items={images} showThumbnails={false} />
     );
 }
