@@ -91,3 +91,16 @@ a {
   width: 30vw;
   padding: 2vh;
 }
+
+.space-theme {
+  margin: 0;
+  background: url("https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+  font-family: "Markazi Text", serif;
+}
+
+.font{
+  color: whitesmoke;
+}

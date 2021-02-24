@@ -22,6 +22,7 @@ export default function SubNavWrapper(props) {
     return (
         <div style={{width: 'min-content', margin: '0 auto'}}>
             { !location.pathname.includes('/space') ? <TPaisMenu /> : <SpaceMenu /> }
+            { location.pathname.includes('/space') ? document.body.classList.add('space-theme', 'font') : document.body.classList.remove('space-theme', 'font') }
             { width >= 1680 && height >= 600 && <News /> }
             <div className="content">
                 <hr className="hr" />

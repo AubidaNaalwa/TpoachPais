@@ -3,15 +3,16 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import Moment from 'react-moment';
+import { useLocation } from 'react-router-dom';
 
 export default function EventInfo(props) {
-
+    const location = useLocation();
     const history = useHistory();
     const item = props.eInfo;
     const [err, setErr] = useState(0);
 
     if (!item)
-        return (<Redirect to="/tpais/events" />);
+        return (<Redirect to={!location.pathname.includes('/space') ? "/tpais/events" : "/space/events"} />);
 
     return (
         <div style={{ textAlign: 'right' }}>
