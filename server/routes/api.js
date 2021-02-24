@@ -80,13 +80,13 @@ router.put('/experiments/tpoach/update/id=:id', (req, res)=>{
     });
 });
 
-router.delete('/experiments/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/experiments/tpoach/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    Experiments.findByIdAndDelete(req.body.id, function(err, result) {
+    Experiments.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -132,13 +132,13 @@ router.put('/experiments/space/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/experiments/space/delete', (req, res)=>{
-    if(!req.body.id) {
+router.delete('/experiments/space/delete/id=:id', (req, res)=>{
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    SpaceExperiments.findByIdAndDelete(req.body.id, function(err, result) {
+    SpaceExperiments.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -183,13 +183,13 @@ router.put('/course/tpoach/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/course/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/course/tpoach/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    Courses.findByIdAndDelete(req.body.id, function(err, result) {
+    Courses.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -235,12 +235,12 @@ router.put('/course/space/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/course/space/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/course/space/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err: "not all faild exist"});
         return;
     }
-    SpaceCourses.findByIdAndDelete(req.body.id, function(err, result) {
+    SpaceCourses.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -285,13 +285,13 @@ router.put('/event/tpoach/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/event/tpoach/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/event/tpoach/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    Events.findByIdAndDelete(req.body.id, function(err, result) {
+    Events.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else
@@ -336,13 +336,13 @@ router.put('/event/space/update/id=:id', (req, res)=> {
     });
 });
 
-router.delete('/event/space/delete', (req, res)=> {
-    if(!req.body.id) {
+router.delete('/event/space/delete/id=:id', (req, res)=> {
+    if(!req.params.id) {
         res.send({err:"not all faild exist"});
         return;
     }
 
-    SpaceEvents.findByIdAndDelete(req.body.id, function(err, result) {
+    SpaceEvents.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
             res.send(err);
         else

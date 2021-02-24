@@ -1,3 +1,5 @@
+const { TramRounded } = require('@material-ui/icons');
+
 require('dotenv').config();
 const express = require('express'),
 api = require('./server/routes/api'),
