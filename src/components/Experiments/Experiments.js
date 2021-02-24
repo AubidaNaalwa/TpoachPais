@@ -80,13 +80,13 @@ export default function Experiments(props) {
                         </select>
 
                     </div>
-                    <Grid container direction="row" justify="space-between" spacing={3} style={{ marginTop: 15 }}>
+                    <Grid container direction="row" justify="flex-start" spacing={10} style={{ marginTop: -10, marginRight: -1 }}>
                         {select
                             ? experiments.filter(fd => fd.category === select).map(e => <Grid item key={e._id}>
-                                <ExperimentCard setExperiment={props.setExperiment} experiment={e} />
+                                <ExperimentCard setExperiment={props.setExperiment} handleRemove={handleRemove} handleEdit={handleEdit} experiment={e} />
                             </Grid>)
                             : experiments.map(e => <Grid item key={e._id}>
-                                <ExperimentCard setExperiment={props.setExperiment} experiment={e} />
+                                <ExperimentCard setExperiment={props.setExperiment} handleRemove={handleRemove} handleEdit={handleEdit} experiment={e} />
                             </Grid>)
                         }
                     </Grid >
