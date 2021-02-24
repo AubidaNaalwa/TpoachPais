@@ -6,8 +6,6 @@ const video = new Schema({
     video: { type: String , required: true },
     date: { type: Date, default: Date.now },
     description:String,
-    img:{type: String , required: true},
-    category: { type: String , required: true },
     forWebsite: { type: String, require: true }
 });
 

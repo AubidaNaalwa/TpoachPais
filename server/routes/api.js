@@ -35,10 +35,8 @@ router.post('/logout', (req, res)=> {
 
 const checkValidate = (body) => {
     const keys = Object.keys(body);
-    //TODO
-    //for (let i of keys)
-        //res.body[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-
+    for (let i of keys)
+        res.body[i].replace(/</g, '&lt;');
     return body;
 }
 
@@ -445,7 +443,7 @@ router.get('/tpoach/news', async (req,res)=> {
 //viseos
 
 router.get('/space/videos/:id', (req, res) => {
-    Videos.find({ forWebsite: 's', category: req.params.id }, function(err, data) {
+    Videos.find({ forWebsite: 's' }, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -453,8 +451,8 @@ router.get('/space/videos/:id', (req, res) => {
     });
 });
 
-router.get('/tpoach/videos/:id', (req, res) => {
-    Videos.find({ forWebsite: 't', category: req.params.id }, function(err, data) {
+router.get('/tpoach/videos/', (req, res) => {
+    Videos.find({ forWebsite: 't' }, function(err, data) {
         if (err)
             res.send({ err, status: 400 });
         else
@@ -473,26 +471,6 @@ router.post('/video', (req, res) => {
     const image = new Videos(body);
     image.save();
     res.end();
-});
-
-router.get('/videosCategory/tpoach', async (req, res) => {
-    const results = await Videos.aggregate().match({ forWebsite: "t" }).group(
-    {
-        _id: '$category',
-        imgUrl: { $first: "$img" },
-        count: { $sum: 1 }
-    });
-    res.send({ categories: results });
-});
-
-router.get('/videosCategory/space', async (req, res) => {
-    const results = await Videos.aggregate().match({ forWebsite: "s" }).group(
-    {
-        _id: '$category',
-        imgUrl: { $first: "$img" },
-        count: { $sum: 1 }
-    });
-    res.send({ categories: results });
 });
 
 
