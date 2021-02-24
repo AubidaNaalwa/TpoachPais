@@ -80,34 +80,14 @@ a {
   word-spacing: 4px;
 }
 
-.ePopOver img {
-  width: 350px;
-  height: 190px;
-  margin-bottom: 20px;
-}
-
-.ePopOver {
-  display: grid;
-  margin: 25px;
-  justify-items: center;
-}
-
-.exit {
-  display: grid;
-  justify-items: left;
-  margin-left: 10px;
-  font-size: 150%;
-}
-
-.eDesc {
-  font-size: 127%;
-}
-
-.hdr {
-  margin-top: -20px;
-}
-
 .eDate{
   color: gray;
   margin-top: -20px;
+}
+
+.update {
+  display: grid;
+  height: 60vh;
+  width: 30vw;
+  padding: 2vh;
 }
