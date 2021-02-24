@@ -2,6 +2,7 @@ const express = require('express'),
 Courses = require('../models/Courses'),
 SpaceCourses = require('../models/SpaceCourses'),
 Images = require('../models/Images'),
+Videos = require('../models/Videos'),
 SpaceExperiments = require('../models/SpaceExperiments'),
 Experiments = require('../models/Experiments'),
 Events = require('../models/Events'),
@@ -439,5 +440,60 @@ router.get('/tpoach/news', async (req,res)=> {
         res.send({error});
     }
 });
+
+
+//viseos
+
+router.get('/space/videos/:id', (req, res) => {
+    Videos.find({ forWebsite: 's', category: req.params.id }, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ videos: data, status: 200 });
+    });
+});
+
+router.get('/tpoach/videos/:id', (req, res) => {
+    Videos.find({ forWebsite: 't', category: req.params.id }, function(err, data) {
+        if (err)
+            res.send({ err, status: 400 });
+        else
+            res.send({ videos: data, status: 200 });
+    });
+});
+
+router.post('/video', (req, res) => {
+    let body = req.body;
+    if (!body|| !iLoggedIn) {
+        res.send({ err: "data is missing" });
+        return;
+    }
+
+    body = checkValidate(req.body);
+    const image = new Videos(body);
+    image.save();
+    res.end();
+});
+
+router.get('/videosCategory/tpoach', async (req, res) => {
+    const results = await Videos.aggregate().match({ forWebsite: "t" }).group(
+    {
+        _id: '$category',
+        imgUrl: { $first: "$img" },
+        count: { $sum: 1 }
+    });
+    res.send({ categories: results });
+});
+
+router.get('/videosCategory/space', async (req, res) => {
+    const results = await Videos.aggregate().match({ forWebsite: "s" }).group(
+    {
+        _id: '$category',
+        imgUrl: { $first: "$img" },
+        count: { $sum: 1 }
+    });
+    res.send({ categories: results });
+});
+
 
 module.exports = router;
