@@ -10,7 +10,7 @@ SpaceEvents  = require('../models/SpaceEvents'),
 Contact = require('../models/ContactUs'),
 router = express.Router(),
 { AdminUser, AdminPass } = require('../../src/Constants');
-let iLoggedIn = 0;
+let iLoggedIn = 1;
 
 router.post('/logIn', (req, res)=> {
     if(!req.body) {
