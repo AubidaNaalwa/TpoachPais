@@ -26,23 +26,25 @@ export default function MediaCard(props) {
 		setCourse = props.setCourse;
 	const [err, setErr] = useState(0)
 	return (
-		<Card className={classes.root}>
-			<CardActionArea>
-				<CardMedia>
-					<img className={classes.media} src={!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
-				</CardMedia>
-				<CardContent>
-					<Typography gutterBottom variant="h6" component="h2">
-						{cInfo.name} <Link to='/tpais/courses/courseinfo'><i class="fas fa-info-circle" onClick={() => setCourse(cInfo)}></i></Link>
-					</Typography>
-					<Typography gutterBottom variant="body2" component="p">
-						<Moment format="YYYY/MM/DD">{cInfo.date}</Moment>
-					</Typography>
-					<Typography variant="body2" color="textSecondary" component="p">
-						{cInfo.shortDescription}
-					</Typography>
-				</CardContent>
-			</CardActionArea>
-		</Card>
+		<Link to={window.location.pathname === '/tpais/courses' ? '/tpais/courses/courseinfo' : '/space/courses/courseinfo'}>
+			<Card className={classes.root} onClick={() => setCourse(cInfo)}>
+				<CardActionArea>
+					<CardMedia>
+						<img className={classes.media} src={!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
+					</CardMedia>
+					<CardContent>
+						<Typography gutterBottom variant="h6" component="h2">
+							{cInfo.name}
+						</Typography>
+						<Typography gutterBottom variant="body2" component="p">
+							<Moment format="YYYY/MM/DD">{cInfo.date}</Moment>
+						</Typography>
+						<Typography variant="body2" color="textSecondary" component="p">
+							{cInfo.shortDescription}
+						</Typography>
+					</CardContent>
+				</CardActionArea>
+			</Card>
+		</Link>
 	);
 }

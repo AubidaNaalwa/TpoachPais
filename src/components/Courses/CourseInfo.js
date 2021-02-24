@@ -16,7 +16,7 @@ export default function CourseInfo(props) {
             <img src={!err ? item.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} alt='img' style={{ width: '80%', height: '75%' }} onError={() => setErr(1)} ></img>
             <p>{item.longDescription}</p>
             <p>{item.available ? `للاشتراك والتسجيل :${item.courseLink}` : "الدورة غير متوفرة حاليا"}</p>
-            <Button onClick={() => history.push('/tpais/courses')} size="small" color="primary">
+            <Button onClick={() => window.location.pathname === '/tpais/courses/courseinfo' ? history.push('/tpais/courses') : history.push('/space/courses')} size="small" color="primary">
             <i class="far fa-arrow-alt-circle-right"></i>
 			</Button>
         </div>
