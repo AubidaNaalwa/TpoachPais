@@ -12,7 +12,6 @@ import Admin from './components/Admin';
 import Footer from './components/Footer';
 import React, { useState } from 'react';
 import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
-import Events from "./components/Events/Events";
 import Courses from './components/Courses/Courses';
 import CourseInfo from './components/Courses/CourseInfo';
 import SpaceGallery from "./components/Galleries/SpaceGallery";
@@ -22,6 +21,8 @@ import SimulationSolarSystem from "./components/Simulations/SolarSystem";
 import SubNavWrapper from "./components/SubNavWrapper";
 import Experiments from './components/Experiments/Experiments';
 import ExperimentInfo from './components/Experiments/ExperimentInfo';
+import Events from './components/Events/Events';
+import EventInfo from './components/Events/EventInfo';
 
 const theme = createMuiTheme({
 	palette: {
@@ -47,7 +48,8 @@ const useStyles = makeStyles(() => ({
 export default function App() {
 	const classes = useStyles(),
 	[course, setCourse] = useState(null),
-	[experiment, setExperiment] = useState(null);
+	[experiment, setExperiment] = useState(null),
+	[event, setEvent] = useState(null);
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -61,9 +63,11 @@ export default function App() {
 							<Route path="/about" exact render={() => <About />} />
 							<Route path="/contactus" exact render={() => <ContactUs />} />
 							<Route path="/admin" exact render={() => <Admin />} />
-							<Route path="/tpais/events" exact render={() => <Events />} />
-							<Route path="/space/events" exact render={() => <Events />} />
+							<Route path="/tpais/events" exact render={() => <Events setEvent={setEvent} />} />
+							<Route path="/space/events" exact render={() => <Events setEvent={setEvent} />} />
 							<Route path="/tpais/courses" exact render={() => <Courses setCourse={setCourse} />} />
+							<Route path="/tpais/events/eventinfo" exact render={() => <EventInfo eInfo={event} />} />
+							<Route path="/space/events/eventinfo" exact render={() => <EventInfo eInfo={event} />} />
 							<Route path="/tpais/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />
 							<Route path="/space/courses" exact render={() => <Courses setCourse={setCourse} />} />
 							<Route path="/space/courses/courseinfo" exact render={() => <CourseInfo cInfo={course} />} />

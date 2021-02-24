@@ -1,4 +1,4 @@
-import React ,{useState}from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
+import UpdateExperiments from './UpdateExperiments';
 
 const useStyles = makeStyles({
 	root: {
@@ -23,31 +26,50 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard(props) {
-	const classes = useStyles(),
+	const isAdmin = true, // REMOVE IN FUTURE
+	classes = useStyles(),
 	eInfo = props.experiment,
 	setExperiment = props.setExperiment,
-	[err, setErr] = useState(0);
+	[err, setErr] = useState(0),
+	[open, setOpen] = useState(false);
+
+	const handleRemove = (id) => {
+		props.handleRemove(id);
+	}
+
+	const handleEdit = () => {
+		setOpen(true);
+	}
 
 	return (
-		<Link to={window.location.pathname === '/tpais/experiments' ? '/tpais/experiments/experimentinfo' : '/space/experiments/experimentinfo'}>
-			<Card className={classes.root} onClick={() => setExperiment(eInfo)}>
-				<CardActionArea>
-					<CardMedia>
-						<img alt="img" className={classes.media} src={!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
-					</CardMedia>
-					<CardContent>
-						<Typography gutterBottom variant="h6" component="h2">
-							{eInfo.name}
-						</Typography>
-						<Typography gutterBottom variant="body2" component="p">
-							<Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
-						</Typography>
-						<Typography variant="body2" color="textSecondary" component="p">
-							{eInfo.shortDescription}
-						</Typography>
-					</CardContent>
-				</CardActionArea>
-			</Card>
-		</Link>
+		<div>
+			{
+				isAdmin && <div className='adminBtns'>
+				<DeleteOutlineRoundedIcon onClick={() => handleRemove(eInfo._id)} />
+				<EditRoundedIcon onClick={handleEdit} />
+				</div>
+			}
+			<Link to={window.location.pathname === '/tpais/experiments' ? '/tpais/experiments/experimentinfo' : '/space/experiments/experimentinfo'}>
+				<Card className={classes.root} onClick={() => setExperiment(eInfo)}>
+					<CardActionArea>
+						<CardMedia>
+							<img alt="img" className={classes.media} src={!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
+						</CardMedia>
+						<CardContent>
+							<Typography gutterBottom variant="h6" component="h2">
+								{eInfo.name}
+							</Typography>
+							<Typography gutterBottom variant="body2" component="p">
+								<Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
+							</Typography>
+							<Typography variant="body2" color="textSecondary" component="p">
+								{eInfo.shortDescription}
+							</Typography>
+						</CardContent>
+					</CardActionArea>
+				</Card>
+			</Link>
+			{open && <UpdateExperiments experimentInfo={eInfo} setOpen={setOpen} handleEdit={props.handleEdit} />}
+		</div>
 	);
 }

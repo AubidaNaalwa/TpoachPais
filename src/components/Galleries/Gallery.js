@@ -15,5 +15,5 @@ export default function Gallery(props) {
             </Link>
             <p>{props.gallery._id}</p>
         </div>
-    )
+    );
 }
