@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function ExperimentInfo(props) {
     const history = useHistory();
-    const item = props.eInfo;
+    const item = props.sInfo;
     const [err, setErr] = useState(0);
     if (!item)
         return (<Redirect to="/space/experiments" />);
@@ -15,7 +15,7 @@ export default function ExperimentInfo(props) {
             <h3>{item.name}</h3>
             <iframe title="experiment" width="560" height="315" src={item.img} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             <p>{item.longDescription}</p>
-            <Button onClick={() => history.push('/tpais/experiments')} size="small" color="primary">
+            <Button onClick={() => history.push('/space/experiments')} size="small" color="primary">
             <i class="far fa-arrow-alt-circle-right"></i>
 			</Button>
         </div>
