@@ -27,7 +27,6 @@ export default function MediaCard(props) {
 	[err, setErr] = useState(0);
 
 	return (
-<<<<<<< HEAD
 		<Link to={window.location.pathname === '/tpais/courses' ? '/tpais/courses/courseinfo' : '/space/courses/courseinfo'}>
 			<Card className={classes.root} onClick={() => setCourse(cInfo)}>
 				<CardActionArea>
@@ -48,25 +47,5 @@ export default function MediaCard(props) {
 				</CardActionArea>
 			</Card>
 		</Link>
-=======
-		<Card className={classes.root}>
-			<CardActionArea>
-				<CardMedia>
-					<img alt="img" className={classes.media} src= {!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
-				</CardMedia>
-				<CardContent>
-					<Typography gutterBottom variant="h6" component="h2">
-						{cInfo.name} <Link to='/tpais/courses/courseinfo'><i className="fas fa-info-circle" onClick={() => setCourse(cInfo)}></i></Link>
-					</Typography>
-					<Typography gutterBottom variant="body2" component="p">
-						<Moment format="YYYY/MM/DD">{cInfo.date}</Moment>
-					</Typography>
-					<Typography variant="body2" color="textSecondary" component="p">
-						{cInfo.shortDescription}
-					</Typography>
-				</CardContent>
-			</CardActionArea>
-		</Card>
->>>>>>> 30c05a46a78b8e978df61a5bacb18b7d8610b98d
 	);
 }
