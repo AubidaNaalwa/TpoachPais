@@ -29,34 +29,27 @@ export default function MediaCard(props) {
 	[err, setErr] = useState(0);
 
 	return (
-		<Card className={classes.root}>
+		<Link to={window.location.pathname === '/tpais/experiments' ? '/tpais/experiments/experimentinfo' : '/space/experiments/experimentinfo'}>
+		<Card className={classes.root} onClick={() => setExperiment(eInfo)}>
 			<CardActionArea>
-			<CardMedia>
-					<img alt="img" className={classes.media} src= {!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg" } onError={()=>setErr(1)} />
+				<CardMedia>
+					<img className={classes.media} src={!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
 				</CardMedia>
 				<CardContent>
 					<Typography gutterBottom variant="h6" component="h2">
 						{eInfo.name}
 					</Typography>
-                    <Typography gutterBottom variant="body2" component="p">
-                        <Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
+					<Typography gutterBottom variant="body2" component="p">
+						<Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
 					</Typography>
 					<Typography variant="body2" color="textSecondary" component="p">
 						{eInfo.shortDescription}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
-			<CardActions>
-				<Button onClick={() => setExperiment(eInfo)} size="small" color="primary">
-				<p>{item.available ? `للاشتراك والتسجيل :${item.courseLink}` : "الدورة غير متوفرة حاليا"}</p>
-				if (window.location.pathname === '/tpais/experiments') {
-                <Link to='/tpais/experiments/experimentinfo'>اقرأ المزيد...</Link>
-            } else {
-                
-				<Link to='/space/experiments/experimentinfo'>اقرأ المزيد...</Link>
-            }
-				</Button>
-			</CardActions>
 		</Card>
-	);
+	</Link>
+);
+			
+	
 }
