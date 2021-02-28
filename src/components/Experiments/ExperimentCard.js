@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -25,12 +23,11 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function MediaCard(props) {
+export default function ExperimentCard(props) {
 	const isAdmin = true, // REMOVE IN FUTURE
 	classes = useStyles(),
 	eInfo = props.experiment,
 	setExperiment = props.setExperiment,
-	[err, setErr] = useState(0),
 	[open, setOpen] = useState(false);
 
 	const handleRemove = (id) => {
@@ -49,11 +46,11 @@ export default function MediaCard(props) {
 				<EditRoundedIcon onClick={handleEdit} />
 				</div>
 			}
-			<Link to={window.location.pathname === '/tpais/experiments' ? '/tpais/experiments/experimentinfo' : '/space/experiments/experimentinfo'}>
+			<Link to={window.location.pathname === '/tpais/experiments' ? `/tpais/experiments/${eInfo._id}` : `/space/experiments/${eInfo._id}`}>
 				<Card className={classes.root} onClick={() => setExperiment(eInfo)}>
 					<CardActionArea>
 						<CardMedia>
-							<img alt="img" className={classes.media} src={!err ? eInfo.defaultImg : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
+							<img alt="img" className={classes.media} src={eInfo.img} onError={(e) => e.target.src ='./images/default_experiment.jpg'} />
 						</CardMedia>
 						<CardContent>
 							<Typography gutterBottom variant="h6" component="h2">
@@ -62,7 +59,7 @@ export default function MediaCard(props) {
 							<Typography gutterBottom variant="body2" component="p">
 								<Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
 							</Typography>
-							<Typography variant="body2" color="textSecondary" component="p">
+							<Typography variant="body2" component="p">
 								{eInfo.shortDescription}
 							</Typography>
 						</CardContent>

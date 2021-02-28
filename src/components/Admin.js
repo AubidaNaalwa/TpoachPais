@@ -1,4 +1,5 @@
 import SnackBar from './SnackBar';
+import { API_PATH, SNACKBAR_PROPS } from '../Constants';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,10 +9,8 @@ import PersonPinIcon from '@material-ui/icons/PersonPin';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 import EventsIcon from '@material-ui/icons/EventAvailable';
 import ActivitiesIcon from '@material-ui/icons/LocalActivity';
-import { API_PATH, SNACKBAR_PROPS } from '../Constants';
 import axios from 'axios';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -59,7 +58,7 @@ const useStyles = makeStyles(() => ({
     },
     biggerFont: {
         fontWeight: 'bold',
-        fontSize: '110%',
+        fontSize: '100%',
     },
     sizes: {
         width: 370,
@@ -67,11 +66,14 @@ const useStyles = makeStyles(() => ({
     },
     lblSelect: {
         fontWeight: 'bold',
-        fontSize: '100%',
+        fontSize: '80%',
         textAlign: 'right'
     },
     btn: {
-        textIndent: 3
+        fontSize: '120%',
+        paddingLeft: 20,
+        paddingRight: 20,
+        color: 'white'
     }
 }));
 
@@ -94,7 +96,10 @@ export default function Admin() {
     [imageShortDesc, setImageShortDesc] = useState(''),
     [imageCategory, setImageCategory] = useState(''),
     [imageForWebsite, setImageForWebsite] = useState(''),
-    [snack, setSnack] = useState({ message: "", severity: "" });
+    [eventForWebsite, setEventForWebsite] = useState(''),
+    [courseForWebsite, setCourseForWebsite] = useState(''),
+    [expirementForWebsite, setExpirementForWebsite] = useState(''),
+    [snack, setSnack] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -103,7 +108,7 @@ export default function Admin() {
     const handleSubmitEvent = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}event`, { name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate });
+            await axios.post(`${API_PATH}events/new`, { name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate, forWebsite: eventForWebsite });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -114,7 +119,7 @@ export default function Admin() {
     const handleSubmitCourse = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}course`, { name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate, courseLink });
+            await axios.post(`${API_PATH}courses/new`, { name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate, courseLink, forWebsite: courseForWebsite });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -125,7 +130,7 @@ export default function Admin() {
     const handleSubmitImage = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}image`, { name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory, imageForWebsite });
+            await axios.post(`${API_PATH}images/new`, { name: imageName, img: imgURL, shortDescription: imageShortDesc, category: imageCategory, forWebsite: imageForWebsite });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -136,9 +141,9 @@ export default function Admin() {
     return (
         <div className={classes.root}>
             <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="off">
-                <Tab className={classes.biggerFont} label="أحداث" icon={<EventsIcon />} aria-label="أحداث" {...a11yProps(0)} />
-                <Tab className={classes.biggerFont} label="نشاطات" icon={<ActivitiesIcon />} aria-label="نشاطات" {...a11yProps(1)} />
-                <Tab className={classes.biggerFont} label="صور" icon={<PersonPinIcon />} aria-label="صور" {...a11yProps(2)} />
+                <Tab className={classes.biggerFont} label="أحداث المركز" icon={<EventsIcon />} aria-label="أحداث المركز" {...a11yProps(0)} />
+                <Tab className={classes.biggerFont} label="نشاطات ودورات" icon={<ActivitiesIcon />} aria-label="نشاطات ودورات" {...a11yProps(1)} />
+                <Tab className={classes.biggerFont} label="معرض الصور" icon={<PersonPinIcon />} aria-label="معرض الصور" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <form onSubmit={handleSubmitEvent}>
@@ -150,9 +155,9 @@ export default function Admin() {
                     <br/><br/>
                     <TextField multiline required onInput={e => setEventLongDesc(e.target.value)} name="eventLongDesc" placeholder="شرح موسع" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setEventDate(e.target.value)} name="eventDate" label="تاريخ الحدث" type="date" format="yyyy-MM-dd" className={classes.sizes} InputLabelProps={{ shrink: true }} />
+                    <TextField required onInput={e => setEventDate(e.target.value)} name="eventDate" label="تاريخ الحدث" type="date" format="yyyy-MM-dd" className={classes.sizes} />
                     <br/><br/>
-                    <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
+                    <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                 </form>
             </TabPanel>
             <TabPanel value={value} index={1}>
@@ -165,11 +170,11 @@ export default function Admin() {
                     <br/><br/>
                     <TextField multiline required onInput={e => setCourseLongDesc(e.target.value)} name="courseLongDesc" placeholder="شرح موسع" direction="right" className={classes.sizes} />
                     <br/><br/>
-                    <TextField required onInput={e => setCourseDate(e.target.value)} name="courseDate" label="تاريخ الدورة" type="date" format="yyyy-MM-dd" className={classes.sizes} InputLabelProps={{ shrink: true }} />
+                    <TextField required onInput={e => setCourseDate(e.target.value)} name="courseDate" label="تاريخ الدورة" type="date" format="yyyy-MM-dd" className={classes.sizes} />
                     <br/><br/>
                     <TextField required onInput={e => setCourseLink(e.target.value)} name="courseLink" placeholder="رابط التسجيل" className={classes.sizes} />
                     <br/><br/>
-                    <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
+                    <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                 </form>
             </TabPanel>
             <TabPanel value={value} index={2}>
@@ -190,10 +195,10 @@ export default function Admin() {
                         <FormHelperText className={classes.lblSelect}>مكان الصورة</FormHelperText>
                     </FormControl>
                     <br/><br/>
-                    <Button type="submit" variant="contained" color="primary" className={classes.btn} startIcon={<Icon>send</Icon>}>أرسال</Button>
+                    <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                 </form>
             </TabPanel>
-            <SnackBar message={snack.message} severity={snack.severity} />
+            <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
         </div>
     );
 }

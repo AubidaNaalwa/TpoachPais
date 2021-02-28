@@ -2,62 +2,75 @@ import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import PageNotFound from '../PageNotFound';
+import SnackBar from '../SnackBar';
+import { SNACKBAR_PROPS, API_PATH } from '../../Constants';
 
 export default function Events(props) {
     const [events, setEvents] = useState([]),
+    [snack, setSnack] = useState(''),
     [currPath, setCurrPath] = useState('');
 
     const handleRemove = (id) => {
         try {
-            axios.delete(`/event/${currPath}/delete/id=${id}`);
+            axios.delete(`${API_PATH}/${currPath}/events/delete/${id}`);
             const tempEvents = [...events];
             const i = tempEvents.findIndex(e => e._id === id);
             tempEvents.splice(i, 1);
             setEvents(tempEvents);
         }
-        catch (error) {
-            console.log(error.toString());
+        catch (err) {
+            setSnack({ message: err.message, severity: SNACKBAR_PROPS.SeverityType.ERROR });
         }
     }
 
     const handleEdit = (event) => {
         try {
-            axios.put(`/event/${currPath}/update/id=${event._id}`, event);
+            axios.put(`${API_PATH}/${currPath}/events/update/${event._id}`, event);
             const tempEvents = [...events];
             const i = tempEvents.findIndex(e => e._id === event._id);
             tempEvents[i] = event;
             setEvents(tempEvents);
         }
-        catch (error) {
-            console.log(error.toString());
+        catch (err) {
+            setSnack({ message: err.message, severity: SNACKBAR_PROPS.SeverityType.ERROR });
         }
     }
 
     useEffect(() => {
         async function fetchEvents() {
-            let events;
-            if (window.location.pathname === '/tpais/events') {
-                events = await axios.get(`/events`);
-                setCurrPath('tpoach');
+            try {
+                let events;
+                if (window.location.pathname === '/tpais/events') {
+                    events = await axios.get(`${API_PATH}/tpais/events`);
+                    setCurrPath('tpais');
+                }
+                else {
+                    events = await axios.get(`${API_PATH}/space/events`);
+                    setCurrPath('space');
+                }
+                setEvents(events.data.events);
             }
-            else {
-                events = await axios.get(`/space/events`);
-                setCurrPath('space');
+            catch {
+                setSnack({ message: SNACKBAR_PROPS.MessageType.CONNECTION_ERROR, severity: SNACKBAR_PROPS.SeverityType.ERROR });
             }
-            setEvents(events.data.events);
         }
         fetchEvents();
     }, []);
 
     return (
-        <Grid container direction="row" justify="flex-start" spacing={10} style={{ marginTop: -10, marginRight: -12 }}>
-        {
-            events.map(e => (
-                <Grid item key={e._id}>
-                    <EventCard setEvent={props.setEvent} handleRemove={handleRemove} handleEdit={handleEdit} event={e} />
-                </Grid>
-            ))
-        }
-        </Grid>
+        <>
+            <Grid container direction="row" justify="space-evenly" spacing={3}>
+            {
+                events.length > 0 ? events.map(e => (
+                    <Grid item key={e._id}>
+                        <EventCard setEvent={props.setEvent} handleRemove={handleRemove} handleEdit={handleEdit} event={e} />
+                    </Grid>
+                ))
+                : <PageNotFound />
+            }
+            </Grid>
+            <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
+        </>
     );
 }

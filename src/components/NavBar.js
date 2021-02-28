@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         height: 70,
-        transition: 'transform 0.5s',
         marginLeft: theme.spacing(1)
     }
 }));
@@ -27,7 +26,7 @@ export default function NavBar() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" className="mobile_navbar_fix">
                 <Toolbar>
                     <Link to="/" className={classes.inputRoot} >
                         <IconButton edge="start" color="inherit">

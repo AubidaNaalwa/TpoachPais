@@ -1,7 +1,8 @@
 .news_header {
     background-color: #283039;
     padding-left: 10px;
-    padding-right: 15px;
+    padding-right: 10px;
+    text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
     color: white;
@@ -9,17 +10,17 @@
     border-top-right-radius: 5px;
     top: -40.5px;
     position: relative;
-    word-spacing: 3px;
+    word-spacing: 4px;
     box-shadow: 2px 2px 11px black;
 }
 
 .news_container {
-    width: 18em;
-    height: 25em;
+    width: 270px;
+    height: 460px;
     position: fixed;
-    top: 28em;
-    left: 22px;
-    transform: translateY(-50%);
+    top: 475px;
+    left: 50%;
+    transform: translate(-310%, -50%);
     box-sizing: border-box;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -48,8 +49,8 @@
 }
 
 @keyframes marquee {
-    0%   { top:   25em }
-    100% { top: -25em }
+    0%   { top:   460px }
+    100% { top: -460px }
 }
 
 .marq_font .marquee {
@@ -97,4 +98,105 @@
 /*.vanity a:hover, */
 .marq_font a:hover {
     color: #F65314;
+}
+
+.feedItem {
+    width: 90%;
+    height: 20vh;
+    margin: auto auto 15px auto;
+    background-color: #f5f3f3;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 23px, rgba(255, 255, 255, 0.5) 4px, rgba(255, 255, 255, 0.5) 40px);
+    top: 15px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.header {
+    height: 4vh;
+    background: #7baa49;
+    position: absolute;
+    right: -10px;
+    text-align: -webkit-right;
+    top: -5px;
+    border-radius: 4px;
+    line-height: 4vh;
+    width: 75%;
+    text-transform: capitalize;
+    color: white;
+    font-size: 2vh;
+    padding-left: 5px;
+    font-family: monospace;
+    vertical-align: unset;
+}
+
+.feedItem img {
+    height: 13vh;
+    width: 13vh;
+    position: absolute;
+    right: 20px;
+    border-radius: 4px;
+    bottom: 10px;
+}
+
+.content2 {
+    position: absolute;
+    width: 55vw;
+    background: white;
+    left: 2vw;
+    bottom: 8px;
+    padding: 1vh;
+    font-size: 1.9vh;
+    box-sizing: content-box;
+    overflow: auto;
+    text-align: justify;
+    height: 11vh;
+    border-radius: 4px;
+    border: 1px solid #e4e8e9;
+    color: #55717e;
+    font-family: sans-serif;
+    line-height: 1.5;
+}
+
+.tpaisSticky{
+    font-size: 0.8em;
+    font-family: Impact;
+    color: yellow;
+    background-color: #2d3940;
+    font-style: italic;
+    font-variant: small-caps;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.subTitle{
+    color: rgb(226, 13, 13);
+}
+
+.spaceSticky{
+    font-size: 0.8em;
+    font-family: Impact;
+    color: #80403d;
+    background-color:#cfcad8;
+    font-style: italic;
+    font-variant: small-caps;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.spaceHeader{
+    height: 4vh;
+    background: #25a5f0;
+    position: absolute;
+    right: -10px;
+    text-align: -webkit-right;
+    top: -5px;
+    border-radius: 4px;
+    line-height: 4vh;
+    width: 75%;
+    text-transform: capitalize;
+    color: white;
+    font-size: 2vh;
+    padding-left: 5px;
+    font-family: monospace;
+    vertical-align: unset;
 }

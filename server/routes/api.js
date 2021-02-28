@@ -1,86 +1,123 @@
 const express = require('express'),
+{ isValidFullName, isValidEmail, isValidMessage } = require('../../src/Constants'),
 Courses = require('../models/Courses'),
-SpaceCourses = require('../models/SpaceCourses'),
 Images = require('../models/Images'),
 Videos = require('../models/Videos'),
-SpaceExperiments = require('../models/SpaceExperiments'),
 Experiments = require('../models/Experiments'),
 Events = require('../models/Events'),
-SpaceEvents  = require('../models/SpaceEvents'),
 Contact = require('../models/ContactUs'),
 router = express.Router(),
-{ AdminUser, AdminPass } = require('../../src/Constants');
-let isLoggedIn = false;
+AdminUser = process.env.REACT_APP_ADMIN,
+AdminPass = process.env.REACT_APP_PASS;
+let isLoggedIn = true;
 
-router.post('/logIn', (req, res)=> {
-    if (!req.body) {
-        res.send({ error : 1 });
-        isLoggedIn = false;
-        return;
-    }
-    if (AdminUser === req.body.username && AdminPass === req.body.password) {
-        res.send({ error: 0 });
+router.post('/login', (req, res)=> {
+    const body = clearBadChars(req.body);
+
+    if (body && AdminUser === req.body.username && AdminPass === req.body.password)
+        //TODO
         isLoggedIn = true;
-    }
-    else {
-        res.send({ error: 1 });
-        isLoggedIn = false;
-    }
+
+    res.send(isLoggedIn);
 });
 
 router.post('/logout', (req, res)=> {
     isLoggedIn = false;
-    res.send({ error: 0 });
+    res.sendStatus(200);
 });
 
-const checkValidate = (body) => {
-    body.replace(/</g, '&lt;');
+const clearBadChars = (body) => {
+    const keys = Object.keys(body);
+    keys.forEach((key) => body[key] = body[key].replace(/<|>|`/g, '').trim());
     return body;
 }
 
-router.get('/', (req, res) => {
-    res.send("server working");
-});
-
-router.post('/experiment', (req, res) => {
-    let body = req.body;
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    body = checkValidate(req.body);
-    const experiment = new Experiments(body);
-    experiment.save();
-    res.end();
-});
-
-router.get('/experiments', (req, res) => {
-    Experiments.find({}, [], {sort:{date: -1}}, function(err, data) {
+router.get('/tpais/experiments', (req, res) => {
+    Experiments.find({ forWebsite: 't' }, [], {sort:{date: -1}}, function(err, data) {
         if (err)
-            res.send({ err, status: 400 });
+            res.send(err.message);
         else
-            res.send({ experiments: data, status: 200 });
+            res.send({ experiments: data });
     });
 });
 
-router.put('/experiments/tpoach/update/id=:id', (req, res)=>{
+router.post('/tpais/experiments/new', (req, res) => {
+    const body = clearBadChars(req.body);
+
+    if (!body || !isLoggedIn) {
+        res.send({ err: "invalid data", status: 400 });
+        return;
+    }
+
+    const experiment = new Experiments(body);
+    experiment.save();
+});
+
+router.put('/tpais/experiments/update/:id', (req, res)=>{
     if (!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
     Experiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
 
-router.delete('/experiments/tpoach/delete/id=:id', (req, res)=> {
+router.delete('/tpais/experiments/delete/:id', (req, res)=> {
     if(!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
+        return;
+    }
+
+    Experiments.findByIdAndDelete(req.params.id, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(result);
+    });
+});
+
+router.get('/space/experiments', (req, res) => {
+    Experiments.find({ forWebsite: 's' }, [], {sort: {date: -1}}, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send({ experiments: result });
+    });
+});
+
+router.post('/space/experiments/new', (req, res) => {
+    const body = clearBadChars(req.body);
+    if (!body || !isLoggedIn) {
+        res.send({ err: "invalid data", status: 400 });
+        return;
+    }
+
+    const experiment = new Experiments(body);
+    experiment.save();
+});
+
+router.put('/space/experiments/update/:id', (req, res)=> {
+    if (!req.params.id) {
+        res.send({ err: "invalid data", status: 400 });
+        return;
+    }
+
+    Experiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(result);
+    });
+});
+
+router.delete('/space/experiments/delete/:id', (req, res)=>{
+    if(!req.params.id) {
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
@@ -92,81 +129,28 @@ router.delete('/experiments/tpoach/delete/id=:id', (req, res)=> {
     });
 });
 
-//Start Space Experiments
-router.post('/space/experiment', (req, res) => {
-    let body = req.body;
-    if (!body|| !isLoggedIn) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    body = checkValidate(req.body);
-    const experiment = new SpaceExperiments(body);
-    experiment.save();
-    res.end();
-});
-
-router.get('/space/experiments', (req, res) => {
-    SpaceExperiments.find({}, [], {sort: {date: -1}}, function(err, data) {
+router.get('/tpais/courses', (req, res) => {
+    Courses.find({ forWebsite: 't' }, [], {sort: {date: -1}}, function(err, result) {
         if (err)
-            res.send({ err, status: 400 });
+            res.send(err.message);
         else
-            res.send({ experiments: data, status: 200 });
+            res.send({ courses: result });
     });
 });
 
-router.put('/experiments/space/update/id=:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({ err: "invalid data" });
+router.post('/tpais/courses/new', (req, res) => {
+    const body = clearBadChars(req.body);
+    if (!body || !isLoggedIn) {
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    SpaceExperiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err);
-        else
-            res.send(result);
-    });
-});
-
-router.delete('/experiments/space/delete/id=:id', (req, res)=>{
-    if(!req.params.id) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    SpaceExperiments.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err);
-        else
-            res.send(result);
-    });
-});
-//End Space Experiments
-
-router.get('/courses', (req, res) => {
-    Courses.find({}, [], {sort: {date: -1}}, function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ courses: data, status: 200 });
-    });
-});
-
-router.post('/course', (req, res) => {
-    let body = req.body;
-    if (!body|| !isLoggedIn) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    body = checkValidate(req.body);
     const course = new Courses(body);
     course.save();
-    res.end();
+    res.sendStatus(200);
 });
 
-router.put('/course/tpoach/update/id=:id', (req, res)=> {
+router.put('/tpais/course/update/:id', (req, res)=> {
     if (!req.params.id) {
         res.send({err: "invalid data"});
         return;
@@ -174,299 +158,291 @@ router.put('/course/tpoach/update/id=:id', (req, res)=> {
 
     Courses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
 
-router.delete('/course/tpoach/delete/id=:id', (req, res)=> {
+router.delete('/tpais/course/delete/:id', (req, res)=> {
     if(!req.params.id) {
-        res.send({err: "invalid data"});
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
     Courses.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     })
 });
 
-//Space Courses
 router.get('/space/courses', (req, res) => {
-    SpaceCourses.find({}, [], {sort: {date: -1}}, function(err, data) {
+    Courses.find({ forWebsite: 's' }, [], {sort: {date: -1}}, function(err, result) {
         if (err)
-            res.send({ err, status: 400 });
+            res.send(err.message);
         else
-            res.send({ courses: data, status: 200 });
+            res.send({ courses: result });
     });
 });
 
-router.post('/space/course', (req, res) => {
-    let body = req.body;
+router.post('/space/courses/new', (req, res) => {
+    const body = clearBadChars(req.body);
     if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    body = checkValidate(req.body);
-    const course = new SpaceCourses(body);
+    const course = new Courses(body);
     course.save();
-    res.end();
 });
 
-router.put('/course/space/update/id=:id', (req, res)=> {
+router.put('/space/courses/update/:id', (req, res)=> {
     if (!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    SpaceCourses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+    Courses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
 
-router.delete('/course/space/delete/id=:id', (req, res)=> {
+router.delete('/space/courses/delete/:id', (req, res)=> {
     if(!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
-    SpaceCourses.findByIdAndDelete(req.params.id, function(err, result) {
+    Courses.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
-//End Space Courses
 
-router.get('/events', (req, res) => {
-    Events.find({}, [], {sort:{date: -1}} ,function(err, data) {
+router.get('/tpais/events', (req, res) => {
+    Events.find({ forWebsite: 't' }, [], {sort:{date: -1}} ,function(err, result) {
         if (err)
-            res.send({ err, status: 400 });
+            res.send(err.message);
         else
-            res.send({ events: data, status: 200 });
+            res.send({ events: result });
     });
 });
 
-router.post('/event', (req, res) => {
-    let body = req.body;
+router.get('/space/events', (req, res) => {
+    Events.find({ forWebsite: 's' }, [], {sort:{date: -1}}, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send({ events: result });
+    });
+});
+
+router.post('/events/new', (req, res) => {
+    const body = clearBadChars(req.body);
     if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    body = checkValidate(req.body);
     const event = new Events(body);
     event.save();
-    res.end();
+    res.sendStatus(200);
 });
 
-router.put('/event/tpoach/update/id=:id', (req, res)=> {
+router.put('/tpais/events/update/:id', (req, res)=> {
     if (!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
     Events.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
 
-router.delete('/event/tpoach/delete/id=:id', (req, res)=> {
+router.put('/space/events/update/:id', (req, res)=> {
+    if (!req.params.id) {
+        res.send({ err: "invalid data", status: 400 });
+        return;
+    }
+
+    Events.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(result);
+    });
+});
+
+router.delete('/tpais/events/delete/:id', (req, res)=> {
     if(!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
     Events.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
 
-//new Space Events
-router.get('/space/events', (req, res) => {
-    SpaceEvents.find({}, [], {sort:{date: -1}}, function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ events: data, status: 200 });
-    });
-});
-
-router.post('/space/event', (req, res) => {
-    let body = req.body;
-    if (!body|| !isLoggedIn) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    body = checkValidate(req.body);
-    const event = new SpaceEvents(body);
-    event.save();
-    res.end();
-});
-
-router.put('/event/space/update/id=:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    SpaceEvents.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err);
-        else
-            res.send(result);
-    });
-});
-
-router.delete('/event/space/delete/id=:id', (req, res)=> {
+router.delete('/space/events/delete/:id', (req, res)=> {
     if(!req.params.id) {
-        res.send({ err: "invalid data" });
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    SpaceEvents.findByIdAndDelete(req.params.id, function(err, result) {
+    Events.findByIdAndDelete(req.params.id, function(err, result) {
         if (err)
-            res.send(err);
+            res.send(err.message);
         else
             res.send(result);
     });
 });
-//End Space Events
+
+router.get('/tpais/images/:id', (req, res) => {
+    Images.find({ forWebsite: 't', category: req.params.id }, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send({ images: result });
+    });
+});
 
 router.get('/space/images/:id', (req, res) => {
-    Images.find({ forWebsite: 's', category: req.params.id }, function(err, data) {
+    Images.find({ forWebsite: 's', category: req.params.id }, function(err, result) {
         if (err)
-            res.send({ err, status: 400 });
+            res.send(err.message);
         else
-            res.send({ images: data, status: 200 });
+            res.send({ images: result });
     });
 });
 
-router.get('/tpoach/images/:id', (req, res) => {
-    Images.find({ forWebsite: 't', category: req.params.id }, function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ images: data, status: 200 });
+router.get('/tpais/gallery', async (req, res) => {
+    const result = await Images.aggregate().match({ forWebsite: "t" }).group(
+    {
+        _id: '$category',
+        imgUrl: { $first: "$img" },
+        count: { $sum: 1 }
     });
+    res.send({ categories: result });
 });
 
-router.post('/image', (req, res) => {
-    let body = req.body;
-    if (!body|| !isLoggedIn) {
-        res.send({ err: "data is missing" });
+router.get('/space/gallery', async (req, res) => {
+    const result = await Images.aggregate().match({ forWebsite: "s" }).group(
+    {
+        _id: '$category',
+        imgUrl: { $first: "$img" },
+        count: { $sum: 1 }
+    });
+    res.send({ categories: result });
+});
+
+router.post('/images/new', (req, res) => {
+    const body = clearBadChars(req.body);
+    if (!body || !isLoggedIn) {
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    body = checkValidate(req.body);
     const image = new Images(body);
     image.save();
-    res.end();
+    res.sendStatus(200);
 });
 
-router.get('/imagesCategory/tpoach', async (req, res) => {
-    const results = await Images.aggregate().match({ forWebsite: "t" }).group(
-    {
-        _id: '$category',
-        imgUrl: { $first: "$img" },
-        count: { $sum: 1 }
+router.get('/tpais/videos', (req, res) => {
+    Videos.find({ forWebsite: 't' }, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(result);
     });
-    res.send({ categories: results });
 });
 
-router.get('/imagesCategory/space', async (req, res) => {
-    const results = await Images.aggregate().match({ forWebsite: "s" }).group(
-    {
-        _id: '$category',
-        imgUrl: { $first: "$img" },
-        count: { $sum: 1 }
+router.get('/space/videos', (req, res) => {
+    Videos.find({ forWebsite: 's' }, function(err, result) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(result);
     });
-    res.send({ categories: results });
+});
+
+router.get('/tpais/videos', (req, res) => {
+    Videos.find({ forWebsite: 't' }, function(err, data) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(data);
+    });
+});
+
+router.get('/space/videos', (req, res) => {
+    Videos.find({ forWebsite: 's' }, function(err, data) {
+        if (err)
+            res.send(err.message);
+        else
+            res.send(data);
+    });
+});
+
+router.post('/videos/new', (req, res) => {
+    const body = clearBadChars(req.body);
+    if (!body || !isLoggedIn) {
+        res.send({ err: "invalid data", status: 400 });
+        return;
+    }
+
+    const image = new Videos(body);
+    image.save();
+    res.sendStatus(200);
 });
 
 router.post('/contactus', (req, res) => {
-    let body = req.body;
-    if (!body|| !isLoggedIn) {
-        res.send({ err: "invalid data" });
+    const body = clearBadChars(req.body);
+    if (!body || !isLoggedIn || !isValidFullName(body.fullname) || !isValidEmail(body.email) || !isValidMessage(body.message)) {
+        res.send({ err: "invalid data", status: 400 });
         return;
     }
 
-    body = checkValidate(req.body);
     const contact = new Contact(body);
     contact.save();
-    res.end();
+    res.sendStatus(200);
 });
 
-router.get('/space/news', async(req,res)=> {
+router.get('/space/news', async (req, res)=> {
     try {
-        const courses = await SpaceCourses.find({}, [], {sort: {date: -1}, limit: 5});
-        const events = await SpaceEvents.find({}, [], {sort: {date: -1}, limit: 5});
-        const experiments = await SpaceExperiments.find({}, [], {sort: {date: -1}, limit: 5});
-        res.send({courses, events, experiments});
+        const courses = await Courses.find({ forWebsite: 's' }, [], {sort: {date: -1}, limit: 5});
+        const events = await Events.find({ forWebsite: 's' }, [], {sort: {date: -1}, limit: 5});
+        const experiments = await Experiments.find({ forWebsite: 's' }, [], {sort: {date: -1}, limit: 5});
+        res.send({ courses, events, experiments });
     }
-    catch(error) {
-        res.send({error});
+    catch(err) {
+        res.send(err.message);
     }
 });
 
-router.get('/tpoach/news', async (req,res)=> {
+router.get('/tpais/news', async (req, res)=> {
     try {
-        const courses = await Courses.find({}, [], {sort: {date: -1}, limit: 5});
-        const events = await Events.find({}, [], {sort: {date: -1}, limit: 5});
-        const experiments = await Experiments.find({}, [], {sort: {date: -1}, limit: 5});
-        res.send({courses, events, experiments});
+        const courses = await Courses.find({ forWebsite: 't' }, [], {sort: {date: -1}, limit: 5});
+        const events = await Events.find({ forWebsite: 't' }, [], {sort: {date: -1}, limit: 5});
+        const experiments = await Experiments.find({ forWebsite: 't' }, [], {sort: {date: -1}, limit: 5});
+        res.send({ courses, events, experiments });
     }
-    catch(error) {
-        res.send({error});
+    catch(err) {
+        res.send(err.message);
     }
 });
-
-//Videos
-router.get('/space/videos/:id', (req, res) => {
-    Videos.find({ forWebsite: 's' }, function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ videos: data, status: 200 });
-    });
-});
-
-router.get('/tpoach/videos/', (req, res) => {
-    Videos.find({ forWebsite: 't' }, function(err, data) {
-        if (err)
-            res.send({ err, status: 400 });
-        else
-            res.send({ videos: data, status: 200 });
-    });
-});
-
-router.post('/video', (req, res) => {
-    let body = req.body;
-    if (!body|| !isLoggedIn) {
-        res.send({ err: "invalid data" });
-        return;
-    }
-
-    body = checkValidate(req.body);
-    const image = new Videos(body);
-    image.save();
-    res.end();
-});
-//End Videos
-
 
 module.exports = router;

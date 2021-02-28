@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import TPaisMenu from './TPaisMenu';
-import SpaceMenu from './SpaceMenu';
+import Menu from './Menu';
 import News from './News';
+import FBContainer from './FBContainer';
 
 export default function SubNavWrapper(props) {
-    const location = useLocation(),
-    [width, setWidth] = useState(window.innerWidth),
-    [height, setHeight] = useState(window.innerHeight);
-
-    const updateWidthAndHeight = () => {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
-    };
+    const [pageSize, setPageSize] = useState(null);
 
     useEffect(() => {
-        window.addEventListener("resize", updateWidthAndHeight);
-        return () => window.removeEventListener("resize", updateWidthAndHeight);
-    });
+        function handleResize() {
+            setPageSize({width: window.innerWidth, height: window.innerHeight});
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
-        <div style={{width: 'min-content', margin: '0 auto'}}>
-            { !location.pathname.includes('/space') ? <TPaisMenu /> : <SpaceMenu /> }
-            { width >= 1680 && height >= 600 && <News /> }
+        <div style={{width: 'min-content', margin: '0 auto', minHeight: 640}}>
+            <Menu />
+            {
+                pageSize && pageSize.width >= 1708 && pageSize.height >= 738 &&
+                <>
+                    <News />
+                    <div className="fb_container">
+                        <FBContainer />
+                    </div>
+                </>
+            }
             <div className="content">
                 <hr className="hr" />
                 {props.children}

@@ -23,12 +23,11 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function MediaCard(props) {
+export default function CourseCard(props) {
 	const isAdmin = true, // REMOVE IN FUTURE //TODO
 	classes = useStyles(),
 	cInfo = props.course,
 	setCourse = props.setCourse,
-	[err, setErr] = useState(0),
 	[open, setOpen] = useState(false);
 
 	const handleRemove = (id) => {
@@ -51,7 +50,7 @@ export default function MediaCard(props) {
 				<Card className={classes.root} onClick={() => setCourse(cInfo)}>
 					<CardActionArea>
 						<CardMedia>
-							<img alt="img" className={classes.media} src={!err ? cInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
+							<img alt="img" className={classes.media} src={cInfo.img} onError={(e) => e.target.src ='./images/default_course.jpg'} />
 						</CardMedia>
 						<CardContent>
 							<Typography gutterBottom variant="h6" component="h2">
@@ -60,7 +59,7 @@ export default function MediaCard(props) {
 							<Typography gutterBottom variant="body2" component="p">
 								<Moment format="YYYY/MM/DD">{cInfo.date}</Moment>
 							</Typography>
-							<Typography variant="body2" color="textSecondary" component="p">
+							<Typography variant="body2" component="p">
 								{cInfo.shortDescription}
 							</Typography>
 						</CardContent>

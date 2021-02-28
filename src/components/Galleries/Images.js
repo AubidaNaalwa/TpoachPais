@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-
+import { API_PATH } from '../../Constants';
 export default class Images extends React.Component {
     constructor(props) {
 		super(props);
@@ -13,15 +13,15 @@ export default class Images extends React.Component {
 
     async getImagesFromDb() {
 		const id = this.props.match.params.id;
-		let pathLink
-		this.props.pathLink === "s" ? pathLink = `/space/images/${id}` :  pathLink = `/tpoach/images/${id}`
-		const imagesArray = await axios.get(pathLink)
-		const imagesUrl = imagesArray.data.images.map(i=> i.img)
-		this.setState({imgUrls: imagesUrl})
+		let pathLink;
+		this.props.pathLink === "s" ? pathLink = `${API_PATH}/space/images/${id}` :  pathLink = `${API_PATH}/tpais/images/${id}`;
+		const imagesArray = await axios.get(pathLink);
+		const imagesUrl = imagesArray.data.images.map(i=> i.img);
+		this.setState ({imgUrls: imagesUrl});
     }
 
     componentDidMount() {
-		this.getImagesFromDb()
+		this.getImagesFromDb();
     }
 
     renderImageContent(src, index) {
@@ -56,13 +56,13 @@ export default class Images extends React.Component {
     render() {
     	return (
 			<div>
-				{
-					this.state.imgUrls ?
-					React.createElement("div", { className: "gallery-container" },
-					React.createElement("div", { className: "gallery-grid" },
-					this.state.imgUrls.map(this.renderImageContent)),
-					React.createElement(GalleryModal, { closeModal: this.closeModal, findPrev: this.findPrev, findNext: this.findNext, hasPrev: this.state.currentIndex > 0, hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length, src: this.state.imgUrls[this.state.currentIndex] })): null
-				}
+			{
+				this.state.imgUrls ?
+				React.createElement("div", { className: "gallery-container" },
+				React.createElement("div", { className: "gallery-grid" },
+				this.state.imgUrls.map(this.renderImageContent)),
+				React.createElement(GalleryModal, { closeModal: this.closeModal, findPrev: this.findPrev, findNext: this.findNext, hasPrev: this.state.currentIndex > 0, hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length, src: this.state.imgUrls[this.state.currentIndex] })): null
+			}
 			</div>
         );
 	}

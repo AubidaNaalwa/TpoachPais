@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
-import UpdateEvents from './UpdateEvents'
+import UpdateEvents from './UpdateEvents';
+import Button from '@material-ui/core/Button';
+import { isAdmin } from '../../Constants';
 
 const useStyles = makeStyles({
     root: {
@@ -20,38 +22,36 @@ const useStyles = makeStyles({
     media: {
         height: 180,
         width: '100%'
+    },
+    relative: {
+        position: 'relative'
     }
 });
 
 export default function EventCard(props) {
-    const isAdmin = true, // REMOVE IN FUTURE
-    classes = useStyles(),
+    const classes = useStyles(),
     eInfo = props.event,
     setEvent = props.setEvent,
-    [err, setErr] = useState(0),
     [open, setOpen] = useState(false);
 
     const handleRemove = (id) => {
         props.handleRemove(id);
     }
 
-    const handleEdit = () => {
-        setOpen(true);
-    }
-
     return (
-        <div>
+        <div className={classes.relative}>
             {
-                isAdmin && <div className='adminBtns'>
-                <DeleteOutlineRoundedIcon onClick={() => handleRemove(eInfo._id)} />
-                <EditRoundedIcon onClick={handleEdit} />
+                isAdmin &&
+                <div className='adminBtns'>
+                    <Button className="btn_delete" title="حذف" onClick={() => handleRemove(eInfo._id)}><DeleteOutlineRoundedIcon className="delete_icon" /></Button>
+                    <Button className="btn_update" title="تعديل" onClick={() => setOpen(true)}><EditRoundedIcon className="update_icon" /></Button>
                 </div>
             }
             <Link to={window.location.pathname === '/tpais/events' ? '/tpais/events/eventinfo' : '/space/events/eventinfo'}>
                 <Card className={classes.root} onClick={() => setEvent(eInfo)}>
                     <CardActionArea>
                         <CardMedia>
-                            <img alt="img" className={classes.media} src={!err ? eInfo.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} onError={() => setErr(1)} />
+                            <img alt="img" className={classes.media} src={eInfo.img} onError={(e) => e.target.src ='./images/default_event.jpg'} />
                         </CardMedia>
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="h2">
@@ -60,7 +60,7 @@ export default function EventCard(props) {
                             <Typography gutterBottom variant="body2" component="p">
                                 <Moment format="YYYY/MM/DD">{eInfo.date}</Moment>
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
+                            <Typography variant="body2" component="p">
                                 {eInfo.shortDescription}
                             </Typography>
                         </CardContent>

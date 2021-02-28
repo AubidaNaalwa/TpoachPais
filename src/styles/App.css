@@ -15,11 +15,6 @@ body {
   font-weight: bold !important;
 }
 
-.MuiInputLabel-animated {
-  font-size: 120% !important;
-  color: black !important;
-}
-
 .MuiPaper-elevation4 {
   box-shadow: 0 0 !important;
 }
@@ -32,32 +27,25 @@ a {
   text-decoration: underline;
 }
 
-.App-logo:hover {
-  transform: scale(1.1);
-}
-
 .MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock {
   font-family: 'Markazi Text', serif !important;
   word-spacing: 2px;
 }
 
-.MuiIconButton-label {
+.MuiIconButton-label:hover {
   transition: transform 0.2s;
+  transform: scale(1.05);
 }
 
 .MuiInputBase-input {
   font-weight: bold !important;
 }
 
-.MuiIconButton-label:hover {
-  transform: scale(1.1);
-}
-
 .MuiSvgIcon-root {
   font-size: 1.3em !important;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 775px) {
   .MuiBreadcrumbs-separator {
     display: none !important;
   }
@@ -74,25 +62,86 @@ a {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
+.hr_margins {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 .content {
   line-height: 2;
   font-size: 130%;
   word-spacing: 4px;
 }
 
-.eDate{
-  color: gray;
-  margin-top: -20px;
+.adminBtns {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
 }
 
-.update {
-  display: grid;
-  height: 60vh;
-  width: 30vw;
-  padding: 2vh;
+.btn_update {
+  cursor: pointer;
+  position: absolute;
+  float: right;
+  right: -12px;
+  font-size: 110% !important;
+  background-color: transparent !important;
 }
 
-.Space {
-  background-color: #1a1919;
-  color: #999;
+.btn_delete {
+  cursor: pointer;
+  position: absolute;
+  float: left;
+  left: -12px;
+  font-size: 110% !important;
+  background-color: transparent !important;
+}
+
+.btn_delete:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+.btn_update:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+.delete_icon {
+  color: #370707;
+  box-shadow: 2px 2px 4px #26221f;
+  background-color: #f7f1db;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.update_icon {
+  color: #16292f;
+  box-shadow: 2px 2px 4px #26221f;
+  background-color: #f7f1db;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.fb_container {
+  width: 270px;
+  height: 500px;
+  position: fixed;
+  top: 455px;
+  right: 50%;
+  transform: translate(310%, -50%);
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: #e8e8e8;
+  box-shadow: 2px 2px 9px black;
+}
+
+.mobile_navbar_fix {
+  align-items: center;
+}
+
+@media (min-width: 1091px) {
+  .mobile_navbar_fix {
+    padding-left: 350px;
+  }
 }

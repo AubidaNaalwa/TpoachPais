@@ -23,7 +23,11 @@ const useStyles = makeStyles(() => ({
     navigation_action: {
         fontSize: '130%',
         fontWeight: 'bold',
-        padding: 0
+        padding: 0,
+        "&:hover": {
+            transform: 'scale(1.05)',
+            transition: '0.2s transform'
+        }
     }
 }));
 
@@ -34,16 +38,16 @@ export default function ContactUs() {
     return (
         <>
             <p className={classes.lbl_fill_text}>
-            تبواح بايس ومركز فضاء الطيبة،
+            مركز العلوم 'تبواح بايس' ومركز فضاء الطيبة،
             <br />
-            يقعا في مدينة الطيبة، المدخل الشمالي، بجانب مدرسة الاخوة الاعدادية.
+            يقع في مدينة الطيبة، المدخل الشمالي، بالقرب من مدرسة الاخوة الاعدادية.
             <br />
-            ساعات الدوام: الأحد للخميس 8:00 - 16:00.
+            ساعات الدوام: الأحد للخميس 8:00 - 16:30.
             </p>
             <BottomNavigation value={value} onChange={(event, newValue) => { setValue(newValue) }} showLabels className={classes.navigation}>
                 <BottomNavigationAction href="tel:097996672" className={classes.navigation_action} label="097996672" icon={<PhoneIcon />} />
                 <BottomNavigationAction href="https://www.facebook.com/markaz.st" target="_blank" className={classes.navigation_action} label="Facebook" icon={<FacebookIcon />} />
-                <BottomNavigationAction href="https://wa.me/972524850146" target="_blank" className={classes.navigation_action} label="Whatsapp" icon={<WhatsAppIcon />} />
+                <BottomNavigationAction href="https://wa.me/972524850146" target="_blank" className={classes.navigation_action} label="WhatsApp" icon={<WhatsAppIcon />} />
                 <BottomNavigationAction href="mailto:markaz.s.t@gmail.com" target="_blank" className={classes.navigation_action} label="Email" icon={<EmailIcon />} />
             </BottomNavigation>
             <iframe title="map" src="https://embed.waze.com/ar/iframe?zoom=17&lat=32.953067&lon=35.186011&ct=livemap&pin=1" width="100%" height="450" frameBorder="0" allowFullScreen></iframe>
