@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
         borderRadius: 5,
         marginBottom: 7
     },
-    navigation_action: {
+    navigationAction: {
         fontSize: '130%',
         fontWeight: 'bold',
         padding: 0,
@@ -45,10 +45,10 @@ export default function ContactUs() {
             ساعات الدوام: الأحد للخميس 8:00 - 16:30.
             </p>
             <BottomNavigation value={value} onChange={(event, newValue) => { setValue(newValue) }} showLabels className={classes.navigation}>
-                <BottomNavigationAction href="tel:097996672" className={classes.navigation_action} label="097996672" icon={<PhoneIcon />} />
-                <BottomNavigationAction href="https://www.facebook.com/markaz.st" target="_blank" className={classes.navigation_action} label="Facebook" icon={<FacebookIcon />} />
-                <BottomNavigationAction href="https://wa.me/972524850146" target="_blank" className={classes.navigation_action} label="WhatsApp" icon={<WhatsAppIcon />} />
-                <BottomNavigationAction href="mailto:markaz.s.t@gmail.com" target="_blank" className={classes.navigation_action} label="Email" icon={<EmailIcon />} />
+                <BottomNavigationAction href="tel:097996672" className={classes.navigationAction} label="097996672" icon={<PhoneIcon />} />
+                <BottomNavigationAction href="https://www.facebook.com/markaz.st" target="_blank" className={classes.navigationAction} label="Facebook" icon={<FacebookIcon />} />
+                <BottomNavigationAction href="https://wa.me/972524850146" target="_blank" className={classes.navigationAction} label="WhatsApp" icon={<WhatsAppIcon />} />
+                <BottomNavigationAction href="mailto:markaz.s.t@gmail.com" target="_blank" className={classes.navigationAction} label="Email" icon={<EmailIcon />} />
             </BottomNavigation>
             <iframe title="map" src="https://embed.waze.com/ar/iframe?zoom=17&lat=32.953067&lon=35.186011&ct=livemap&pin=1" width="100%" height="450" frameBorder="0" allowFullScreen></iframe>
             <ContactForm />

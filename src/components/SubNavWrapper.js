@@ -1,26 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Menu from './Menu';
 import News from './News';
 import FBContainer from './FBContainer';
+import { menuWidth } from '../Constants';
 
 export default function SubNavWrapper(props) {
-    const [pageSize, setPageSize] = useState(null);
+    const [pageSize, setPageSize] = useState(null),
+    ref = useRef(null);
 
     useEffect(() => {
         function handleResize() {
             setPageSize({width: window.innerWidth, height: window.innerHeight});
+            if (ref.current !== null) {
+                const width = ref.current.clientWidth + 'px';
+                const toolbarWidth = document.getElementById('toolbar');
+                if (width !== toolbarWidth.style.width) {
+                    menuWidth.width = width;
+                    toolbarWidth.style.width = width;
+                }
+            }
         }
 
         window.addEventListener('resize', handleResize);
         handleResize();
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [ref]);
 
     return (
-        <div style={{width: 'min-content', margin: '0 auto', minHeight: 640}}>
+        <div ref={ref} style={{width: 'min-content', margin: '0 auto', minHeight: 640}}>
             <Menu />
             {
-                pageSize && pageSize.width >= 1708 && pageSize.height >= 738 &&
+                pageSize && pageSize.width >= 1844 && pageSize.height >= 738 &&
                 <>
                     <News />
                     <div className="fb_container">

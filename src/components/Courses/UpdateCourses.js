@@ -50,8 +50,8 @@ export default function UpdateCourses(props) {
     };
 
     const update = () => {
-        const { name, img, shortDescription, longDescription, courseLink} = course;
-        if (name && img && shortDescription && longDescription && courseLink) {
+        const { name, shortDescription, longDescription} = course;
+        if (name && shortDescription && longDescription) {
             props.handleEdit(course);
             handleClose();
         }
@@ -60,19 +60,20 @@ export default function UpdateCourses(props) {
     }
 
     const updateInput = (c) => {
-        const { id, value } = c.target;
-        setCourse({ ...course, [id]: value });
+        const { name, value } = c.target;
+        setCourse({ ...course, [name]: value });
     }
 
     return (
         <Modal className={classes.modal} open={true} onClose={handleClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
             <Fade in={true}>
                 <div className={classes.modalUpdate}>
-                    <TextField required label="العنوان" value={course.name} variant="standard" id="name" onChange={updateInput} />
-                    <TextField label="رابط الصورة" value={course.img} variant="standard" id="img" onChange={updateInput} />
-                    <TextField required label="شرح مختصر" value={course.shortDescription} variant="standard" id="shortDescription" onChange={updateInput} />
-                    <TextField required multiline rows={3} label="شرح موسع" value={course.longDescription} variant="standard" id="longDescription" onChange={updateInput} />
-                    <TextField label="رابط التسجيل" value={course.courseLink} variant="standard" id="courseLink" onChange={updateInput} />
+                    <span title="اغلاق" className={classes.closeBtn} onClick={handleClose}>&times;</span>
+                    <TextField required label="العنوان" value={course.name} variant="standard" name="name" onChange={updateInput} />
+                    <TextField label="رابط الصورة" value={course.img} variant="standard" name="img" onChange={updateInput} />
+                    <TextField required label="شرح مُختصر" value={course.shortDescription} variant="standard" name="shortDescription" onChange={updateInput} />
+                    <TextField required multiline rows={3} label="شرح موسع" value={course.longDescription} variant="standard" name="longDescription" onChange={updateInput} />
+                    <TextField label="رابط التسجيل" value={course.courseLink} variant="standard" name="courseLink" onChange={updateInput} />
                     <Button className={classes.btn} variant="contained" color="primary" onClick={update}>تعديل</Button>
                     <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
                 </div>

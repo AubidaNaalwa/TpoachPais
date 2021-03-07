@@ -10,6 +10,7 @@ import Moment from 'react-moment';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import UpdateCourses from './UpdateCourses';
+import { isAdmin } from '../../Constants';
 
 const useStyles = makeStyles({
 	root: {
@@ -24,8 +25,7 @@ const useStyles = makeStyles({
 });
 
 export default function CourseCard(props) {
-	const isAdmin = true, // REMOVE IN FUTURE //TODO
-	classes = useStyles(),
+	const classes = useStyles(),
 	cInfo = props.course,
 	setCourse = props.setCourse,
 	[open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function CourseCard(props) {
 	return (
 		<div>
 			{
-				isAdmin && <div className='adminBtns'>
+				isAdmin && <div className='btns_admin'>
 				<DeleteOutlineRoundedIcon onClick={() => handleRemove(cInfo._id)} />
 				<EditRoundedIcon onClick={handleEdit} />
 				</div>

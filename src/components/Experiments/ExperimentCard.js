@@ -10,6 +10,7 @@ import Moment from 'react-moment';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import UpdateExperiments from './UpdateExperiments';
+import { isAdmin } from '../../Constants';
 
 const useStyles = makeStyles({
 	root: {
@@ -24,8 +25,7 @@ const useStyles = makeStyles({
 });
 
 export default function ExperimentCard(props) {
-	const isAdmin = true, // REMOVE IN FUTURE
-	classes = useStyles(),
+	const classes = useStyles(),
 	eInfo = props.experiment,
 	setExperiment = props.setExperiment,
 	[open, setOpen] = useState(false);
@@ -41,9 +41,10 @@ export default function ExperimentCard(props) {
 	return (
 		<div>
 			{
-				isAdmin && <div className='adminBtns'>
-				<DeleteOutlineRoundedIcon onClick={() => handleRemove(eInfo._id)} />
-				<EditRoundedIcon onClick={handleEdit} />
+				isAdmin &&
+				<div className='btns_admin'>
+					<DeleteOutlineRoundedIcon onClick={() => handleRemove(eInfo._id)} />
+					<EditRoundedIcon onClick={handleEdit} />
 				</div>
 			}
 			<Link to={window.location.pathname === '/tpais/experiments' ? `/tpais/experiments/${eInfo._id}` : `/space/experiments/${eInfo._id}`}>

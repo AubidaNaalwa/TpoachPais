@@ -50,8 +50,8 @@ export default function UpdateEvents(props) {
     };
 
     const update = () => {
-        const { name, img, shortDescription, longDescription, date } = event;
-        if (name && img && shortDescription && longDescription && date) {
+        const { name, shortDescription } = event;
+        if (name && shortDescription ) {
             props.handleEdit(event);
             handleClose();
         }
@@ -60,8 +60,8 @@ export default function UpdateEvents(props) {
     }
 
     const updateInput = (e) => {
-        const { id, value } = e.target;
-        setEvent({ ...event, [id]: value });
+        const { name, value } = e.target;
+        setEvent({ ...event, [name]: value });
     }
 
     return (
@@ -69,11 +69,11 @@ export default function UpdateEvents(props) {
 			<Fade in={true}>
                     <div className={classes.modalUpdate}>
                     <span title="اغلاق" className={classes.closeBtn} onClick={handleClose}>&times;</span>
-                    <TextField required label="العنوان" value={event.name} variant="standard" id="name" onChange={updateInput} />
-                    <TextField label="رابط الصورة"  value={event.img} variant="standard" id="img" onChange={updateInput} />
-                    <TextField required label="شرح مختصر" value={event.shortDescription} variant="standard" id="shortDescription" onChange={updateInput} />
-                    <TextField multiline rows={3} label="شرح موسع" value={event.longDescription} variant="standard" id="longDescription" onChange={updateInput} />
-                    <TextField type="date" format="yyyy-MM-dd" required label="تاريخ الحدث" value={event.date} variant="standard" id="date" onChange={updateInput} />
+                    <TextField required label="العنوان" value={event.name} variant="standard" name="name" onChange={updateInput} />
+                    <TextField label="رابط الصورة"  value={event.img} variant="standard" name="img" onChange={updateInput} />
+                    <TextField required label="شرح مُختصر" value={event.shortDescription} variant="standard" name="shortDescription" onChange={updateInput} />
+                    <TextField multiline rows={3} label="شرح موسع" value={event.longDescription} variant="standard" name="longDescription" onChange={updateInput} />
+                    <TextField type="date" format="yyyy-MM-dd" label="تاريخ الحدث" value={event.toDate} variant="standard" name="toDate" onChange={updateInput} />
                     <Button className={classes.btn} variant="contained" color="primary" onClick={update}>تعديل</Button>
                     <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
 				</div>

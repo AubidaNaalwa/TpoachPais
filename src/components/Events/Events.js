@@ -3,11 +3,13 @@ import EventCard from './EventCard';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import PageNotFound from '../PageNotFound';
+import LoadingSpinner from '../LoadingSpinner';
 import SnackBar from '../SnackBar';
 import { SNACKBAR_PROPS, API_PATH } from '../../Constants';
 
 export default function Events(props) {
     const [events, setEvents] = useState([]),
+    [isLoading, setLoading] = useState(true),
     [snack, setSnack] = useState(''),
     [currPath, setCurrPath] = useState('');
 
@@ -54,6 +56,9 @@ export default function Events(props) {
             catch {
                 setSnack({ message: SNACKBAR_PROPS.MessageType.CONNECTION_ERROR, severity: SNACKBAR_PROPS.SeverityType.ERROR });
             }
+            finally {
+                setLoading(false);
+            }
         }
         fetchEvents();
     }, []);
@@ -62,6 +67,7 @@ export default function Events(props) {
         <>
             <Grid container direction="row" justify="space-evenly" spacing={3}>
             {
+                isLoading ? <LoadingSpinner /> :
                 events.length > 0 ? events.map(e => (
                     <Grid item key={e._id}>
                         <EventCard setEvent={props.setEvent} handleRemove={handleRemove} handleEdit={handleEdit} event={e} />

@@ -1,7 +1,8 @@
 import React from "react";
 import axios from 'axios';
 import { API_PATH } from '../../Constants';
-export default class Images extends React.Component {
+
+export default class GalleryImage extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = { currentIndex: null, imgUrls: [] };
@@ -13,11 +14,10 @@ export default class Images extends React.Component {
 
     async getImagesFromDb() {
 		const id = this.props.match.params.id;
-		let pathLink;
-		this.props.pathLink === "s" ? pathLink = `${API_PATH}/space/images/${id}` :  pathLink = `${API_PATH}/tpais/images/${id}`;
-		const imagesArray = await axios.get(pathLink);
-		const imagesUrl = imagesArray.data.images.map(i=> i.img);
-		this.setState ({imgUrls: imagesUrl});
+		const getSitePath = this.props.path === "s" ? "space" : "tpais";
+		const imagesArray = await axios.get(`${API_PATH}/${getSitePath}/gallery/images/${id}`);
+		const imagesUrl = imagesArray.data.images.map(arr => arr.img);
+		this.setState({imgUrls: imagesUrl});
     }
 
     componentDidMount() {
@@ -25,49 +25,48 @@ export default class Images extends React.Component {
     }
 
     renderImageContent(src, index) {
-		return (React.createElement("div", { onClick: e => this.openModal(e, index) }, React.createElement("img", { src: src, key: index })));
+		return (React.createElement("div", { onClick: e => this.openModal(e, index), key: index }, React.createElement("img", { src: src, key: index })));
     }
 
     openModal(e, index) {
-    	this.setState({ currentIndex: index });
+		this.setState({ currentIndex: index });
     }
 
     closeModal(e) {
-    	if (e !== undefined)
-        	e.preventDefault();
+		if (e !== undefined)
+			e.preventDefault();
 
-    	this.setState({ currentIndex: null });
+		this.setState({ currentIndex: null });
     }
 
     findPrev(e) {
-    	if (e !== undefined)
-        	e.preventDefault();
+		if (e !== undefined)
+			e.preventDefault();
 
 		this.setState(prevState => ({ currentIndex: prevState.currentIndex - 1 }));
     }
 
     findNext(e) {
-    	if (e !== undefined)
-        	e.preventDefault();
+		if (e !== undefined)
+			e.preventDefault();
 
 		this.setState(prevState => ({ currentIndex: prevState.currentIndex + 1 }));
     }
 
     render() {
-    	return (
+		return (
 			<div>
 			{
-				this.state.imgUrls ?
+				this.state.imgUrls &&
 				React.createElement("div", { className: "gallery-container" },
 				React.createElement("div", { className: "gallery-grid" },
 				this.state.imgUrls.map(this.renderImageContent)),
-				React.createElement(GalleryModal, { closeModal: this.closeModal, findPrev: this.findPrev, findNext: this.findNext, hasPrev: this.state.currentIndex > 0, hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length, src: this.state.imgUrls[this.state.currentIndex] })): null
+				React.createElement(GalleryModal, { closeModal: this.closeModal, findPrev: this.findPrev, findNext: this.findNext, hasPrev: this.state.currentIndex > 0, hasNext: this.state.currentIndex + 1 < this.state.imgUrls.length, src: this.state.imgUrls[this.state.currentIndex] }))
 			}
 			</div>
         );
 	}
 }
-
 
 class GalleryModal extends React.Component {
     constructor() {
@@ -76,7 +75,7 @@ class GalleryModal extends React.Component {
     }
 
     componentDidMount() {
-    	document.body.addEventListener('keydown', this.handleKeyDown);
+		document.body.addEventListener('keydown', this.handleKeyDown);
     }
 
     handleKeyDown(e) {
@@ -91,9 +90,9 @@ class GalleryModal extends React.Component {
     render() {
 		const { closeModal, hasNext, hasPrev, findNext, findPrev, src } = this.props;
 		if (!src)
-        	return null;
+			return null;
 
-    	return (
+		return (
 			React.createElement("div", null,
 			React.createElement("div", { className: "modal-overlay", onClick: closeModal }),
 			React.createElement("div", { className: "modal" },

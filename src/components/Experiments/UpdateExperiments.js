@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -53,8 +54,8 @@ export default function UpdateExperiments(props) {
     };
 
     const update = () => {
-        const { name, img, shortDescription, longDescription, category } = experiment;
-        if (name && img && shortDescription && longDescription && category) {
+        const { name, shortDescription, longDescription, category } = experiment;
+        if (name && shortDescription && longDescription && category) {
             props.handleEdit(experiment);
             handleClose();
         }
@@ -63,8 +64,8 @@ export default function UpdateExperiments(props) {
     }
 
     const updateInput = (e) => {
-        const { id, value } = e.target;
-        setExperiment({ ...experiment, [id]: value });
+        const { name, value } = e.target;
+        setExperiment({ ...experiment, [name]: value });
     }
 
     return (
@@ -72,16 +73,16 @@ export default function UpdateExperiments(props) {
 			<Fade in={true}>
 				<div className={classes.modalUpdate}>
                     <span title="اغلاق" className={classes.closeBtn} onClick={handleClose}>&times;</span>
-                    <TextField required label="العنوان" value={experiment.name} variant="standard" id="name" onChange={updateInput} />
-                    <TextField label="رابط الصورة" value={experiment.img} variant="standard" id="img" onChange={updateInput} />
-                    <TextField required label="شرح مختصر" value={experiment.shortDescription} variant="standard" id="shortDescription" onChange={updateInput} />
-                    <TextField required multiline rows={3} label="شرح موسع" value={experiment.longDescription} variant="standard" id="longDescription" onChange={updateInput} />
+                    <TextField required label="العنوان" value={experiment.name} variant="standard" name="name" onChange={updateInput} />
+                    <TextField label="رابط الصورة" value={experiment.img} variant="standard" name="img" onChange={updateInput} />
+                    <TextField required label="شرح مُختصر" value={experiment.shortDescription} variant="standard" name="shortDescription" onChange={updateInput} />
+                    <TextField required multiline rows={3} label="شرح موسع" value={experiment.longDescription} variant="standard" name="longDescription" onChange={updateInput} />
                     <FormControl>
-                        <InputLabel htmlFor="category">الفئة</InputLabel>
-                        <Select required variant="standard" value={experiment.category} id="category" onChange={updateInput} label="الفئة">
-                            <option value={'Ch'}>كيمياء</option>
-                            <option value={'Ph'}>فيزياء</option>
-                            <option value={'Bio'}>بيولوجيا</option>
+                        <InputLabel required htmlFor="category">الفئة</InputLabel>
+                        <Select required variant="standard" value={experiment.category} name="category" onChange={updateInput} label="الفئة">
+                            <MenuItem value={'Ch'}>كيمياء</MenuItem>
+                            <MenuItem value={'Ph'}>فيزياء</MenuItem>
+                            <MenuItem value={'Bio'}>بيولوجيا</MenuItem>
                         </Select>
                     </FormControl>
                     <Button className={classes.btn} variant="contained" color="primary" onClick={update}>تعديل</Button>
@@ -89,5 +90,5 @@ export default function UpdateExperiments(props) {
 				</div>
 			</Fade>
 		</Modal>
-    )
+    );
 }

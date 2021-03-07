@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import PageNotFound from '../PageNotFound';
 
 export default function ExperimentInfo(props) {
@@ -7,9 +8,10 @@ export default function ExperimentInfo(props) {
     return (
         item ?
         <div style={{textAlign: 'right'}}>
-            <h3>{item.name}</h3>
+            <h1>{item.name}</h1>
+            <h3 style={{ color: 'gray', marginTop: -20 }}><Moment format="YYYY/MM/DD">{item.date}</Moment></h3>
             <iframe title="experiment" width="560" height="315" src={item.img} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-            <p>{item.longDescription}</p>
+            <div>{item.longDescription}</div>
         </div>
         : <PageNotFound />
     );

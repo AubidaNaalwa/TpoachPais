@@ -11,6 +11,7 @@ export default function EventInfo(props) {
             <h1>{item.name}</h1>
             <h3 style={{ color: 'gray', marginTop: -20 }}><Moment format="YYYY/MM/DD">{item.date}</Moment></h3>
             <div>{item.longDescription}</div>
+            <span>{item.toDate}</span>
         </div>
         : <PageNotFound />
     );

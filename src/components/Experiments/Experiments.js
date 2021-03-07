@@ -3,11 +3,13 @@ import ExperimentCard from './ExperimentCard';
 import Grid from '@material-ui/core/Grid';
 import PageNotFound from '../PageNotFound';
 import SnackBar from '../SnackBar';
+import LoadingSpinner from '../LoadingSpinner';
 import { SNACKBAR_PROPS, API_PATH } from '../../Constants';
 const axios = require('axios');
 
 export default function Experiments(props) {
     const [experiments, setExperiments] = useState([]),
+    [isLoading, setLoading] = useState(true),
     [currPath, setCurrPath] = useState(''),
     [isSpaceSite, setIsSpaceSite] = useState(0),
     [snack, setSnack] = useState(''),
@@ -47,7 +49,6 @@ export default function Experiments(props) {
         async function fetchExperiments() {
             try {
                 let experiments;
-
                 if (window.location.pathname === '/tpais/experiments') {
                     experiments = await axios.get(`${API_PATH}/tpais/experiments`);
                     setCurrPath('tpais');
@@ -62,6 +63,9 @@ export default function Experiments(props) {
             }
             catch {
                 setSnack({ message: SNACKBAR_PROPS.MessageType.CONNECTION_ERROR, severity: SNACKBAR_PROPS.SeverityType.ERROR });
+            }
+            finally {
+                setLoading(false);
             }
         }
         fetchExperiments();
@@ -82,6 +86,7 @@ export default function Experiments(props) {
             }
             <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
             {
+                isLoading ? <LoadingSpinner /> :
                 experiments.length > 0 ?
                 <Grid container direction="row" justify="space-evenly" spacing={3}>
                 {

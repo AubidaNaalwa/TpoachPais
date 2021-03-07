@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
         minHeight: '74px',
 		maxHeight: '74px',
         letterSpacing: 1,
-        maxWidth: 250,
+        maxWidth: 260,
         boxShadow: '0 3px 9px #283039',
         "&:focus":{
             backgroundColor: 'rgb(31, 39, 44)' //backgroundColor: '#08457e' for Secondary TODO

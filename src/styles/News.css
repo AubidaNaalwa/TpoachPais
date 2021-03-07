@@ -15,12 +15,12 @@
 }
 
 .news_container {
-    width: 270px;
+    width: 338px;
     height: 460px;
     position: fixed;
-    top: 475px;
+    top: 485px;
     left: 50%;
-    transform: translate(-310%, -50%);
+    transform: translate(-266%, -50%);
     box-sizing: border-box;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -101,7 +101,6 @@
 }
 
 .feedItem {
-    width: 90%;
     height: 20vh;
     margin: auto auto 15px auto;
     background-color: #f5f3f3;
@@ -112,40 +111,34 @@
 }
 
 .header {
-    height: 4vh;
     background: #7baa49;
-    position: absolute;
-    right: -10px;
-    text-align: -webkit-right;
-    top: -5px;
     border-radius: 4px;
-    line-height: 4vh;
-    width: 75%;
+    line-height: 2vh;
     text-transform: capitalize;
     color: white;
-    font-size: 2vh;
-    padding-left: 5px;
+    padding: 5px;
     font-family: monospace;
-    vertical-align: unset;
+    display: inline-grid;
+    width: 70%;
 }
 
 .feedItem img {
-    height: 13vh;
-    width: 13vh;
-    position: absolute;
-    right: 20px;
-    border-radius: 4px;
-    bottom: 10px;
+    height: 100%;
+    width: 100%;
+    min-width: 90px;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-gap: 20px;
 }
 
 .content2 {
-    position: absolute;
-    width: 55vw;
+    width: 90%;
     background: white;
-    left: 2vw;
-    bottom: 8px;
     padding: 1vh;
-    font-size: 1.9vh;
+    font-size: 80%;
     box-sizing: content-box;
     overflow: auto;
     text-align: justify;

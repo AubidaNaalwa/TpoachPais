@@ -42,7 +42,7 @@ export default function EventCard(props) {
         <div className={classes.relative}>
             {
                 isAdmin &&
-                <div className='adminBtns'>
+                <div className='btns_admin'>
                     <Button className="btn_delete" title="حذف" onClick={() => handleRemove(eInfo._id)}><DeleteOutlineRoundedIcon className="delete_icon" /></Button>
                     <Button className="btn_update" title="تعديل" onClick={() => setOpen(true)}><EditRoundedIcon className="update_icon" /></Button>
                 </div>

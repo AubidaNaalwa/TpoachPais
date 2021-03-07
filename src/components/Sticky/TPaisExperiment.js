@@ -8,9 +8,11 @@ export default function TPaisExperiment(props) {
 
         <div className="feedItem">
             <span className="header">{props.experiment.name}</span>
-            <img alt="img" className="feedIcon" src={!err ? props.experiment.img : props.experiment.defaultImg} onError={() => setErr(1)} />
-            <div className="content2">
-                <div className='subTitle'>{props.experiment.shortDescription}</div>{props.experiment.longDescription}
+            <div className="info">
+                <img alt="img" className="feedIcon" src={!err ? props.experiment.img : props.experiment.defaultImg} onError={() => setErr(1)} />
+                <div className="content2">
+                    <div className='subTitle'>{props.experiment.shortDescription}</div>{props.experiment.longDescription}
+                </div>
             </div>
         </div>
     )

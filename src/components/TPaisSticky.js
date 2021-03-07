@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TPaisEvent from './Sticky/TPaisEvent';
 import TPaisCourse from './Sticky/TPaisCourse';
 import TPaisExperiment from './Sticky/TPaisExperiment';
 import { API_PATH } from '../Constants';
 import axios from 'axios';
-import { useEffect, useState } from "react";
 
 export default function TPaisSticky() {
     const [events, setEvents] = useState([]),
@@ -13,11 +12,10 @@ export default function TPaisSticky() {
 
     useEffect(() => {
         async function fetchEvents() {
-            let news;
-            news = await axios.get(`${API_PATH}/tpais/news`);
-            setEvents(news.data.events);
-            setCourses(news.data.courses);
-            setExperiments(news.data.experiments);
+            let sticky = await axios.get(`${API_PATH}/tpais/sticky`);
+            setEvents(sticky.data.events);
+            setCourses(sticky.data.courses);
+            setExperiments(sticky.data.experiments);
         }
         fetchEvents();
     }, []);

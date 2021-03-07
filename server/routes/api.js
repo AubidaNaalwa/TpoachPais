@@ -33,11 +33,11 @@ const clearBadChars = (body) => {
 }
 
 router.get('/tpais/experiments', (req, res) => {
-    Experiments.find({ forWebsite: 't' }, [], {sort:{date: -1}}, function(err, data) {
+    Experiments.find({ forWebsite: 't' }, [], {sort:{created_at: -1}}, function(err, result) {
         if (err)
             res.send(err.message);
         else
-            res.send({ experiments: data });
+            res.send({ experiments: result });
     });
 });
 
@@ -82,7 +82,7 @@ router.delete('/tpais/experiments/delete/:id', (req, res)=> {
 });
 
 router.get('/space/experiments', (req, res) => {
-    Experiments.find({ forWebsite: 's' }, [], {sort: {date: -1}}, function(err, result) {
+    Experiments.find({ forWebsite: 's' }, [], {sort: {created_at: -1}}, function(err, result) {
         if (err)
             res.send(err.message);
         else
@@ -130,7 +130,7 @@ router.delete('/space/experiments/delete/:id', (req, res)=>{
 });
 
 router.get('/tpais/courses', (req, res) => {
-    Courses.find({ forWebsite: 't' }, [], {sort: {date: -1}}, function(err, result) {
+    Courses.find({ forWebsite: 't' }, [], {sort: {created_at: -1}}, function(err, result) {
         if (err)
             res.send(err.message);
         else
@@ -179,7 +179,7 @@ router.delete('/tpais/course/delete/:id', (req, res)=> {
 });
 
 router.get('/space/courses', (req, res) => {
-    Courses.find({ forWebsite: 's' }, [], {sort: {date: -1}}, function(err, result) {
+    Courses.find({ forWebsite: 's' }, [], {sort: {created_at: -1}}, function(err, result) {
         if (err)
             res.send(err.message);
         else
@@ -226,7 +226,7 @@ router.delete('/space/courses/delete/:id', (req, res)=> {
 });
 
 router.get('/tpais/events', (req, res) => {
-    Events.find({ forWebsite: 't' }, [], {sort:{date: -1}} ,function(err, result) {
+    Events.find({ forWebsite: 't' }, [], {sort:{created_at: -1}} ,function(err, result) {
         if (err)
             res.send(err.message);
         else
@@ -235,7 +235,7 @@ router.get('/tpais/events', (req, res) => {
 });
 
 router.get('/space/events', (req, res) => {
-    Events.find({ forWebsite: 's' }, [], {sort:{date: -1}}, function(err, result) {
+    Events.find({ forWebsite: 's' }, [], {sort:{created_at: -1}}, function(err, result) {
         if (err)
             res.send(err.message);
         else
@@ -311,7 +311,7 @@ router.delete('/space/events/delete/:id', (req, res)=> {
     });
 });
 
-router.get('/tpais/images/:id', (req, res) => {
+router.get('/tpais/gallery/images/:id', (req, res) => {
     Images.find({ forWebsite: 't', category: req.params.id }, function(err, result) {
         if (err)
             res.send(err.message);
@@ -320,7 +320,7 @@ router.get('/tpais/images/:id', (req, res) => {
     });
 });
 
-router.get('/space/images/:id', (req, res) => {
+router.get('/space/gallery/images/:id', (req, res) => {
     Images.find({ forWebsite: 's', category: req.params.id }, function(err, result) {
         if (err)
             res.send(err.message);
@@ -379,24 +379,6 @@ router.get('/space/videos', (req, res) => {
     });
 });
 
-router.get('/tpais/videos', (req, res) => {
-    Videos.find({ forWebsite: 't' }, function(err, data) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(data);
-    });
-});
-
-router.get('/space/videos', (req, res) => {
-    Videos.find({ forWebsite: 's' }, function(err, data) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(data);
-    });
-});
-
 router.post('/videos/new', (req, res) => {
     const body = clearBadChars(req.body);
     if (!body || !isLoggedIn) {
@@ -421,11 +403,11 @@ router.post('/contactus', (req, res) => {
     res.sendStatus(200);
 });
 
-router.get('/space/news', async (req, res)=> {
+router.get('/news', async (req, res)=> {
     try {
-        const courses = await Courses.find({ forWebsite: 's' }, [], {sort: {date: -1}, limit: 5});
-        const events = await Events.find({ forWebsite: 's' }, [], {sort: {date: -1}, limit: 5});
-        const experiments = await Experiments.find({ forWebsite: 's' }, [], {sort: {date: -1}, limit: 5});
+        const courses = await Courses.find({}, [], {sort: {created_at: -1}, limit: 5});
+        const events = await Events.find({}, [], {sort: {created_at: -1}, limit: 5});
+        const experiments = await Experiments.find({}, [], {sort: {created_at: -1}, limit: 5});
         res.send({ courses, events, experiments });
     }
     catch(err) {
@@ -433,11 +415,23 @@ router.get('/space/news', async (req, res)=> {
     }
 });
 
-router.get('/tpais/news', async (req, res)=> {
+router.get('/tpais/sticky', async (req, res)=> {
     try {
-        const courses = await Courses.find({ forWebsite: 't' }, [], {sort: {date: -1}, limit: 5});
-        const events = await Events.find({ forWebsite: 't' }, [], {sort: {date: -1}, limit: 5});
-        const experiments = await Experiments.find({ forWebsite: 't' }, [], {sort: {date: -1}, limit: 5});
+        const courses = await Courses.find({ forWebsite: 't', sticky: 'true' }, [], {sort: {stickyOrder: -1}});
+        const events = await Events.find({ forWebsite: 't', sticky: 'true' }, [], {sort: {stickyOrder: -1}});
+        const experiments = await Experiments.find({ forWebsite: 't', sticky: 'true' }, [], {sort: {stickyOrder: -1}});
+        res.send({ courses, events, experiments });
+    }
+    catch(err) {
+        res.send(err.message);
+    }
+});
+
+router.get('/space/sticky', async (req, res)=> {
+    try {
+        const courses = await Courses.find({ forWebsite: 's', sticky: 'true' }, [], {sort: {stickyOrder: -1}});
+        const events = await Events.find({ forWebsite: 's', sticky: 'true' }, [], {sort: {stickyOrder: -1}});
+        const experiments = await Experiments.find({ forWebsite: 's', sticky: 'true' }, [], {sort: {stickyOrder: -1}});
         res.send({ courses, events, experiments });
     }
     catch(err) {

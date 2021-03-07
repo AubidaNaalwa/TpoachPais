@@ -1,3 +1,8 @@
+/*
+@import url(//fonts.googleapis.com/earlyaccess/notosanskufiarabic.css);
+font-family: 'Noto Sans Kufi Arabic', sans-serif;
+*/
+
 body {
   margin: 0;
   background-color: whitesmoke;
@@ -19,8 +24,18 @@ body {
   box-shadow: 0 0 !important;
 }
 
+.MuiFormControlLabel-label {
+  font-size: 85% !important;
+  font-weight: bold !important;
+}
+
 a {
   text-decoration: none;
+}
+
+.MuiBreadcrumbs-li {
+  font-family: "Markazi Text", serif;
+  font-size: 110%;
 }
 
 .MuiBreadcrumbs-li:hover {
@@ -73,17 +88,18 @@ a {
   word-spacing: 4px;
 }
 
-.adminBtns {
+.btns_admin {
   position: absolute;
   z-index: 1;
   width: 100%;
+  top: -2px;
 }
 
 .btn_update {
   cursor: pointer;
   position: absolute;
   float: right;
-  right: -12px;
+  right: -10px;
   font-size: 110% !important;
   background-color: transparent !important;
 }
@@ -92,7 +108,7 @@ a {
   cursor: pointer;
   position: absolute;
   float: left;
-  left: -12px;
+  left: -10px;
   font-size: 110% !important;
   background-color: transparent !important;
 }
@@ -108,7 +124,7 @@ a {
 }
 
 .delete_icon {
-  color: #370707;
+  color: #b30909;
   box-shadow: 2px 2px 4px #26221f;
   background-color: #f7f1db;
   border-radius: 8px;
@@ -124,24 +140,28 @@ a {
 }
 
 .fb_container {
-  width: 270px;
+  width: 340px;
   height: 500px;
   position: fixed;
-  top: 455px;
+  top: 464.4px;
   right: 50%;
-  transform: translate(310%, -50%);
-  border-radius: 5px;
+  transform: translate(265.5%, -50%);
   border-width: 2px;
   border-color: #e8e8e8;
   box-shadow: 2px 2px 9px black;
 }
 
-.mobile_navbar_fix {
-  align-items: center;
+.main_navbar {
+  padding: 0 !important;
+  margin: 0 auto;
 }
 
-@media (min-width: 1091px) {
-  .mobile_navbar_fix {
-    padding-left: 350px;
+.MuiGrid-container {
+  margin-bottom: 5px !important;
+}
+
+@media (min-width: 1844px) {
+  .main_navbar {
+    left: 370px;
   }
 }

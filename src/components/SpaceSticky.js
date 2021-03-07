@@ -1,23 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SpaceEvent from './Sticky/SpaceEvent';
 import SpaceCourse from './Sticky/SpaceCourse';
 import SpaceExperiment from './Sticky/SpaceExperiment';
 import { API_PATH } from '../Constants';
 import axios from 'axios';
-import { useEffect, useState } from "react";
 
 export default function SpaceSticky() {
-    const [events, setEvents] = useState([]);
-    const [courses, setCourses] = useState([]);
-    const [experiments, setExperiments] = useState([]);
+    const [events, setEvents] = useState([]),
+    [courses, setCourses] = useState([]),
+    [experiments, setExperiments] = useState([]);
 
     useEffect(() => {
         async function fetchEvents() {
-            let news;
-            news = await axios.get(`${API_PATH}/space/news`);
-            setEvents(news.data.events);
-            setCourses(news.data.courses);
-            setExperiments(news.data.experiments);
+            let sticky = await axios.get(`${API_PATH}/space/sticky`);
+            setEvents(sticky.data.events);
+            setCourses(sticky.data.courses);
+            setExperiments(sticky.data.experiments);
         }
         fetchEvents();
     }, []);

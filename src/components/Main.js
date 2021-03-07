@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import SpaceQuickGallery from './Galleries/SpaceQuickGallery';
+import QuickGallery from './Galleries/QuickGallery';
 import ContactForm from './ContactForm';
 import FBContainer from './FBContainer';
-import SpaceSticky from './SpaceSticky';
+import TPaisSticky from './TPaisSticky';
 
-export default function Space() {
+export default function Main() {
     const [pageSize, setPageSize] = useState(null);
 
     useEffect(() => {
@@ -19,9 +19,9 @@ export default function Space() {
 
     return (
         <>
-            <SpaceQuickGallery />
+            <QuickGallery />
             {
-                pageSize && (pageSize.width < 1708 || pageSize.height < 738) &&
+                pageSize && (pageSize.width < 1844 || pageSize.height < 738) &&
                 <>
                     <hr className="hr hr_margins" />
                     <center>
@@ -30,7 +30,7 @@ export default function Space() {
                 </>
             }
             <hr className="hr hr_margins" />
-            <SpaceSticky />
+            <TPaisSticky />
             <ContactForm />
         </>
     );

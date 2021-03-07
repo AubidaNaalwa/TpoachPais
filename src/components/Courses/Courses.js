@@ -3,11 +3,13 @@ import CourseCard from './CourseCard';
 import Grid from '@material-ui/core/Grid';
 import PageNotFound from '../PageNotFound';
 import SnackBar from '../SnackBar';
+import LoadingSpinner from '../LoadingSpinner';
 import { SNACKBAR_PROPS, API_PATH } from '../../Constants';
 const axios = require('axios');
 
 export default function Courses(props) {
     const [courses, setCourses] = useState([]),
+    [isLoading, setLoading] = useState(true),
     [snack, setSnack] = useState(''),
     [currPath, setCurrPath] = useState('');
 
@@ -54,14 +56,18 @@ export default function Courses(props) {
             catch {
                 setSnack({ message: SNACKBAR_PROPS.MessageType.CONNECTION_ERROR, severity: SNACKBAR_PROPS.SeverityType.ERROR });
             }
+            finally {
+                setLoading(false);
+            }
         }
         fetchCourses();
     }, []);
 
     return (
-        <>
+        <div>
             <Grid container direction="row" justify="space-evenly" spacing={3}>
             {
+                isLoading ? <LoadingSpinner /> :
                 courses.length > 0 ? courses.map((c) => (
                     <Grid item key={c._id}>
                         <CourseCard setCourse={props.setCourse} handleRemove={handleRemove} handleEdit={handleEdit} course={c} />
@@ -71,6 +77,6 @@ export default function Courses(props) {
             }
             </Grid>
             <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
-        </>
+        </div>
     );
 }

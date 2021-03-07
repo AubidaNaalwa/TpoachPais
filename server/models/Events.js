@@ -6,12 +6,11 @@ const events = new Schema({
     img: String,
     shortDescription: { type: String, required: true },
     longDescription: String,
-    date: { type: Date, default: Date.now },
     toDate: String,
-    forWebsite: { type: String, require: true },
+    forWebsite: { type: String, required: true },
     sticky: { type: Boolean, default: false },
     stickyOrder: { type: Number, default: 0 }
-});
+}, { timestamps: true });
 
 const Events = mongoose.model('events', events);
 

@@ -21,18 +21,28 @@ const SNACKBAR_PROPS = {
     }
 };
 
-const isValidEmail = (_email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(_email);
+const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-const isValidFullName = (_fullname) => {
-    return _fullname.trim().length > 3 && /^[\u0600-\u06FFa-zA-Z ]+$/.test(_fullname);
+const isValidFullName = (fullname) => {
+    return fullname.trim().length > 3 && /^[\u0600-\u06FFa-zA-Z ]+$/.test(fullname);
 }
 
-const isValidMessage = (_message) => {
-    return _message.trim().length > 15 && /^[\u0600-\u06FF\u0750-\u077Fa-zA-Z,._@،!?+*%()-]+$/.test(_message);
+const isValidMessage = (message) => {
+    return message.trim().length > 15 && /^[\u0600-\u06FF\u0750-\u077Fa-zA-Z,._@،!?+*%()-]+$/.test(message);
 }
 
-let isAdmin = true;
+let _menuWidth = '1024px';
+let _isAdmin = true;
+const menuWidth = {
+    get width(){ return _menuWidth; },
+    set width(value){ _menuWidth = value; }
+}
 
-module.exports = { API_PATH, SNACKBAR_PROPS, isAdmin, isValidFullName, isValidEmail, isValidMessage };
+const isAdmin = {
+    get isAdmin(){ return _isAdmin; },
+    set isAdmin(value){ _isAdmin = value; }
+}
+
+module.exports = { API_PATH, SNACKBAR_PROPS, isAdmin, menuWidth, isValidFullName, isValidEmail, isValidMessage };
