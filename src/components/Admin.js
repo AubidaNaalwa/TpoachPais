@@ -314,7 +314,7 @@ export default function Admin() {
                         <TextField required onInput={e => setVideoURL(e.target.value)} name="videoURL" label="رابط الفيديو - Youtube" className={classes.sizes} />
                         <TextField onInput={e => setVideoDesc(e.target.value)} name="videoDesc" label="شرح عن الفيديو" className={classes.sizes} />
                         <FormControl className={classes.sizes}>
-                            <InputLabel required htmlFor="videoForWebsite">مكان الصورة</InputLabel>
+                            <InputLabel required htmlFor="videoForWebsite">مكان الفيديو</InputLabel>
                             <Select required variant="standard" label="مكان الفيديو" name="videoForWebsite" value={videoForWebsite} onChange={e => setVideoForWebsite(e.target.value)}>
                                 <MenuItem value={'t'}>تبواح بايس</MenuItem>
                                 <MenuItem value={'s'}>مركز الفضاء</MenuItem>

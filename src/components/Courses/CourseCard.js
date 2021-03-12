@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     },
     createdAt: {
         fontWeight: 'bold',
-        color: 'gray'
+        color: '#774a3c'
     },
     divAdmin: {
         position: 'absolute',
@@ -122,6 +122,9 @@ const useStyles = makeStyles({
     },
     notAvailable: {
         color: '#f94444'
+    },
+    header: {
+        color: '#325355'
     }
 });
 
@@ -154,7 +157,7 @@ export default function CourseCard(props) {
 						<CardContent className={classes.textHeight}>
 							{cInfo.sticky && <div className={classes.divSticky} title="مُلتصق في الصفحة الرئيسية"><StickyIcon className={classes.stickyIcon} /></div>}
                             <div className={classes.divAvailability} title={cInfo.available ? 'التسجيل فعال' : 'التسجيل غير فعال'}><AvailableIcon className={cInfo.available ? classes.available : classes.notAvailable} /></div>
-							<Typography noWrap variant="h6" component="h2">
+							<Typography noWrap variant="h6" component="h2" className={classes.header}>
 								{cInfo.name}
 							</Typography>
 							<Typography gutterBottom variant="subtitle2" component="p" className={classes.createdAt}>

@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     },
     createdAt: {
         fontWeight: 'bold',
-        color: 'gray'
+        color: '#774a3c'
     },
     divAdmin: {
         position: 'absolute',
@@ -107,6 +107,9 @@ const useStyles = makeStyles({
     },
     stickyIcon: {
         color: '#f9dd44'
+    },
+    header: {
+        color: '#325355'
     }
 });
 
@@ -138,7 +141,7 @@ export default function ExperimentCard(props) {
 						</CardMedia>
 						<CardContent className={classes.textHeight}>
                             {eInfo.sticky && <div className={classes.divSticky} title="مُلتصق في الصفحة الرئيسية"><StickyIcon className={classes.stickyIcon} /></div>}
-							<Typography noWrap variant="h6" component="h2">
+							<Typography noWrap variant="h6" component="h2" className={classes.header}>
 								{eInfo.name}
 							</Typography>
                             <Typography gutterBottom variant="subtitle2" component="p" className={classes.createdAt}>

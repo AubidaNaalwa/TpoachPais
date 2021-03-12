@@ -42,7 +42,7 @@ a {
   text-decoration: underline;
 }
 
-.MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock, .MuiFormControlLabel-label {
+.MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock, .MuiFormControlLabel-label, .MuiTypography-root {
   font-family: 'Markazi Text', serif !important;
   word-spacing: 2px;
 }
