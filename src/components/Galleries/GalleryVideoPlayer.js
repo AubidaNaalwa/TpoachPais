@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 		},
         display: 'inline-block',
         top: 11,
-        paddingRight: 2,
+        paddingRight: 2
     },
     divIframe: {
         outline: 0,

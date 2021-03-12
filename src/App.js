@@ -70,12 +70,12 @@ export default function App() {
 							<Route exact path="/admin" render={() => <Admin />} />
 							<Route exact path="/tpais/events" render={() => <Events setEvent={setEvent} />} />
 							<Route exact path="/space/events" render={() => <Events setEvent={setEvent} />} />
-							<Route exact path="/tpais/events/eventinfo" render={() => <EventInfo eInfo={event} />} />
-							<Route exact path="/space/events/eventinfo" render={() => <EventInfo eInfo={event} />} />
+							<Route exact path="/tpais/events/:id" render={({ match }) => <EventInfo match={match} eInfo={event} />} />
+							<Route exact path="/space/events/:id" render={({ match }) => <EventInfo match={match} eInfo={event} />} />
 							<Route exact path="/tpais/courses" render={() => <Courses setCourse={setCourse} />} />
 							<Route exact path="/space/courses" render={() => <Courses setCourse={setCourse} />} />
-							<Route exact path="/tpais/courses/courseinfo" render={() => <CourseInfo cInfo={course} />} />
-							<Route exact path="/space/courses/courseinfo" render={() => <CourseInfo cInfo={course} />} />
+							<Route exact path="/tpais/courses/:id" render={({ match }) => <CourseInfo match={match} cInfo={course} />} />
+							<Route exact path="/space/courses/:id" render={({ match }) => <CourseInfo match={match} cInfo={course} />} />
 							<Route exact path="/tpais/experiments" render={() => <Experiments setExperiment={setExperiment} />} />
 							<Route exact path="/space/experiments" render={() => <Experiments setExperiment={setExperiment} />} />
 							<Route exact path="/tpais/experiments/:id" render={({ match }) => <ExperimentInfo match={match} eInfo={experiment} />} />
@@ -84,8 +84,8 @@ export default function App() {
 							<Route exact path="/space/gallery" render={() => <GalleryMain />} />
 							<Route exact path="/tpais/gallery/images" render={() => <GalleryImageCategories />} />
 							<Route exact path="/space/gallery/images" render={() => <GalleryImageCategories />} />
-							<Route exact path='/tpais/gallery/images/:id' render={({ match }) => <GalleryImage path="t" match={match} />} />
-							<Route exact path='/space/gallery/images/:id' render={({ match }) => <GalleryImage path="s" match={match} />} />
+							<Route exact path='/tpais/gallery/images/:id' render={({ match }) => <GalleryImage match={match} />} />
+							<Route exact path='/space/gallery/images/:id' render={({ match }) => <GalleryImage match={match} />} />
 							<Route exact path="/tpais/gallery/videos" render={() => <GalleryVideos/>} />
 							<Route exact path="/space/gallery/videos" render={() => <GalleryVideos/>} />
 							<Route render={() => <PageNotFound />} />

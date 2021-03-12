@@ -31,6 +31,7 @@ export default function Main() {
             }
             <hr className="hr hr_margins" />
             <TPaisSticky />
+            <hr className="hr hr_margins" />
             <ContactForm />
         </>
     );

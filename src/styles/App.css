@@ -21,7 +21,7 @@ body {
 }
 
 .MuiPaper-elevation4 {
-  box-shadow: 0 0 !important;
+  box-shadow: none !important;
 }
 
 .MuiFormControlLabel-label {
@@ -42,7 +42,7 @@ a {
   text-decoration: underline;
 }
 
-.MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock {
+.MuiButton-containedPrimary, .MuiPaper-root, .MuiTypography-displayBlock, .MuiFormControlLabel-label {
   font-family: 'Markazi Text', serif !important;
   word-spacing: 2px;
 }

@@ -6,10 +6,10 @@ const events = new Schema({
     img: String,
     shortDescription: { type: String, required: true },
     longDescription: String,
-    toDate: String,
+    duration: String,
     forWebsite: { type: String, required: true },
     sticky: { type: Boolean, default: false },
-    stickyOrder: { type: Number, default: 0 }
+    stickyOrder: { type: Number, default: 5 }
 }, { timestamps: true });
 
 const Events = mongoose.model('events', events);

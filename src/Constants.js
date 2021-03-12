@@ -8,6 +8,7 @@ const SNACKBAR_PROPS = {
     },
     MessageType: {
         SUCCESS_SENT: 'لقد تم ارسال البيانات بنجاح',
+        SUCCESS_EMAIL_SENT: 'لقد تم ارسال النموذج بنجاح',
         SUCCESS_SAVED: 'لقد تم حفظ البيانات بنجاح',
         SUCCESS_REMOVED: 'لقد تم حذف البيانات بنجاح',
         FAILED_SAVING: 'فشل في حفظ البيانات',
@@ -22,15 +23,19 @@ const SNACKBAR_PROPS = {
 };
 
 const isValidEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    email = email.trim();
+    return email.length > 7 && email.length < 40 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 const isValidFullName = (fullname) => {
-    return fullname.trim().length > 3 && /^[\u0600-\u06FFa-zA-Z ]+$/.test(fullname);
+    fullname = fullname.trim();
+    return fullname.length > 3 && fullname.length < 20 && /^[\u0600-\u06FFa-zA-Z ]+$/.test(fullname);
 }
 
 const isValidMessage = (message) => {
-    return message.trim().length > 15 && /^[\u0600-\u06FF\u0750-\u077Fa-zA-Z,._@،!?+*%()-]+$/.test(message);
+    message = message.trim();
+    const regexMessage = new RegExp('^[\u0600-\u06FFa-zA-Z0-9 ,._@،!?+*%)(":-]+$');
+    return message.length > 15 && message.length < 200 && regexMessage.test(message);
 }
 
 let _menuWidth = '1024px';

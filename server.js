@@ -4,7 +4,7 @@ api = require('./server/routes/api'),
 mongoose = require('mongoose'),
 path = require('path'),
 app = express(),
-PORT = process.env.REACT_APP_PORT || 8080,
+PORT = process.env.REACT_APP_PORT || 5000,
 URI = process.env.REACT_APP_MONGODB_URI || 'mongodb://localhost/tPaisDB',
 API_PATH = require('./src/Constants').API_PATH;
 

@@ -9,7 +9,7 @@ const experiments = new Schema({
     category: { type: String, required: true },
     forWebsite: { type: String, required: true },
     sticky: { type: Boolean, default: false },
-    stickyOrder: { type: Number, default: 0 }
+    stickyOrder: { type: Number, default: 5 }
 }, { timestamps: true });
 
 const Experiments = mongoose.model('experiments', experiments);

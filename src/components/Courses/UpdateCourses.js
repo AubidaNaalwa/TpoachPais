@@ -4,6 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Rating from '@material-ui/lab/Rating';
+import InputLabel from '@material-ui/core/InputLabel';
 import SnackBar from '../SnackBar';
 import { SNACKBAR_PROPS } from '../../Constants';
 
@@ -19,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: theme.shadows[5],
 		outline: 0,
 		padding: theme.spacing(0, 4, 3),
-        minWidth: 310,
+        minWidth: 280,
         width: '50vw',
         display: 'grid',
-        height: '70vh'
+        minHeight: '80vh',
+        overflowY: 'auto'
 	},
     closeBtn: {
         justifySelf: 'end',
@@ -35,9 +40,27 @@ const useStyles = makeStyles((theme) => ({
 		}
     },
     btn: {
-        fontSize: '120%',
-        color: 'white'
-    }
+        fontSize: '140%',
+        color: 'white',
+        marginTop: 10
+    },
+    StickyDiv: {
+        display: 'block'
+    },
+    formControlSticky: {
+        marginTop: 7,
+        marginBottom: 5,
+        marginRight: -4,
+        fontSize: '120%'
+    },
+    inputLabelSticky: {
+        padding: 2,
+        marginRight: 7
+    },
+    formControlAvailable: {
+        marginRight: -4,
+        fontSize: '120%'
+    },
 }));
 
 export default function UpdateCourses(props) {
@@ -73,7 +96,14 @@ export default function UpdateCourses(props) {
                     <TextField label="رابط الصورة" value={course.img} variant="standard" name="img" onChange={updateInput} />
                     <TextField required label="شرح مُختصر" value={course.shortDescription} variant="standard" name="shortDescription" onChange={updateInput} />
                     <TextField required multiline rows={3} label="شرح موسع" value={course.longDescription} variant="standard" name="longDescription" onChange={updateInput} />
-                    <TextField label="رابط التسجيل" value={course.courseLink} variant="standard" name="courseLink" onChange={updateInput} />
+                    <TextField label="زمن الدورة" value={course.duration} variant="standard" name="duration" onChange={updateInput} />
+                    <FormControlLabel label="التسجيل ساري المفعول" className={classes.formControlAvailable} control={<Checkbox name="available" checked={course.available} onChange={e => setCourse({...course, available: e.target.checked})} color="primary" />} />
+                    <TextField disabled={!course.available} label="رابط التسجيل" value={course.courseLink} variant="standard" name="courseLink" onChange={updateInput} />
+                    <div className={classes.StickyDiv}>
+                        <FormControlLabel label="تثبيت بالصفحة الرئيسية" className={classes.formControlSticky} control={<Checkbox name="sticky" checked={course.sticky} onChange={e => setCourse({...course, sticky: e.target.checked})} color="primary" />} />
+                        <InputLabel className={classes.inputLabelSticky} htmlFor="stickyOrder">تحديد الأولوية</InputLabel>
+                        <Rating disabled={!course.sticky} size="large" name="stickyOrder" value={course.stickyOrder} onChange={e => setCourse({...course, stickyOrder: parseInt(e.target.value)})} />
+                    </div>
                     <Button className={classes.btn} variant="contained" color="primary" onClick={update}>تعديل</Button>
                     <SnackBar open={setSnack} message={snack.message} severity={snack.severity} />
                 </div>

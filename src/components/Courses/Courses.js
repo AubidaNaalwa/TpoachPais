@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import CourseCard from './CourseCard';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
 import PageNotFound from '../PageNotFound';
-import SnackBar from '../SnackBar';
 import LoadingSpinner from '../LoadingSpinner';
+import SnackBar from '../SnackBar';
+import { useLocation } from 'react-router-dom';
 import { SNACKBAR_PROPS, API_PATH } from '../../Constants';
-const axios = require('axios');
 
 export default function Courses(props) {
     const [courses, setCourses] = useState([]),
     [isLoading, setLoading] = useState(true),
     [snack, setSnack] = useState(''),
-    [currPath, setCurrPath] = useState('');
+    getPath = useLocation().pathname.includes('/space') ? "space" : "tpais";
 
     const handleRemove = (id) => {
         try {
-            axios.delete(`${API_PATH}/${currPath}/courses/delete/${id}`);
+            axios.delete(`${API_PATH}/${getPath}/courses/delete/${id}`);
             const tempCourses = [...courses];
             const i = tempCourses.findIndex(c => c._id === id);
             tempCourses.splice(i, 1);
             setCourses(tempCourses);
+            setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_REMOVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch (err) {
             setSnack({ message: err.message, severity: SNACKBAR_PROPS.SeverityType.ERROR });
@@ -28,11 +30,12 @@ export default function Courses(props) {
 
     const handleEdit = (course) => {
         try {
-            axios.put(`${API_PATH}/${currPath}/courses/update/${course._id}`, course);
+            axios.put(`${API_PATH}/${getPath}/courses/update/${course._id}`, course);
             const tempCourses = [...courses];
             const i = tempCourses.findIndex(c => c._id === course._id);
             tempCourses[i] = course;
             setCourses(tempCourses);
+            setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch (err) {
             setSnack({ message: err.message, severity: SNACKBAR_PROPS.SeverityType.ERROR });
@@ -42,15 +45,7 @@ export default function Courses(props) {
     useEffect(() => {
         async function fetchCourses() {
             try {
-                let courses;
-                if (window.location.pathname === '/tpais/courses') {
-                    courses = await axios.get(`${API_PATH}/tpais/courses`);
-                    setCurrPath('tpais');
-                }
-                else {
-                    courses = await axios.get(`${API_PATH}/space/courses`);
-                    setCurrPath('space');
-                }
+                const courses = await axios.get(`${API_PATH}/${getPath}/courses`);
                 setCourses(courses.data.courses);
             }
             catch {
@@ -61,7 +56,7 @@ export default function Courses(props) {
             }
         }
         fetchCourses();
-    }, []);
+    }, [getPath]);
 
     return (
         <div>

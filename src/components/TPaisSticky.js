@@ -21,7 +21,7 @@ export default function TPaisSticky() {
     }, []);
 
     return (
-        <div>
+        <>
             <h1 className="tpaisSticky"> احداث المركز</h1>
             <div className="feeds">
                 {events.map(e => <TPaisEvent event={e} key={e._id} />)}
@@ -34,6 +34,6 @@ export default function TPaisSticky() {
             <div className="feeds">
                 {experiments.map(e => <TPaisExperiment experiment={e} key={e._id} />)}
             </div>
-        </div>
+        </>
     );
 }

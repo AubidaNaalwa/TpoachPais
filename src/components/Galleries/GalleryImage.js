@@ -13,11 +13,17 @@ export default class GalleryImage extends React.Component {
     }
 
     async getImagesFromDb() {
-		const id = this.props.match.params.id;
-		const getSitePath = this.props.path === "s" ? "space" : "tpais";
-		const imagesArray = await axios.get(`${API_PATH}/${getSitePath}/gallery/images/${id}`);
-		const imagesUrl = imagesArray.data.images.map(arr => arr.img);
-		this.setState({imgUrls: imagesUrl});
+		const imageName = this.props.match.params.id;
+		const getSitePath = window.location.pathname.includes('space') ? "space" : "tpais";
+
+		try {
+			const imagesArray = await axios.get(`${API_PATH}/${getSitePath}/gallery/images/${imageName}`);
+			const imagesUrl = imagesArray.data.images.map(arr => arr.img);
+			this.setState({imgUrls: imagesUrl});
+		}
+		catch {
+			this.setState({imgUrls: null});
+		}
     }
 
     componentDidMount() {
@@ -97,9 +103,9 @@ class GalleryModal extends React.Component {
 			React.createElement("div", { className: "modal-overlay", onClick: closeModal }),
 			React.createElement("div", { className: "modal" },
 			React.createElement("div", { className: "modal-body" },
-			React.createElement("a", { href: "#", className: "modal-close", onClick: closeModal, onKeyDown: this.handleKeyDown }, "\xD7"),
-			hasPrev && React.createElement("a", { href: "#", className: "modal-next", onClick: findPrev, onKeyDown: this.handleKeyDown }, "\u2039"),
-			hasNext && React.createElement("a", { href: "#", className: "modal-prev", onClick: findNext, onKeyDown: this.handleKeyDown }, "\u203A"),
+			React.createElement("a", { href: "#", className: "modal-close", title: "اغلاق", onClick: closeModal, onKeyDown: this.handleKeyDown }, "\xD7"),
+			hasPrev && React.createElement("a", { href: "#", className: "modal-next", title: "السابق", onClick: findPrev, onKeyDown: this.handleKeyDown }, "\u2039"),
+			hasNext && React.createElement("a", { href: "#", className: "modal-prev", title: "التالي", onClick: findNext, onKeyDown: this.handleKeyDown }, "\u203A"),
 			React.createElement("img", {className:"display", src: src }))))
 		);
     }

@@ -3,9 +3,19 @@ import Menu from './Menu';
 import News from './News';
 import FBContainer from './FBContainer';
 import { menuWidth } from '../Constants';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+	root: {
+        width: 'min-content',
+        margin: '0 auto',
+        minHeight: 640
+	}
+}));
 
 export default function SubNavWrapper(props) {
-    const [pageSize, setPageSize] = useState(null),
+    const classes = useStyles(),
+    [pageSize, setPageSize] = useState(null),
     ref = useRef(null);
 
     useEffect(() => {
@@ -27,7 +37,7 @@ export default function SubNavWrapper(props) {
     }, [ref]);
 
     return (
-        <div ref={ref} style={{width: 'min-content', margin: '0 auto', minHeight: 640}}>
+        <div ref={ref} className={classes.root}>
             <Menu />
             {
                 pageSize && pageSize.width >= 1844 && pageSize.height >= 738 &&

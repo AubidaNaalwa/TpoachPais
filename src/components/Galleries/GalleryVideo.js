@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
     imgThumb: {
         cursor: 'pointer',
-        boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
         opacity: 0.8,
         transition: 'all 0.2s ease-in-out',
         width: '100%',
@@ -32,14 +31,18 @@ const useStyles = makeStyles(() => ({
         WebkitLineClamp: 3,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
-        cursor: 'zoom-in'
+        cursor: 'zoom-in',
+        marginTop: 3,
+        textAlign: 'justify'
     },
     spanFullDesc: {
         color: '#342f42',
         fontSize: '85%',
         boxSizing: 'border-box',
         display: 'table',
-        cursor: 'zoom-out'
+        cursor: 'zoom-out',
+        marginTop: 3,
+        textAlign: 'justify'
     },
     videoIconThumbnail: {
         position: 'relative',
@@ -70,7 +73,7 @@ export default function GalleryVideo(props) {
                     <span onClick={handleClick} className={classes.spanFullDesc}>{props.video.description}</span>
                 }
             </div>
-            {open && <GalleryVideoPlayer setOpen={setOpen} video={props.video.video} />}
+            {open && <GalleryVideoPlayer setOpen={setOpen} video={props.video.video + '?autoplay=1'} />}
         </>
     );
 }

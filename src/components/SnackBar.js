@@ -27,9 +27,9 @@ export default function SnackBar(props) {
     };
 
     return (
-        props.length > 0 &&
+        props.message !== undefined &&
         <div className={classes.root} dir="ltr">
-            <Snackbar open={props.message} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={props.severity}>
                     {props.message}
                 </Alert>

@@ -46,7 +46,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
     return {
         id: `scrollable-force-tab-${index}`,
-        'aria-controls': `scrollable-force-tabpanel-${index}`,
+        'aria-controls': `scrollable-force-tabpanel-${index}`
     };
 }
 
@@ -59,16 +59,18 @@ const useStyles = makeStyles(() => ({
     },
     biggerFont: {
         fontWeight: 'bold',
-        fontSize: '100%',
+        fontSize: '100%'
     },
     sizes: {
         width: '100%',
+        textAlign: 'start'
     },
     btn: {
         fontSize: '120%',
         paddingLeft: 20,
         paddingRight: 20,
-        color: 'white'
+        color: 'white',
+        marginTop: 15
     },
     navigation: {
         alignItems: 'center',
@@ -76,17 +78,26 @@ const useStyles = makeStyles(() => ({
     },
     navigationAction: {
         fontWeight: 'bold',
-        fontSize: '150%',
-    },
-    StickyPrio: {
-        display: 'block'
+        fontSize: '150%'
     },
     formControlSticky: {
         marginLeft: 0,
+        marginTop: 5,
         paddingLeft: 27
     },
     inputLabelSticky: {
         padding: 2
+    },
+    formColumn: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10
+    },
+    noLineHeight: {
+        lineHeight: 0
+    },
+    customHeight: {
+        height: 15
     }
 }));
 
@@ -98,12 +109,12 @@ export default function Admin() {
     [eventImg, setEventImg] = useState(''),
     [eventShortDesc, setEventShortDesc] = useState(''),
     [eventLongDesc, setEventLongDesc] = useState(''),
-    [eventDate, setEventDate] = useState(''),
+    [eventDuration, setEventDuration] = useState(''),
     [courseName, setCourseName] = useState(''),
     [courseImg, setCourseImg] = useState(''),
     [courseShortDesc, setCourseShortDesc] = useState(''),
     [courseLongDesc, setCourseLongDesc] = useState(''),
-    [courseDate, setCourseDate] = useState(''),
+    [courseDuration, setCourseDuration] = useState(''),
     [courseLink, setCourseLink] = useState(''),
     [experimentName, setExperimentName] = useState(''),
     [experimentImg, setExperimentImg] = useState(''),
@@ -122,21 +133,26 @@ export default function Admin() {
     [courseForWebsite, setCourseForWebsite] = useState(''),
     [experimentForWebsite, setExperimentForWebsite] = useState(''),
     [eventIsSticky, setEventIsSticky] = useState(false),
-    [eventStickyPrio, setEventStickyPrio] = useState(5),
+    [eventStickyOrder, setEventStickyOrder] = useState(5),
     [courseIsSticky, setCourseIsSticky] = useState(false),
-    [courseStickyPrio, setCourseStickyPrio] = useState(5),
+    [courseStickyOrder, setCourseStickyOrder] = useState(5),
     [experimentIsSticky, setExperimentIsSticky] = useState(false),
-    [experimentStickyPrio, setExperimentStickyPrio] = useState(5),
+    [experimentStickyOrder, setExperimentStickyOrder] = useState(5),
     [snack, setSnack] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const getYouTubeVideoId = (url) => {
+        const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        return undefined !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
+    }
+
     const handleSubmitEvent = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}events/new`, { name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, toDate: eventDate, forWebsite: eventForWebsite, Sticky: eventIsSticky, StickyOrder: eventStickyPrio });
+            await axios.post(`${API_PATH}/events/new`, { name: eventName, img: eventImg, shortDescription: eventShortDesc, longDescription: eventLongDesc, duration: eventDuration, forWebsite: eventForWebsite, sticky: eventIsSticky, stickyOrder: eventStickyOrder });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -147,7 +163,7 @@ export default function Admin() {
     const handleSubmitCourse = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}courses/new`, { name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, toDate: courseDate, courseLink, forWebsite: courseForWebsite, Sticky: courseIsSticky, StickyOrder: courseStickyPrio });
+            await axios.post(`${API_PATH}/courses/new`, { name: courseName, img: courseImg, shortDescription: courseShortDesc, longDescription: courseLongDesc, duration: courseDuration, courseLink, forWebsite: courseForWebsite, sticky: courseIsSticky, stickyOrder: courseStickyOrder });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -158,7 +174,7 @@ export default function Admin() {
     const handleSubmitExperiment = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}experiments/new`, { name: experimentName, img: experimentImg, shortDescription: experimentShortDesc, longDescription: experimentLongDesc, category: experimentCategory, forWebsite: experimentForWebsite, Sticky: experimentIsSticky, StickyOrder: experimentStickyPrio });
+            await axios.post(`${API_PATH}/experiments/new`, { name: experimentName, img: experimentImg, shortDescription: experimentShortDesc, longDescription: experimentLongDesc, category: experimentCategory, forWebsite: experimentForWebsite, sticky: experimentIsSticky, stickyOrder: experimentStickyOrder });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -169,7 +185,7 @@ export default function Admin() {
     const handleSubmitImage = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}images/new`, { name: imageName, img: imgURL, category: imageCategory, forWebsite: imageForWebsite });
+            await axios.post(`${API_PATH}/images/new`, { name: imageName, img: imgURL, category: imageCategory, forWebsite: imageForWebsite });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -180,7 +196,8 @@ export default function Admin() {
     const handleSubmitVideo = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_PATH}videos/new`, { name: videoName, video: videoURL, description: videoDesc, forWebsite: videoForWebsite });
+            const thumbnail = `https://img.youtube.com/vi/${getYouTubeVideoId(videoURL)}/hqdefault.jpg`
+            await axios.post(`${API_PATH}/videos/new`, { name: videoName, video: videoURL, thumbnail, description: videoDesc, forWebsite: videoForWebsite });
             setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch {
@@ -197,91 +214,76 @@ export default function Admin() {
                 <Tab className={classes.biggerFont} label="معرض الصور" icon={<GalleryIcon />} {...a11yProps(3)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <form onSubmit={handleSubmitEvent}>
+                <form onSubmit={handleSubmitEvent} className={classes.formColumn}>
                     <TextField required onInput={e => setEventName(e.target.value)} name="eventName" label="عنوان الحدث" className={classes.sizes} />
-                    <br/><br/>
                     <TextField onInput={e => setEventImg(e.target.value)} name="eventImg" label="رابط الصورة" className={classes.sizes} />
-                    <br/><br/>
                     <TextField required onInput={e => setEventShortDesc(e.target.value)} name="eventShortDesc" label="شرح مُختصر" className={classes.sizes} />
-                    <br/><br/>
                     <TextField multiline rows={3} required onInput={e => setEventLongDesc(e.target.value)} name="eventLongDesc" label="شرح موسع" className={classes.sizes} />
-                    <br/><br/>
-                    <TextField onInput={e => setEventDate(e.target.value)} name="eventDate" label="تاريخ الحدث" type="date" format="yyyy-MM-dd" className={classes.sizes} />
-                    <br/><br/>
+                    <TextField onInput={e => setEventDuration(e.target.value)} name="eventDate" label="زمن الحدث" className={classes.sizes} />
                     <FormControl className={classes.sizes}>
                         <InputLabel required htmlFor="eventForWebsite">مكان الحدث</InputLabel>
                         <Select required variant="standard" label="مكان الحدث" name="eventForWebsite" value={eventForWebsite} onChange={e => setEventForWebsite(e.target.value)}>
-                            <MenuItem value={'tpais'}>تبواح بايس</MenuItem>
-                            <MenuItem value={'space'}>مركز الفضاء</MenuItem>
+                            <MenuItem value={'t'}>تبواح بايس</MenuItem>
+                            <MenuItem value={'s'}>مركز الفضاء</MenuItem>
                         </Select>
                     </FormControl>
-                    <br/><br/>
-                    <div className={classes.StickyPrio}>
+                    <div>
                         <FormControlLabel label="تثبيت بالصفحة الرئيسية" className={classes.formControlSticky} control={<Checkbox checked={eventIsSticky} onChange={e => setEventIsSticky(!eventIsSticky)} name="eventSticky" color="primary" />} />
-                        <InputLabel className={classes.inputLabelSticky} htmlFor="eventPriority">تحديد الأولوية بالصفحة الرئيسية</InputLabel>
-                        <Rating disabled={!eventIsSticky} size="large" name="eventPriority" value={eventStickyPrio} onChange={(event, newValue) => { setEventStickyPrio(newValue); }} />
+                        <InputLabel className={classes.inputLabelSticky} htmlFor="eventPriority">تحديد الأولوية</InputLabel>
+                        <Rating className={classes.noLineHeight} disabled={!eventIsSticky} size="large" name="eventPriority" value={eventStickyOrder} onChange={(event, newValue) => { setEventStickyOrder(newValue); }} />
                     </div>
-                    <br/>
                     <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                 </form>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <form onSubmit={handleSubmitCourse}>
+                <form onSubmit={handleSubmitCourse} className={classes.formColumn}>
                     <TextField required onInput={e => setCourseName(e.target.value)} name="courseName" label="اسم الدورة" className={classes.sizes} />
-                    <br/><br/>
                     <TextField onInput={e => setCourseImg(e.target.value)} name="courseImg" label="رابط الصورة" className={classes.sizes} />
-                    <br/><br/>
                     <TextField required onInput={e => setCourseShortDesc(e.target.value)} name="courseShortDesc" label="شرح مُختصر" className={classes.sizes} />
-                    <br/><br/>
                     <TextField multiline rows={3} required onInput={e => setCourseLongDesc(e.target.value)} name="courseLongDesc" label="شرح موسع" className={classes.sizes} />
-                    <br/><br/>
-                    <TextField onInput={e => setCourseDate(e.target.value)} name="courseDate" label="تاريخ الدورة" type="date" format="yyyy-MM-dd" className={classes.sizes} />
-                    <br/><br/>
+                    <TextField onInput={e => setCourseDuration(e.target.value)} name="courseDate" label="زمن الدورة" className={classes.sizes} />
                     <TextField onInput={e => setCourseLink(e.target.value)} name="courseLink" label="رابط التسجيل" className={classes.sizes} />
-                    <br/><br/>
                     <FormControl className={classes.sizes}>
                         <InputLabel required htmlFor="courseForWebsite">مكان الدورة</InputLabel>
                         <Select required variant="standard" label="مكان الدورة" name="courseForWebsite" value={courseForWebsite} onChange={e => setCourseForWebsite(e.target.value)}>
-                            <MenuItem value={'tpais'}>تبواح بايس</MenuItem>
-                            <MenuItem value={'space'}>مركز الفضاء</MenuItem>
+                            <MenuItem value={'t'}>تبواح بايس</MenuItem>
+                            <MenuItem value={'s'}>مركز الفضاء</MenuItem>
                         </Select>
                     </FormControl>
-                    <br/><br/>
-                    <div className={classes.StickyPrio}>
+                    <div>
                         <FormControlLabel label="تثبيت بالصفحة الرئيسية" className={classes.formControlSticky} control={<Checkbox checked={courseIsSticky} onChange={e => setCourseIsSticky(!courseIsSticky)} name="courseSticky" color="primary" />} />
-                        <InputLabel className={classes.inputLabelSticky} htmlFor="coursePriority">تحديد الأولوية بالصفحة الرئيسية</InputLabel>
-                        <Rating disabled={!courseIsSticky} size="large" name="coursePriority" value={courseStickyPrio} onChange={(event, newValue) => { setCourseStickyPrio(newValue); }} />
+                        <InputLabel className={classes.inputLabelSticky} htmlFor="coursePriority">تحديد الأولوية</InputLabel>
+                        <Rating className={classes.noLineHeight} disabled={!courseIsSticky} size="large" name="coursePriority" value={courseStickyOrder} onChange={(event, newValue) => { setCourseStickyOrder(newValue); }} />
                     </div>
-                    <br/>
                     <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                 </form>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <form onSubmit={handleSubmitExperiment}>
+                <form onSubmit={handleSubmitExperiment} className={classes.formColumn}>
                     <TextField required onInput={e => setExperimentName(e.target.value)} name="experimentName" label="اسم التجربة / المُحاكاة" className={classes.sizes} />
-                    <br/><br/>
                     <TextField onInput={e => setExperimentImg(e.target.value)} name="experimentImg" label="رابط الصورة" className={classes.sizes} />
-                    <br/><br/>
                     <TextField required onInput={e => setExperimentShortDesc(e.target.value)} name="experimentShortDesc" label="شرح مُختصر" className={classes.sizes} />
-                    <br/><br/>
                     <TextField multiline rows={3} required onInput={e => setExperimentLongDesc(e.target.value)} name="experimentLongDesc" label="شرح موسع" className={classes.sizes} />
-                    <br/><br/>
-                    <TextField required onInput={e => setExperimentCategory(e.target.value)} name="experimentCategory" label="فئة التجربة / المُحاكاة" className={classes.sizes} />
-                    <br/><br/>
+                    <FormControl className={classes.sizes}>
+                        <InputLabel required htmlFor="experimentCategory">فئة التجربة / المُحاكاة</InputLabel>
+                        <Select required variant="standard" label="فئة التجربة / المُحاكاة" name="experimentCategory" value={experimentCategory} onChange={e => setExperimentCategory(e.target.value)}>
+                            <MenuItem value={'Ch'}>كيمياء</MenuItem>
+                            <MenuItem value={'Ph'}>فيزياء</MenuItem>
+                            <MenuItem value={'Bio'}>بيولوجيا</MenuItem>
+                        </Select>
+                    </FormControl>
                     <FormControl className={classes.sizes}>
                         <InputLabel required htmlFor="experimentForWebsite">مكان التجربة / المُحاكاة</InputLabel>
                         <Select required variant="standard" label="مكان التجربة / المُحاكاة" name="experimentForWebsite" value={experimentForWebsite} onChange={e => setExperimentForWebsite(e.target.value)}>
-                            <MenuItem value={'tpais'}>تبواح بايس</MenuItem>
-                            <MenuItem value={'space'}>مركز الفضاء</MenuItem>
+                            <MenuItem value={'t'}>تبواح بايس</MenuItem>
+                            <MenuItem value={'s'}>مركز الفضاء</MenuItem>
                         </Select>
                     </FormControl>
-                    <br/><br/>
-                    <div className={classes.StickyPrio}>
+                    <div>
                         <FormControlLabel label="تثبيت بالصفحة الرئيسية" className={classes.formControlSticky} control={<Checkbox checked={experimentIsSticky} onChange={e => setExperimentIsSticky(!experimentIsSticky)} name="experimentSticky" color="primary" />} />
-                        <InputLabel className={classes.inputLabelSticky} htmlFor="experimentPriority">تحديد الأولوية بالصفحة الرئيسية</InputLabel>
-                        <Rating disabled={!experimentIsSticky} size="large" name="experimentPriority" value={experimentStickyPrio} onChange={(event, newValue) => { setExperimentStickyPrio(newValue); }} />
+                        <InputLabel className={classes.inputLabelSticky} htmlFor="experimentPriority">تحديد الأولوية</InputLabel>
+                        <Rating className={classes.noLineHeight} disabled={!experimentIsSticky} size="large" name="experimentPriority" value={experimentStickyOrder} onChange={(event, newValue) => { setExperimentStickyOrder(newValue); }} />
                     </div>
-                    <br/>
                     <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                 </form>
             </TabPanel>
@@ -292,39 +294,33 @@ export default function Admin() {
                 </BottomNavigation>
                 {
                     !navigationValue ?
-                    <form onSubmit={handleSubmitImage}>
+                    <form onSubmit={handleSubmitImage} className={classes.formColumn}>
                         <TextField required onInput={e => setImageName(e.target.value)} name="imageName" label="عنوان الصورة" className={classes.sizes} />
-                        <br/><br/>
                         <TextField required onInput={e => setImgURL(e.target.value)} name="imgURL" label="رابط الصورة" className={classes.sizes} />
-                        <br/><br/>
                         <TextField required onInput={e => setImageCategory(e.target.value)} name="imageCategory" label="فئة الصورة" className={classes.sizes} />
-                        <br/><br/>
                         <FormControl className={classes.sizes}>
                             <InputLabel required htmlFor="imageForWebsite">مكان الصورة</InputLabel>
                             <Select required variant="standard" label="مكان الصورة" name="imageForWebsite" value={imageForWebsite} onChange={e => setImageForWebsite(e.target.value)}>
-                                <MenuItem value={'tpais'}>تبواح بايس</MenuItem>
-                                <MenuItem value={'space'}>مركز الفضاء</MenuItem>
+                                <MenuItem value={'t'}>تبواح بايس</MenuItem>
+                                <MenuItem value={'s'}>مركز الفضاء</MenuItem>
                             </Select>
                         </FormControl>
-                        <br/><br/>
+                        <span className={classes.customHeight}></span>
                         <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                     </form>
                     :
-                    <form onSubmit={handleSubmitVideo}>
+                    <form onSubmit={handleSubmitVideo} className={classes.formColumn}>
                         <TextField required onInput={e => setVideoName(e.target.value)} name="videoName" label="عنوان الفيديو" className={classes.sizes} />
-                        <br/><br/>
-                        <TextField required onInput={e => setVideoURL(e.target.value)} name="videoURL" label="رابط الفيديو" className={classes.sizes} />
-                        <br/><br/>
+                        <TextField required onInput={e => setVideoURL(e.target.value)} name="videoURL" label="رابط الفيديو - Youtube" className={classes.sizes} />
                         <TextField onInput={e => setVideoDesc(e.target.value)} name="videoDesc" label="شرح عن الفيديو" className={classes.sizes} />
-                        <br/><br/>
                         <FormControl className={classes.sizes}>
                             <InputLabel required htmlFor="videoForWebsite">مكان الصورة</InputLabel>
                             <Select required variant="standard" label="مكان الفيديو" name="videoForWebsite" value={videoForWebsite} onChange={e => setVideoForWebsite(e.target.value)}>
-                                <MenuItem value={'tpais'}>تبواح بايس</MenuItem>
-                                <MenuItem value={'space'}>مركز الفضاء</MenuItem>
+                                <MenuItem value={'t'}>تبواح بايس</MenuItem>
+                                <MenuItem value={'s'}>مركز الفضاء</MenuItem>
                             </Select>
                         </FormControl>
-                        <br/><br/>
+                        <span className={classes.customHeight}></span>
                         <Button type="submit" variant="contained" color="primary" className={classes.btn}>أرسال</Button>
                     </form>
                 }

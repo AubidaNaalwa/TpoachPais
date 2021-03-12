@@ -7,11 +7,11 @@ const courses = new Schema({
     shortDescription: {type: String, required: true },
     longDescription: { type: String, required: true },
     available: { type: Boolean, default: true },
-    toDate: String,
+    duration: String,
     courseLink: String,
     forWebsite: { type: String, required: true },
     sticky: { type: Boolean, default: false },
-    stickyOrder: { type: Number, default: 0 }
+    stickyOrder: { type: Number, default: 5 }
 }, { timestamps: true });
 
 const Courses = mongoose.model('courses', courses);

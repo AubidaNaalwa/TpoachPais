@@ -1,19 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import ExperimentCard from './ExperimentCard';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import PageNotFound from '../PageNotFound';
 import SnackBar from '../SnackBar';
 import LoadingSpinner from '../LoadingSpinner';
 import { SNACKBAR_PROPS, API_PATH } from '../../Constants';
+import { useLocation } from 'react-router-dom';
 const axios = require('axios');
 
+const useStyles = makeStyles(() => ({
+    category: {
+        backgroundColor: '#3f5160',
+        color: 'white',
+        padding: 12,
+        width: '10em',
+        border: 'none',
+        fontSize: '80%',
+        boxShadow: '3px 3px 3px rgba(0, 0, 0, 0.5)',
+        outline: 'none',
+        borderRadius: 5,
+        marginBottom: 14
+    }
+}));
+
 export default function Experiments(props) {
-    const [experiments, setExperiments] = useState([]),
+    const classes = useStyles(),
+    [experiments, setExperiments] = useState([]),
     [isLoading, setLoading] = useState(true),
-    [currPath, setCurrPath] = useState(''),
-    [isSpaceSite, setIsSpaceSite] = useState(0),
     [snack, setSnack] = useState(''),
-    [select, setSelect] = useState("");
+    [select, setSelect] = useState(""),
+    getPath = useLocation().pathname.includes('/space') ? "space" : "tpais";
 
     const handleSelect = (e) => {
         setSelect(e.target.value);
@@ -21,11 +38,12 @@ export default function Experiments(props) {
 
     const handleRemove = (id) => {
         try {
-            axios.delete(`${API_PATH}/${currPath}/experiments/delete/${id}`);
+            axios.delete(`${API_PATH}/${getPath}/experiments/delete/${id}`);
             const tempExperiments = [...experiments];
             const i = tempExperiments.findIndex(e => e._id === id);
             tempExperiments.splice(i, 1);
             setExperiments(tempExperiments);
+            setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_REMOVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch (err) {
             setSnack({ message: err.message, severity: SNACKBAR_PROPS.SeverityType.ERROR });
@@ -34,11 +52,12 @@ export default function Experiments(props) {
 
     const handleEdit = (experiment) => {
         try {
-            axios.put(`${API_PATH}/${currPath}/experiments/update/${experiment._id}`, experiment);
+            axios.put(`${API_PATH}/${getPath}/experiments/update/${experiment._id}`, experiment);
             const tempExperiments = [...experiments];
             const i = tempExperiments.findIndex(e => e._id === experiment._id);
             tempExperiments[i] = experiment;
             setExperiments(tempExperiments);
+            setSnack({ message: SNACKBAR_PROPS.MessageType.SUCCESS_SAVED, severity: SNACKBAR_PROPS.SeverityType.SUCCESS });
         }
         catch (err) {
             setSnack({ message: err.message, severity: SNACKBAR_PROPS.SeverityType.ERROR });
@@ -48,17 +67,7 @@ export default function Experiments(props) {
     useEffect(() => {
         async function fetchExperiments() {
             try {
-                let experiments;
-                if (window.location.pathname === '/tpais/experiments') {
-                    experiments = await axios.get(`${API_PATH}/tpais/experiments`);
-                    setCurrPath('tpais');
-                    setIsSpaceSite(false);
-                }
-                else {
-                    experiments = await axios.get(`${API_PATH}/space/experiments`);
-                    setCurrPath('space');
-                    setIsSpaceSite(true);
-                }
+                const experiments = await axios.get(`${API_PATH}/${getPath}/experiments`);
                 setExperiments(experiments.data.experiments);
             }
             catch {
@@ -69,14 +78,14 @@ export default function Experiments(props) {
             }
         }
         fetchExperiments();
-    }, []);
+    }, [getPath]);
 
     return (
         <div>
             {
-                !isSpaceSite &&
+                getPath === 'tpais' &&
                 <div>
-                    <select style={{ backgroundColor: '#3f5160', color: 'white', padding: 12, width: '10em', border: 'none', fontSize: '80%', boxShadow: '3px 3px 3px rgba(0, 0, 0, 0.5)', outline: 'none', borderRadius: 5, marginBottom: 14 }} name="category" value={select} onChange={handleSelect}>
+                    <select className={classes.category} name="category" value={select} onChange={handleSelect}>
                         <option value="">جميع الفئات</option>
                         <option value="Ch">كيمياء</option>
                         <option value="Ph">فيزياء</option>

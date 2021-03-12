@@ -5,8 +5,9 @@ Images = require('../models/Images'),
 Videos = require('../models/Videos'),
 Experiments = require('../models/Experiments'),
 Events = require('../models/Events'),
-Contact = require('../models/ContactUs'),
+nodemailer = require("nodemailer"),
 router = express.Router(),
+mongoose = require('mongoose'),
 AdminUser = process.env.REACT_APP_ADMIN,
 AdminPass = process.env.REACT_APP_PASS;
 let isLoggedIn = true;
@@ -14,221 +15,261 @@ let isLoggedIn = true;
 router.post('/login', (req, res)=> {
     const body = clearBadChars(req.body);
 
-    if (body && AdminUser === req.body.username && AdminPass === req.body.password)
+    if (body && AdminUser === body.username && AdminPass === body.password)
         //TODO
         isLoggedIn = true;
 
     res.send(isLoggedIn);
 });
 
-router.post('/logout', (req, res)=> {
+router.get('/logout', (req, res)=> {
     isLoggedIn = false;
     res.sendStatus(200);
 });
 
 const clearBadChars = (body) => {
     const keys = Object.keys(body);
-    keys.forEach((key) => body[key] = body[key].replace(/<|>|`/g, '').trim());
+    keys.forEach((key) => {
+        if (typeof body[key] === 'string')
+            body[key] = body[key].replace(/<|>/g, '').trim();
+    });
     return body;
 }
+
+router.get('/experiments/id/:id', (req, res) => {
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Experiments.findOne({ _id: paramID },function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
+    }
+    else
+        res.status(400).send("Invalid ID");
+});
+
+router.post('/experiments/new', (req, res) => {
+    const body = clearBadChars(req.body);
+
+    if (body && isLoggedIn) {
+        const experiment = new Experiments(body);
+        experiment.save();
+        res.sendStatus(200);
+    }
+    else
+        res.status(400).send("Invalid data");
+});
 
 router.get('/tpais/experiments', (req, res) => {
     Experiments.find({ forWebsite: 't' }, [], {sort:{created_at: -1}}, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ experiments: result });
-    });
-});
-
-router.post('/tpais/experiments/new', (req, res) => {
-    const body = clearBadChars(req.body);
-
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
-
-    const experiment = new Experiments(body);
-    experiment.save();
-});
-
-router.put('/tpais/experiments/update/:id', (req, res)=>{
-    if (!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
-
-    Experiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
-});
-
-router.delete('/tpais/experiments/delete/:id', (req, res)=> {
-    if(!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
-
-    Experiments.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
     });
 });
 
 router.get('/space/experiments', (req, res) => {
     Experiments.find({ forWebsite: 's' }, [], {sort: {created_at: -1}}, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ experiments: result });
     });
 });
 
-router.post('/space/experiments/new', (req, res) => {
+router.put('/tpais/experiments/update/:id', (req, res)=>{
+    const paramID = clearBadChars(req.params.id);
     const body = clearBadChars(req.body);
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Experiments.findByIdAndUpdate(paramID, body, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-
-    const experiment = new Experiments(body);
-    experiment.save();
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.put('/space/experiments/update/:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    const body = clearBadChars(req.body);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Experiments.findByIdAndUpdate(paramID, body, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
+    else
+        res.status(400).send("Invalid data");
+});
 
-    Experiments.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+router.delete('/tpais/experiments/delete/:id', (req, res)=> {
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Experiments.findByIdAndDelete(paramID, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
+    }
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.delete('/space/experiments/delete/:id', (req, res)=>{
-    if(!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Experiments.findByIdAndDelete(paramID, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
+    else
+        res.status(400).send("Invalid data");
+});
 
-    Experiments.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err);
-        else
-            res.send(result);
-    });
+router.get('/courses/id/:id', (req, res) => {
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Courses.findOne({ _id: paramID },function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
+    }
+    else
+        res.status(400).send("Invalid ID");
+});
+
+router.post('/courses/new', (req, res) => {
+    const body = clearBadChars(req.body);
+
+    if (body && isLoggedIn) {
+        const course = new Courses(body);
+        course.save();
+        res.sendStatus(200);
+    }
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.get('/tpais/courses', (req, res) => {
     Courses.find({ forWebsite: 't' }, [], {sort: {created_at: -1}}, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ courses: result });
     });
-});
-
-router.post('/tpais/courses/new', (req, res) => {
-    const body = clearBadChars(req.body);
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
-
-    const course = new Courses(body);
-    course.save();
-    res.sendStatus(200);
-});
-
-router.put('/tpais/course/update/:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({err: "invalid data"});
-        return;
-    }
-
-    Courses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
-});
-
-router.delete('/tpais/course/delete/:id', (req, res)=> {
-    if(!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
-
-    Courses.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    })
 });
 
 router.get('/space/courses', (req, res) => {
     Courses.find({ forWebsite: 's' }, [], {sort: {created_at: -1}}, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ courses: result });
     });
 });
 
-router.post('/space/courses/new', (req, res) => {
+router.put('/tpais/courses/update/:id', (req, res)=> {
+    const paramID = clearBadChars(req.params.id);
     const body = clearBadChars(req.body);
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Courses.findByIdAndUpdate(paramID, body, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-
-    const course = new Courses(body);
-    course.save();
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.put('/space/courses/update/:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    const body = clearBadChars(req.body);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Courses.findByIdAndUpdate(paramID, body, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
+    else
+        res.status(400).send("Invalid data");
+});
 
-    Courses.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+router.delete('/tpais/courses/delete/:id', (req, res)=> {
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Courses.findByIdAndDelete(paramID, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        })
+    }
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.delete('/space/courses/delete/:id', (req, res)=> {
-    if(!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Courses.findByIdAndDelete(paramID, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-    Courses.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+    else
+        res.status(400).send("Invalid data");
+});
+
+router.get('/events/id/:id', (req, res) => {
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Events.findOne({ _id: paramID },function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
+    }
+    else
+        res.status(400).send("Invalid ID");
+});
+
+router.post('/events/new', (req, res) => {
+    const body = clearBadChars(req.body);
+
+    if (body && isLoggedIn) {
+        const event = new Events(body);
+        event.save();
+        res.sendStatus(200);
+    }
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.get('/tpais/events', (req, res) => {
     Events.find({ forWebsite: 't' }, [], {sort:{created_at: -1}} ,function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ events: result });
     });
@@ -237,101 +278,92 @@ router.get('/tpais/events', (req, res) => {
 router.get('/space/events', (req, res) => {
     Events.find({ forWebsite: 's' }, [], {sort:{created_at: -1}}, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ events: result });
     });
 });
 
-router.post('/events/new', (req, res) => {
-    const body = clearBadChars(req.body);
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
-
-    const event = new Events(body);
-    event.save();
-    res.sendStatus(200);
-});
-
 router.put('/tpais/events/update/:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    const body = clearBadChars(req.body);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Events.findByIdAndUpdate(paramID, body, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-
-    Events.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.put('/space/events/update/:id', (req, res)=> {
-    if (!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    const body = clearBadChars(req.body);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Events.findByIdAndUpdate(paramID, body, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-
-    Events.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.delete('/tpais/events/delete/:id', (req, res)=> {
-    if(!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Events.findByIdAndDelete(paramID, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-
-    Events.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.delete('/space/events/delete/:id', (req, res)=> {
-    if(!req.params.id) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
+    const paramID = clearBadChars(req.params.id);
+    if (mongoose.Types.ObjectId.isValid(paramID)) {
+        Events.findByIdAndDelete(paramID, function(err, result) {
+            if (err)
+                res.status(400).send(err.message);
+            else
+                res.send(result);
+        });
     }
-
-    Events.findByIdAndDelete(req.params.id, function(err, result) {
-        if (err)
-            res.send(err.message);
-        else
-            res.send(result);
-    });
+    else
+        res.status(400).send("Invalid data");
 });
 
-router.get('/tpais/gallery/images/:id', (req, res) => {
-    Images.find({ forWebsite: 't', category: req.params.id }, function(err, result) {
+router.get('/tpais/gallery/images/:imageName', (req, res) => {
+    const imageName = clearBadChars(req.params.imageName);
+    Images.find({ forWebsite: 't', category: imageName }, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ images: result });
     });
 });
 
-router.get('/space/gallery/images/:id', (req, res) => {
-    Images.find({ forWebsite: 's', category: req.params.id }, function(err, result) {
+router.get('/space/gallery/images/:imageName', (req, res) => {
+    const imageName = clearBadChars(req.params.imageName);
+    Images.find({ forWebsite: 's', category: imageName }, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send({ images: result });
     });
 });
 
 router.get('/tpais/gallery', async (req, res) => {
-    const result = await Images.aggregate().match({ forWebsite: "t" }).group(
-    {
+    const result = await Images.aggregate().match({ forWebsite: "t" }).group({
         _id: '$category',
         imgUrl: { $first: "$img" },
         count: { $sum: 1 }
@@ -340,8 +372,7 @@ router.get('/tpais/gallery', async (req, res) => {
 });
 
 router.get('/space/gallery', async (req, res) => {
-    const result = await Images.aggregate().match({ forWebsite: "s" }).group(
-    {
+    const result = await Images.aggregate().match({ forWebsite: "s" }).group({
         _id: '$category',
         imgUrl: { $first: "$img" },
         count: { $sum: 1 }
@@ -351,20 +382,20 @@ router.get('/space/gallery', async (req, res) => {
 
 router.post('/images/new', (req, res) => {
     const body = clearBadChars(req.body);
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
 
-    const image = new Images(body);
-    image.save();
-    res.sendStatus(200);
+    if (body && isLoggedIn) {
+        const image = new Images(body);
+        image.save();
+        res.sendStatus(200);
+    }
+    else
+        res.status(400).send("Invalid data");
 });
 
 router.get('/tpais/videos', (req, res) => {
     Videos.find({ forWebsite: 't' }, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send(result);
     });
@@ -373,7 +404,7 @@ router.get('/tpais/videos', (req, res) => {
 router.get('/space/videos', (req, res) => {
     Videos.find({ forWebsite: 's' }, function(err, result) {
         if (err)
-            res.send(err.message);
+            res.status(400).send(err.message);
         else
             res.send(result);
     });
@@ -381,26 +412,45 @@ router.get('/space/videos', (req, res) => {
 
 router.post('/videos/new', (req, res) => {
     const body = clearBadChars(req.body);
-    if (!body || !isLoggedIn) {
-        res.send({ err: "invalid data", status: 400 });
-        return;
-    }
 
-    const image = new Videos(body);
-    image.save();
-    res.sendStatus(200);
+    if (body && isLoggedIn) {
+        const image = new Videos(body);
+        image.save();
+        res.sendStatus(200);
+    }
+    else
+        res.status(400).send("Invalid data");
 });
 
-router.post('/contactus', (req, res) => {
+router.post('/contactus', async (req, res) => {
     const body = clearBadChars(req.body);
     if (!body || !isLoggedIn || !isValidFullName(body.fullname) || !isValidEmail(body.email) || !isValidMessage(body.message)) {
-        res.send({ err: "invalid data", status: 400 });
+        res.status(400).send("Invalid data");
         return;
     }
 
-    const contact = new Contact(body);
-    contact.save();
-    res.sendStatus(200);
+    let mailTransporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.REACT_APP_EMAIL_USER,
+            pass: process.env.REACT_APP_EMAIL_PASS
+        }
+    });
+
+    let mailDetails = {
+        from: body.email,
+        to: process.env.REACT_APP_EMAIL_TO,
+        subject: `رسالة بُعثت من موقع تبواح بايس الطيبة: ${body.fullname}`,
+        text: body.message
+    };
+
+    try {
+        await mailTransporter.sendMail(mailDetails);
+        res.sendStatus(200);
+    }
+    catch {
+        res.status(400).send("Failed to send mail");
+    }
 });
 
 router.get('/news', async (req, res)=> {
@@ -411,7 +461,7 @@ router.get('/news', async (req, res)=> {
         res.send({ courses, events, experiments });
     }
     catch(err) {
-        res.send(err.message);
+        res.status(400).send(err.message);
     }
 });
 
@@ -423,7 +473,7 @@ router.get('/tpais/sticky', async (req, res)=> {
         res.send({ courses, events, experiments });
     }
     catch(err) {
-        res.send(err.message);
+        res.status(400).send(err.message);
     }
 });
 
@@ -435,7 +485,7 @@ router.get('/space/sticky', async (req, res)=> {
         res.send({ courses, events, experiments });
     }
     catch(err) {
-        res.send(err.message);
+        res.status(400).send(err.message);
     }
 });
 
