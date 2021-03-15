@@ -89,7 +89,7 @@ export default function ContactForm() {
 
     return (
         <>
-            <center>
+            <center style={{marginTop:'20px'}}>
                 <iframe title="like" src="https://www.facebook.com/plugins/like.php?locale=ar_AR&href=https%3A%2F%2Fwww.facebook.com%2F%26%23x62a%3B%26%23x628%3B%26%23x648%3B%26%23x627%3B%26%23x62d%3B-%26%23x648%3B%26%23x645%3B%26%23x631%3B%26%23x643%3B%26%23x632%3B-%26%23x641%3B%26%23x636%3B%26%23x627%3B%26%23x621%3B-%26%23x627%3B%26%23x644%3B%26%23x637%3B%26%23x64a%3B%26%23x628%3B%26%23x629%3B-334755379982653&width=174&layout=button_count&action=like&size=large&share=true&height=28&appId" width="178" height="28" scrolling="no" frameBorder="0" allowFullScreen={true} allow="clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </center>
             <div className={classes.lbl_fill_text}>املأ نموذجاً قصيراً وسنقوم بالرد عليك</div>

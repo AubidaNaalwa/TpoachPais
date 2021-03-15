@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from './Menu';
-import News from './News';
+import News from './News/News';
 import FBContainer from './FBContainer';
 import { menuWidth } from '../Constants';
 import { makeStyles } from '@material-ui/core/styles';

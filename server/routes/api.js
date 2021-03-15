@@ -453,15 +453,18 @@ router.post('/contactus', async (req, res) => {
     }
 });
 
-router.get('/news', async (req, res)=> {
+router.get('/news', async (req, res) => {
     try {
-        const courses = await Courses.find({}, [], {sort: {created_at: -1}, limit: 5});
-        const events = await Events.find({}, [], {sort: {created_at: -1}, limit: 5});
-        const experiments = await Experiments.find({}, [], {sort: {created_at: -1}, limit: 5});
-        res.send({ courses, events, experiments });
+        const courses = await Courses.find({}, [], { sort: { created_at: -1 }, limit: 5 });
+        const events = await Events.find({}, [], { sort: { created_at: -1 }, limit: 5 });
+        const experiments = await Experiments.find({}, [], { sort: { created_at: -1 }, limit: 5 });
+        
+        let news = [...events, ...courses, ...experiments]
+        const sortedNews = news.sort((a, b) => b.created_at - a.created_at).slice(0, 5);
+        res.send({ sortedNews });
     }
-    catch(err) {
-        res.status(400).send(err.message);
+    catch (err) {
+        res.send(err.message);
     }
 });
 

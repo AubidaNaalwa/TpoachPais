@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import QuickGallery from './Galleries/QuickGallery';
 import ContactForm from './ContactForm';
-import FBContainer from './FBContainer';
-import TPaisSticky from './TPaisSticky';
+import Sticky from './Sticky/Sticky';
+import TPaisNews from './News/TPaisNews';
+
 
 export default function Main() {
     const [pageSize, setPageSize] = useState(null);
@@ -19,20 +20,14 @@ export default function Main() {
 
     return (
         <>
-            <QuickGallery />
-            {
-                pageSize && (pageSize.width < 1844 || pageSize.height < 738) &&
-                <>
-                    <hr className="hr hr_margins" />
-                    <center>
-                        <FBContainer />
-                    </center>
-                </>
-            }
+           <QuickGallery />
             <hr className="hr hr_margins" />
-            <TPaisSticky />
+            <TPaisNews/>
+            <hr className="hr hr_margins" />
+            <Sticky />
             <hr className="hr hr_margins" />
             <ContactForm />
+
         </>
     );
 }
