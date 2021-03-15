@@ -51,7 +51,7 @@ export default function TPaisNews() {
 
                             </Grid>}
 
-                        <Grid item style={{ margin: '3%' }} >
+                        <Grid item style={{ marginTop: '3%' }} >
                             <FBContainer />
                         </Grid>
                     </Grid>

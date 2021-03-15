@@ -118,11 +118,10 @@
 }
 
 .mobileImg{
-    height: 60%;
-    width: 60%;
+    width: 70%;
     min-width: 120px;
     border-radius: 5%;
-    margin: 3%;
+    margin-right: 2%;
     
 }
 
@@ -155,16 +154,18 @@
     border-radius: 4px;
     text-transform: capitalize;
     color: white;
-    padding: 0.7%;
+    padding-right: 2%;
     font-family: monospace;
     display: inline-grid;
     width: 90%;
-    line-height: 2.5vh;
     overflow: hidden;
    text-overflow: ellipsis;
    display: -webkit-box;
    -webkit-line-clamp: 1; 
    -webkit-box-orient: vertical;
+
+   
+
 
 }
 
@@ -293,70 +294,61 @@ html {
   }
   
   .card {
-    width: 80%;
-    height: 100%;
+    width: 100%;
     position: relative;
     background: #fff;
-    overflow: visible;
     margin: 25px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.5);
   }
   
   .set-image {
     width: 100%;
-    height: 50%;
-    background: #eee;
+    /* background: rgb(44, 6, 6); */
     overflow: hidden;
     font: bold 20px Sans-Serif;
     text-transform: uppercase;
-    display: table;
-  }
-
-
-  
-  .set-image img {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    line-height: 25px;
-    color: #d2d2d2;
-    height: 100%;
-    width: 100%;
-  }
+    display: table; 
+    /* background: linear-gradient(90deg, rgba(49,124,218,1) 0%, rgb(64, 78, 231) 35%, rgba(0,212,255,1) 100%); */
+    background: linear-gradient(180deg, #38aecc 50%, #183a55 360%)
+    }
   
 
-  .set-headline {
-    width: 40%;
-    height: 5%;
-    background: #eee;
-    margin: 20px;
-    text-align: center;
-    font-size: medium;
-
-  }
+  
 
   .set-date {
     color: red;
-    width: 40%;
-    height: 5%;
-    background: #eee;
+    /* width: 40%; */
+    /* height: 5%; */
+    /* background: #eee; */
     margin: 20px;
-    text-align: center;
+    /* text-align: center; */
     font-size: small;
+    box-shadow: 0 4px 2px -2px gray;
+    padding:10px;
 
   }
+
+  .set-image p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 100px;
+    color: #ffffff; 
+  }
+  
 
 
   .set-text {
     width: 90%;
-    height: 20px;
-    background: #eee;
+    /* background: #eee; */
     margin: 10px 20px;
-    font-size: small;
+    font-size: 90%;
     text-align: start;
-    line-height: 2;
+    line-height: 2.2;
+    /* min-height: 300px; */
+    /* background-image: repeating-linear-gradient(45deg, transparent, transparent 23px, rgba(255, 255, 255, 1) 4px, rgba(255, 255, 255, 0.5) 40px); */
 
-  
+ 
     
   }
   
@@ -375,14 +367,11 @@ html {
     color: rgb(15, 3, 3);
     text-align: center;
     text-transform: uppercase;
-    /* -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg); */
+    transform: rotate(45deg);
     position: relative;
     padding: 7px 0;
-    /* left: -11px; */
-    /* top: 26px; */
+    left: -11px;
+    top: 26px;
     width: 150px;
     background-color: #000000;
     color: #fff;

@@ -47,11 +47,11 @@ export default function TPaisNew(props) {
                 <>
                     <div className="mobile-header">{props.new.name}</div>
                     <div className='mobile-subtitle' style={{ margin: '2%' }}>{props.new.shortDescription}</div>
-                    <center>
+                    {/* <center> */}
                         <img className="mobileImg" src={!err ? props.new.img : "https://elearningindustry.com/wp-content/uploads/2020/01/designing-effective-elearning-courses.jpg"} alt='img' onError={() => setErr(1)} ></img>
-                    </center>
+                    {/* </center> */}
                     <Link to={`/tpais/${checkCategory()}/${props.new._id}`}>
-                        <div className='readMore' style={{ margin: '2%' }}>اقرا المزيد..</div>
+                        <div className='readMore' style={{ marginRight: '2%' }}>اقرا المزيد..</div>
                     </Link>
                 </>
             }
